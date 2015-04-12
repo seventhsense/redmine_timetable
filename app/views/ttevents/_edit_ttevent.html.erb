@@ -1,0 +1,21 @@
+<div id="dialog" title="Edit Event">
+  <%= form_for @ttevent do |f| %>
+    <fieldset class="box">
+      <legend><%= "#{@ttevent.issue.project.name} - #{@ttevent.issue.subject}" %></legend>
+      <p><%= f.check_box :is_done %> 作業時間を報告してこの時間を終了する.</p>
+      <%= f.fields_for @ttevent.issue do |builder|%>
+        <p>進捗度 <%= builder.number_field :done_ratio %> %</p>
+        <p>ステータス <%= builder.select :status_id, [1, 2] %></p>
+        <p>使った時間 <%= @ttevent.duration%>時間</p>
+        <p>作業の種類</p>
+        <p>今までの合計時間 hour <%= builder.time_field :estimated_hours %></p>
+      <% end %>
+    </fieldset>
+    <%= f.submit '更新', class: 'button' %>
+  <% end %>
+  <%= button_to :cancel,type: :button,  class: 'button' %>
+  <%= link_to 'Destroy', @ttevent, method: :delete, data: { confirm: 'Are you sure?' }, class: 'button' %>
+</div>
+<script>
+  $(".button").button();
+</script>

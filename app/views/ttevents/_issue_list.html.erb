@@ -1,0 +1,14 @@
+<% issues.each do |issue| %>
+  <div class="draggable tt-event box"
+    data-duration="00:30" 
+    data-issue_id='<%=issue.id %>'>
+    <%= issue.project.name%> - <%= issue.subject %>
+  </div>
+<% end %>
+<% @planned_issues.each do |issue| %>
+  <div class="draggable tt-event box ui-draggable-disabled"
+    data-duration="00:30" 
+    data-issue_id='<%=issue.id %>'>
+    <%= issue.project.name%> - <%= issue.subject %>
+  </div>
+<% end %>

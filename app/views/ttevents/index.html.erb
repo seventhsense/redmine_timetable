@@ -1,0 +1,150 @@
+<%= Gon::Base.render_data({}) %>
+<% content_for :header_tags do %>
+  <%= stylesheet_link_tag 'fullcalendar/fullcalendar.min', :plugin => 'redmine_timetable' %>
+  <%= stylesheet_link_tag 'ttevent', :plugin => 'redmine_timetable' %>
+  <%= javascript_include_tag 'lib/moment.min', plugin: 'redmine_timetable' %>
+  <%= javascript_include_tag 'lib/fullcalendar.min', plugin: 'redmine_timetable' %>
+  <%= javascript_include_tag 'lib/lang/ja', plugin: 'redmine_timetable' %>
+<% end %>
+<h2>TimeTable</h2>
+<% html_title 'TimeTable' %>
+<div id="fullcalendar"></div>
+<div id="modal_area" class="hidden"></div>
+
+<% content_for :sidebar do %>
+  <h3>Issues</h3>
+  <div id="tt-events">
+    <%= render partial: 'issue_list', locals: {issues: @issues} %>
+  </div>
+<% end %>
+
+<script>
+  $(document).ready(function() {
+    // 初期処理
+    $('#tt-events .draggable').each(function(){
+      $(this).draggable({
+        revert: true,
+        revertDuration: 0
+      });
+      $(this).data('event', {
+        title: $.trim($(this).text()),
+        stick: true,
+        issue_id: $.trim($(this).data('issue_id'))
+      });
+    });
+    
+    // カレンダー
+    $('#fullcalendar').fullCalendar({
+      events: gon.ttevents.events,
+      timezone: 'local',
+      defaultView: 'agendaDay',
+      allDaySlot: false,
+      header: { center: 'month, agendaWeek, agendaDay'},
+      selectable: true,
+      editable: true,
+
+      droppable: true,
+      drop: function(date, jsEvent){
+        $(this).draggable('disable');
+      },
+      eventReceive: function(event, element){
+        title = event.title;
+        start = event.start.format();
+        end = event.end.format();
+        issue_id = event.issue_id;
+        stick = event.stick;
+        $.ajax({
+          type: "POST",
+          url: "ttevents",
+          data: {
+            ttevent: {
+            start_time: start,
+            end_time: end,
+            issue_id: issue_id
+          }},
+          success: function(e){
+            console.log('data posted');
+            console.log(e);
+          }
+        });
+      },
+      eventResize: function(event, delta, revertFunc){
+        console.log(event.title + " end is now " + event.end.format());
+        title = event.title;
+        start = event.start.format();
+        end = event.end.format();
+        id = event.id;
+        console.log(id);
+        stick = event.stick;
+        url = "ttevents/" + id
+        $.ajax({
+          type: "PUT",
+          url: url,
+          data: {
+            id: id,
+            ttevent: {
+            start_time: start,
+            end_time: end,
+          }},
+          success: function(){
+            console.log('updated');
+          }
+        });
+      },
+      eventDrop: function(event, delta, revertFunc){
+        console.log(event.title + " start is now " + event.start.format());
+        title = event.title;
+        start = event.start.format();
+        end = event.end.format();
+        id = event.id
+        stick = event.stick;
+        url = "ttevents/" + id;
+        console.log(url);
+        $.ajax({
+          type: "PUT",
+          url: url,
+          data: {
+            id: id,
+            ttevent: {
+            start_time: start,
+            end_time: end,
+          }},
+          success: function(){
+            console.log('updated');
+          }
+        });
+      },
+       dayClick: function(date, jsEvent, view) {
+         if (view.name == 'agendaDay'){ return; }
+         $('#fullcalendar').fullCalendar('gotoDate', date.format() );
+         $('#fullcalendar').fullCalendar('changeView', 'agendaDay');
+       },
+       eventClick: function(calEvent, jsEvent, view) {
+
+         console.log('Event: ' + calEvent.title);
+         console.log('Event: ' + calEvent.id);
+         console.log('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
+         console.log('View: ' + view.name);
+
+         // change the border color just for fun
+         $(this).css('border-color', 'green');
+         id = calEvent.id;
+         url = "ttevents/" + id + "/edit";
+         
+         $.ajax({
+           type: "GET",
+           url: url,
+           data: {ttevent: {
+             id: id
+           }},
+           success: function(e){
+             console.log('get data');
+             console.log(e);
+           }
+         });
+       }
+    });
+  });
+
+
+</script>
