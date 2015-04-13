@@ -64,7 +64,7 @@
           }},
           success: function(e){
             console.log('data posted');
-            console.log(e);
+            //console.log(e);
           }
         });
       },
@@ -120,14 +120,10 @@
          $('#fullcalendar').fullCalendar('changeView', 'agendaDay');
        },
        eventClick: function(calEvent, jsEvent, view) {
-
-         console.log('Event: ' + calEvent.title);
-         console.log('Event: ' + calEvent.id);
-         console.log('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
-         console.log('View: ' + view.name);
-
-         // change the border color just for fun
-         $(this).css('border-color', 'green');
+         // console.log('Event: ' + calEvent.title);
+         // console.log('Event: ' + calEvent.id);
+         // console.log('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
+         // console.log('View: ' + view.name);
          id = calEvent.id;
          url = "ttevents/" + id + "/edit";
          
@@ -139,7 +135,7 @@
            }},
            success: function(e){
              console.log('get data');
-             console.log(e);
+             // console.log(e);
            }
          });
        }

@@ -2,7 +2,7 @@ class Ttevent < ActiveRecord::Base
   # unloadable
   attr_accessible :id, :title, :start_time, :end_time, :issue_id, :is_done
   belongs_to :issue
-  belongs_to :time_entry
+  has_one :time_entry
 
   def self.to_gon
     be = self.all

@@ -12,3 +12,11 @@
     <%= issue.project.name%> - <%= issue.subject %>
   </div>
 <% end %>
+<h3>Not assigned issues</h3>
+<% @issues_not_assigned.each do |issue| %>
+  <div class="draggable tt-event box"
+    data-duration="00:30" 
+    data-issue_id='<%=issue.id %>'>
+    <%= issue.project.name%> - <%= issue.subject %>
+  </div>
+<% end %>
