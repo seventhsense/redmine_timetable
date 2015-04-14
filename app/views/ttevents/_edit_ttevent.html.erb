@@ -1,5 +1,5 @@
 <div id="dialog" title="Edit Event">
-  <%= form_for @ttevent do |f| %>
+  <%= form_for @ttevent, url: ttevent_with_issue_path do |f| %>
     <fieldset class="box">
       <legend><%= "#{@ttevent.issue.project.name} - #{@ttevent.issue.subject}" %></legend>
       <p><%= f.check_box :is_done %> 作業時間を報告してこの時間を終了する.</p>
