@@ -8,9 +8,9 @@ class TteventsController < ApplicationController
     @planned_issues = Issue.open.visible.where(id: planned_issue_ids)
     @issues = Issue.open.visible.where(assigned_to_id: current_user.id).where.not(id: planned_issue_ids)
     @issues_not_assigned = Issue.where(assigned_to_id: nil)
-    # @ttevents
+    # @ttevents to_gon
     @ttevents = Ttevent.where(user_id: current_user.id)
-    gon.ttevents = @ttevents.to_gon
+    gon.watch.ttevents = @ttevents.to_gon
     respond_to do |format|
       format.html
     end
@@ -20,24 +20,18 @@ class TteventsController < ApplicationController
     current_user ||= User.current
     @ttevent = Ttevent.new(params[:ttevent])
     @ttevent.user_id = current_user.id
-    @ttevent.issue.assigned_to_id = current_user.id
+    issue = @ttevent.issue
+    issue.assigned_to_id = current_user.id
     
-    planned_issue_ids = Ttevent.where(user_id: current_user.id, is_done:false).pluck(:issue_id)
-    @planned_issues = Issue.open.visible.where(id: planned_issue_ids)
-    @issues = Issue.open.visible.where(assigned_to_id: current_user.id).where.not(id: planned_issue_ids)
-    @issues_not_assigned = Issue.where(assigned_to_id: nil)
-    if @ttevent.save!
+    if @ttevent.save! && issue.save!
       current_user ||= User.current
-      @ttevents = Ttevent.where(user_id: current_user.id)
-      gon.ttevents = @ttevents.to_gon
       msg = '保存しました'
     else 
       msg = '保存できませんでした.'
     end
     respond_to do |format|
-      format.js {render :json => {success: true}} 
+      format.js
     end
-    # redirect_to ttevents_path, format: :html
   end
 
   def edit
