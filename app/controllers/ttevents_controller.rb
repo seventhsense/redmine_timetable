@@ -12,12 +12,11 @@ class TteventsController < ApplicationController
   end
 
   def create
-    set_issue_lists
+    @current_user = User.current
     @ttevent = Ttevent.new(params[:ttevent])
     @ttevent.user_id = @current_user.id
     issue = @ttevent.issue
     issue.assigned_to_id = @current_user.id
-    gon.ttevent = @ttevent
     
     if @ttevent.save! && issue.save!
       current_user ||= User.current
@@ -26,9 +25,7 @@ class TteventsController < ApplicationController
     else 
       msg = '保存できませんでした.'
     end
-    respond_to do |format|
-      format.js
-    end
+    render json: @ttevent, status: :ok
   end
 
   def edit
