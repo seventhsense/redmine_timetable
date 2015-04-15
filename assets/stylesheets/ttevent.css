@@ -23,13 +23,13 @@
 #dialog .button {
   padding: initial;
 }
-#dialog input[type="submit"] {
+#dialog .button.update {
   padding: 0.4em 1em;
   color: #090;
 }
-#dialog button.button span.ui-button-text {
+#dialog .button.cancel {
   color: #009;
 }
-#dialog span.ui-button-text {
+#dialog .button.destroy {
   color: #900;
 }

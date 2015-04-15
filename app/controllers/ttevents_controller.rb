@@ -16,25 +16,27 @@ class TteventsController < ApplicationController
   end
 
   def create
-    @current_user = User.current
+    set_user
     @ttevent = Ttevent.new(params[:ttevent])
     @ttevent.user_id = @current_user.id
     issue = @ttevent.issue
     issue.assigned_to_id = @current_user.id
     
     if @ttevent.save! && issue.save!
-      current_user ||= User.current
       set_issue_lists
       msg = '保存しました'
+      status = :ok
     else 
       msg = '保存できませんでした.'
+      status = :error
     end
-    render json: @ttevent, status: :ok
+    render json: @ttevent, msg: msg, status: status
   end
 
   def edit
+    set_user
     @ttevent = Ttevent.find(params[:id])
-    @allowed_statuses = @ttevent.issue.new_statuses_allowed_to(User.current)
+    @allowed_statuses = @ttevent.issue.new_statuses_allowed_to(@current_user)
     @project = @ttevent.issue.project
     respond_to do |format|
       format.js
@@ -59,7 +61,7 @@ class TteventsController < ApplicationController
     @issue = @ttevent.issue
     respond_to do |format|
       if @ttevent.update(params[:ttevent]) && @issue.update(params[:ttevent][:issue])
-        format.html {redirect_to ttevents_path}
+        format.html {redirect_to ttevents_path, notice: 'ttevent was successfully updated.' }
       else
         format.html {redirect_to ttevents_path}
       end
