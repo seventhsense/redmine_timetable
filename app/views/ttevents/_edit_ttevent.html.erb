@@ -4,7 +4,7 @@
       <legend><%= "#{@ttevent.issue.project.name} - #{@ttevent.issue.subject}" %></legend>
       <p><%= f.check_box :is_done %> 作業時間を報告してこの時間を終了する.</p>
       <%= f.fields_for @ttevent.issue do |builder|%>
-        <p>進捗度 <%= builder.number_field :done_ratio, step: 10 %> %</p>
+        <p>進捗度 <%= builder.number_field :done_ratio, step: 10, max: 100, min: 0 %> %</p>
         <p>ステータス <%= builder.select :status_id, (@allowed_statuses.collect {|p| [p.name, p.id]}) %></p>
         <p>使った時間 <%= @ttevent.duration%>時間</p>
         <p>作業の種類 <%= select_tag :activity_id, activity_collection_for_select_options(@ttevent.time_entry) %></p>
@@ -19,7 +19,7 @@
 <script>
   $(".button").button();
   function cancel(){
-  $('#dialog').dialog("close");
-  $('#modal_area').html('');
+    $('#dialog').dialog("close");
+    $('#modal_area').html('');
   }
 </script>
