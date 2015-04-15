@@ -19,3 +19,17 @@
 .hidden {
   display: none;
 }
+
+#dialog .button {
+  padding: initial;
+}
+#dialog input[type="submit"] {
+  padding: 0.4em 1em;
+  color: #090;
+}
+#dialog button.button span.ui-button-text {
+  color: #009;
+}
+#dialog span.ui-button-text {
+  color: #900;
+}
