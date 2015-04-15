@@ -11,6 +11,10 @@ class TteventsController < ApplicationController
     end
   end
 
+  def issue_lists
+    set_issue_lists   
+  end
+
   def create
     @current_user = User.current
     @ttevent = Ttevent.new(params[:ttevent])
@@ -42,7 +46,7 @@ class TteventsController < ApplicationController
     @ttevent = Ttevent.find(id)
     respond_to do |format|
       if @ttevent.update(params[:ttevent])
-        format.js
+        format.js  {render json: @ttevent, status: :ok}
       else
         format.js
       end
@@ -73,9 +77,13 @@ class TteventsController < ApplicationController
   end
 
   private
+  def set_user
+    @current_user ||= User.current
+  end
+
   def set_issue_lists
     # search @issues
-    @current_user ||= User.current
+    set_user
     planned_issue_ids = Ttevent.where(user_id: @current_user.id, is_done:false).pluck(:issue_id)
     @planned_issues = Issue.open.visible.where(id: planned_issue_ids)
     @issues = Issue.open.visible.where(assigned_to_id: @current_user.id).where.not(id: planned_issue_ids)

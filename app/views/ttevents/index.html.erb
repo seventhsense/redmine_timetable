@@ -6,8 +6,10 @@
   <%= javascript_include_tag 'lib/fullcalendar.min', plugin: 'redmine_timetable' %>
   <%= javascript_include_tag 'lib/lang/ja', plugin: 'redmine_timetable' %>
 <% end %>
+
 <h2>TimeTable</h2>
 <% html_title 'TimeTable' %>
+
 <div id="fullcalendar"></div>
 <div id="modal_area" class="hidden"></div>
 
@@ -67,9 +69,13 @@
             //console.log(ttevent);
             //console.log(status);
             //console.log(event);
-            event.color = 'green'
-            event.id = ttevent.id
-            $('#fullcalendar').fullCalendar('updateEvent', event)
+            event.color = 'green';
+            event.id = ttevent.id;
+            $('#fullcalendar').fullCalendar('updateEvent', event);
+            $.ajax({
+              type: 'GET',
+              url: "ttevents/issue_lists"
+            })
           }
         });
       },
@@ -91,7 +97,7 @@
             start_time: start,
             end_time: end,
           }},
-          success: function(){
+          success: function(i){
             console.log('updated');
           }
         });
@@ -114,7 +120,7 @@
             start_time: start,
             end_time: end,
           }},
-          success: function(){
+          success: function(i){
             console.log('updated');
           }
         });
@@ -146,6 +152,4 @@
        }
     });
   });
-
-
 </script>
