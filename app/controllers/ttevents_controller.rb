@@ -16,6 +16,7 @@ class TteventsController < ApplicationController
     set_issue_lists   
   end
 
+
   def create
     set_user
     @ttevent = Ttevent.new(params[:ttevent])
@@ -67,16 +68,8 @@ class TteventsController < ApplicationController
     id = params[:id]
     @ttevent = Ttevent.find(id)
     @issue = @ttevent.issue
-    _is_done = @ttevent.is_done
-    if _is_done == false && params[:ttevent][:is_done] == true
-      @ttevent.build_time_entry(
-        project: @ttevent.issue.project ,
-        user: @current_user,
-        issue: @ttevent.issue
-      )
-    end
     respond_to do |format|
-      if @ttevent.update(ttevent_params) && @issue.update(params[:ttevent][:issue])
+      if @ttevent.update(ttevent_params) && @issue.update(issue_params)
         format.html {redirect_to ttevents_path, notice: 'ttevent was successfully updated.' }
       else
         format.html {redirect_to ttevents_path}
@@ -109,8 +102,13 @@ class TteventsController < ApplicationController
   end
 
   def ttevent_params
-    params.require(:ttevent).permit(:id, :is_done,
-                                  time_entry_attributes: [:id, :hours, :activity_id])
+    params[:issue].require(:ttevent).permit(:id, :is_done,:time_entry, :issue,
+                                  time_entry: [:id, :hours, :activity_id]
+                                   )
+  end
+
+  def issue_params
+    params.require(:issue).permit(:id, :done_ratio, :status_id, :estimated_hours)
   end
 
 end
