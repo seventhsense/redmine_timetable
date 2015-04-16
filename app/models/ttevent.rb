@@ -1,8 +1,10 @@
 class Ttevent < ActiveRecord::Base
   # unloadable
-  attr_accessible :id, :title, :start_time, :end_time, :issue_id, :is_done
   belongs_to :issue
   has_one :time_entry
+  accepts_nested_attributes_for :time_entry
+
+  attr_accessible :id, :title, :start_time, :end_time, :issue_id, :is_done, :time_entry
 
   def self.to_gon
     be = self.all

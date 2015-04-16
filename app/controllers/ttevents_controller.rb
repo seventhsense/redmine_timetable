@@ -1,5 +1,6 @@
 class TteventsController < ApplicationController
   # unloadable
+  helper :timelog
 
   def index
     # @ttevents to_gon
@@ -38,6 +39,13 @@ class TteventsController < ApplicationController
     @ttevent = Ttevent.find(params[:id])
     @allowed_statuses = @ttevent.issue.new_statuses_allowed_to(@current_user)
     @project = @ttevent.issue.project
+    if @ttevent.time_entry.nil?
+      @ttevent.build_time_entry(
+        project: @ttevent.issue.project ,
+        user: @current_user,
+        issue: @ttevent.issue
+      )
+    end
     respond_to do |format|
       format.js
     end
@@ -59,8 +67,16 @@ class TteventsController < ApplicationController
     id = params[:id]
     @ttevent = Ttevent.find(id)
     @issue = @ttevent.issue
+    _is_done = @ttevent.is_done
+    if _is_done == false && params[:ttevent][:is_done] == true
+      @ttevent.build_time_entry(
+        project: @ttevent.issue.project ,
+        user: @current_user,
+        issue: @ttevent.issue
+      )
+    end
     respond_to do |format|
-      if @ttevent.update(params[:ttevent]) && @issue.update(params[:ttevent][:issue])
+      if @ttevent.update(ttevent_params) && @issue.update(params[:ttevent][:issue])
         format.html {redirect_to ttevents_path, notice: 'ttevent was successfully updated.' }
       else
         format.html {redirect_to ttevents_path}
@@ -90,6 +106,11 @@ class TteventsController < ApplicationController
     @planned_issues = Issue.open.visible.where(id: planned_issue_ids)
     @issues = Issue.open.visible.where(assigned_to_id: @current_user.id).where.not(id: planned_issue_ids)
     @issues_not_assigned = Issue.open.visible.where(assigned_to_id: nil)
+  end
+
+  def ttevent_params
+    params.require(:ttevent).permit(:id, :is_done,
+                                  time_entry_attributes: [:id, :hours, :activity_id])
   end
 
 end
