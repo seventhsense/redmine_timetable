@@ -16,7 +16,6 @@ class TteventsController < ApplicationController
     set_issue_lists   
   end
 
-
   def create
     set_user
     @ttevent = Ttevent.new(params[:ttevent])
@@ -26,10 +25,10 @@ class TteventsController < ApplicationController
     
     if @ttevent.save! && issue.save!
       set_issue_lists
-      msg = '保存しました'
+      msg = l('saved')
       status = :ok
     else 
-      msg = '保存できませんでした.'
+      msg = l('not_saved')
       status = :error
     end
     render json: @ttevent, msg: msg, status: status
@@ -57,9 +56,9 @@ class TteventsController < ApplicationController
     @ttevent = Ttevent.find(id)
     respond_to do |format|
       if @ttevent.update(params[:ttevent])
-        format.js  {render json: @ttevent, status: :ok}
+        format.js {render json: @ttevent, status: :ok}
       else
-        format.js
+        format.js {render json: @ttevent, status: :error}
       end
     end
   end
@@ -68,11 +67,22 @@ class TteventsController < ApplicationController
     id = params[:id]
     @ttevent = Ttevent.find(id)
     @issue = @ttevent.issue
+    logger.debug time_entry_params
+    if @ttevent.time_entry.nil?
+      @ttevent.build_time_entry(
+        issue_id: @ttevent.issue.id,
+        hours: time_entry_params[:hours],
+        activity_id: time_entry_params[:activity_id],
+        spent_on: time_entry_params[:spent_on]
+      )
+      set_user
+      @ttevent.time_entry.user_id = @current_user.id
+    end
     respond_to do |format|
       if @ttevent.update(ttevent_params) && @issue.update(issue_params)
         format.html {redirect_to ttevents_path, notice: 'ttevent was successfully updated.' }
       else
-        format.html {redirect_to ttevents_path}
+        format.html {redirect_to ttevents_path, notice: 'error! something is going bad'}
       end
     end
   end
@@ -111,4 +121,7 @@ class TteventsController < ApplicationController
     params.require(:issue).permit(:id, :done_ratio, :status_id, :estimated_hours)
   end
 
+  def time_entry_params
+    params[:issue].require(:time_entry).permit(:id, :hours, :spent_on, :activity_id)
+  end
 end
