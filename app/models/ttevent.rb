@@ -6,6 +6,8 @@ class Ttevent < ActiveRecord::Base
 
   attr_accessible :id, :title, :start_time, :end_time, :issue_id, :is_done, :time_entry
 
+  before_save :set_duration
+
   def self.to_gon
     be = self.all
     s = {}
@@ -26,8 +28,12 @@ class Ttevent < ActiveRecord::Base
     s
   end
 
-  def duration
-    (self.end_time - self.start_time) / 60 / 60
+  # def duration
+    # (self.end_time - self.start_time) / 60 / 60
+  # end
+
+  def set_duration
+    self.duration = (self.end_time - self.start_time) / 60 / 60
   end
 
 end
