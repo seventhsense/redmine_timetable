@@ -2,7 +2,7 @@ Redmine::Plugin.register :redmine_timetable do
   name 'Redmine Timetable plugin'
   author 'Seventh'
   description 'Timetable using fullcalendar'
-  version '0.3.2'
+  version '0.4.2'
   url 'https://github.com/seventhsense/redmine_timetable'
   author_url 'http://blog.scimpr.com'
 
@@ -10,10 +10,6 @@ Redmine::Plugin.register :redmine_timetable do
   require_dependency 'issue_patch'
 
   menu :top_menu, :redmine_timetable, {
-    controller: 'ttevents', action: 'index'
-  }, caption: :timetable
-
-  menu :application_menu, :redmine_timetable, {
     controller: 'ttevents', action: 'index'
   }, caption: :timetable
 
