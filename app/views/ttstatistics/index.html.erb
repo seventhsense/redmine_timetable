@@ -1,1 +1,12 @@
-<h2>TtstatisticsController#index</h2>
+<div class="contextual">
+  <%= link_to l(:timetable), ttevents_path %>
+</div>
+<h2>
+  <%= l(:statistics)%>
+</h2>
+<p>context</p>
+<% content_for :sidebar do %>
+  <h3>
+    sidebar
+  </h3>
+<% end %>

@@ -91,9 +91,9 @@ class TteventsController < ApplicationController
         if @ttevent.is_done == false && @ttevent.time_entry
           @ttevent.time_entry.destroy
         end
-        format.html {redirect_to ttevents_path, notice: 'ttevent was successfully updated.' }
+        format.html {redirect_to ttevents_path, notice: l(:notice_successful_update) }
       else
-        format.html {redirect_to ttevents_path, notice: 'error! something is going bad'}
+        format.html {redirect_to ttevents_path, alert: l(:error_something_went_wrong)}
       end
     end
   end
@@ -103,7 +103,7 @@ class TteventsController < ApplicationController
     @ttevent = Ttevent.find(id)
     @ttevent.destroy
     respond_to do |format|
-      format.html { redirect_to ttevents_url, notice: 'ttevent was successfully destroyed.' }
+      format.html { redirect_to ttevents_url, notice: l(:notice_successful_delete) }
       format.json { head :no_content }
     end
   end
