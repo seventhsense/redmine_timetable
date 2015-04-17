@@ -14,4 +14,4 @@ ja:
   edit_issue: チケットを編集する
   hours: 時間
   link_to_destroy: 削除
-
+  error_something_went_wrong: 保存できませんでした.

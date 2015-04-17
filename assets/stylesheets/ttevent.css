@@ -33,3 +33,9 @@
 #dialog .button.destroy {
   color: #900;
 }
+
+#flash_alert {
+  background: url("../../../images/false.png") no-repeat scroll 15px 10px #ffdfdf;
+  color: #9f0000;
+  border-color: #cf9f9f;
+}
