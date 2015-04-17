@@ -75,7 +75,8 @@ class TteventsController < ApplicationController
     id = params[:id]
     @ttevent = Ttevent.find(id)
     @issue = @ttevent.issue
-    if @ttevent.time_entry.nil? && @ttevent.is_done
+    is_done = ttevent_params[:is_done]
+    if @ttevent.time_entry.nil? && is_done == "1"
       @ttevent.build_time_entry(
         issue_id: @ttevent.issue.id,
         hours: time_entry_params[:hours],
