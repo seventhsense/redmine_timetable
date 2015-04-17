@@ -1,4 +1,17 @@
 ja:
   timetable: 時間表
+  statistics: 統計情報
   permission_view_timetable: 時間表を閲覧する
   permission_edit_timetable: 時間表を編集する
+
+  issues: チケット
+  my_issues: 自分に割り当てられたチケット
+  not_assigned_issues: 担当者がいないチケット
+
+  field_is_done: 作業時間を報告してこのイベントをクローズする.
+
+  edit_event: イベントの編集
+  edit_issue: チケットを編集する
+  hours: 時間
+  link_to_destroy: 削除
+

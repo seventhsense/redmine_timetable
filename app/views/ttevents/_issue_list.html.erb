@@ -1,3 +1,6 @@
+<h4>
+  <%= l(:my_issues)%>
+</h4>
 <% issues.each do |issue| %>
   <div class="draggable tt-event box"
     data-duration="00:30" 
@@ -12,7 +15,9 @@
     <%= issue.project.name%> - <%= issue.subject %>
   </div>
 <% end %>
-<h3>Not assigned issues</h3>
+<h4>
+  <%= l(:not_assigned_issues) %>
+</h4>
 <% @issues_not_assigned.each do |issue| %>
   <div class="draggable tt-event box"
     data-duration="00:30" 

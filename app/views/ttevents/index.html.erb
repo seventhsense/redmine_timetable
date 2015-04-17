@@ -7,14 +7,21 @@
   <%= javascript_include_tag 'lib/lang/ja', plugin: 'redmine_timetable' %>
 <% end %>
 
-<h2>TimeTable</h2>
-<% html_title 'TimeTable' %>
+<div class="contextual">
+  <%= link_to l(:statistics), ttstatistics_path, class: 'icon icon-stats' %>
+</div>
+<h2>
+  <%= l(:timetable) %>
+</h2>
+<% html_title l(:timetable) %>
 
 <div id="fullcalendar"></div>
 <div id="modal_area" class="hidden"></div>
 
 <% content_for :sidebar do %>
-  <h3>Issues</h3>
+  <h3>
+    <%= l(:issues)%>
+  </h3>
   <div id="tt-events">
     <%= render partial: 'issue_list', locals: {issues: @issues} %>
   </div>
@@ -22,7 +29,7 @@
 
 <script>
   $(document).ready(function() {
-    // 初期処理
+    // Initialize
     $('#tt-events .draggable').each(function(){
       $(this).not('.ui-draggable-disabled').draggable({
         revert: true,
@@ -35,7 +42,7 @@
       });
     });
     
-    // カレンダー
+    // Calendar
     $('#fullcalendar').fullCalendar({
       events: gon.ttevents.events,
       timezone: 'local',
