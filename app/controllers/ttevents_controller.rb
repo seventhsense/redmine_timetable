@@ -54,6 +54,14 @@ class TteventsController < ApplicationController
   def update
     id = params[:id]
     @ttevent = Ttevent.find(id)
+    if @ttevent.is_done
+      start_time = DateTime.parse params[:ttevent][:start_time]
+      end_time = DateTime.parse params[:ttevent][:end_time]
+      duration = ((end_time - start_time) * 24).to_f
+      @ttevent.time_entry.hours = duration
+      @ttevent.time_entry.spent_on = start_time
+    end
+
     respond_to do |format|
       if @ttevent.update(params[:ttevent])
         format.js {render json: @ttevent, status: :ok}
@@ -67,8 +75,7 @@ class TteventsController < ApplicationController
     id = params[:id]
     @ttevent = Ttevent.find(id)
     @issue = @ttevent.issue
-    logger.debug time_entry_params
-    if @ttevent.time_entry.nil?
+    if @ttevent.time_entry.nil? && @ttevent.is_done
       @ttevent.build_time_entry(
         issue_id: @ttevent.issue.id,
         hours: time_entry_params[:hours],
@@ -79,7 +86,10 @@ class TteventsController < ApplicationController
       @ttevent.time_entry.user_id = @current_user.id
     end
     respond_to do |format|
-      if @ttevent.update(ttevent_params) && @issue.update(issue_params)
+      if @ttevent.update(ttevent_params) && @issue.update(issue_params) 
+        if @ttevent.is_done == false && @ttevent.time_entry
+          @ttevent.time_entry.destroy
+        end
         format.html {redirect_to ttevents_path, notice: 'ttevent was successfully updated.' }
       else
         format.html {redirect_to ttevents_path, notice: 'error! something is going bad'}

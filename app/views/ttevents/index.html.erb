@@ -85,7 +85,7 @@
         start = event.start.format();
         end = event.end.format();
         id = event.id;
-        console.log(id);
+        // console.log(id);
         stick = event.stick;
         url = "ttevents/" + id
         $.ajax({
@@ -110,7 +110,7 @@
         id = event.id
         stick = event.stick;
         url = "ttevents/" + id;
-        console.log(url);
+        // console.log(url);
         $.ajax({
           type: "PUT",
           url: url,
