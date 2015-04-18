@@ -8,7 +8,38 @@ class Ttevent < ActiveRecord::Base
 
   before_save :set_duration
 
-  by_star_field :start_time
+  def self.group_by_month
+    adapter = ActiveRecord::Base.connection.instance_values["config"][:adapter]
+    case adapter
+    when /sqlite3/ then
+      group('strftime("%Y", start_time)').group('strftime("%m", start_time)')
+    when 'mysql', 'mysql2' then
+      # TODO need mysql grouping
+      all
+    when /postgresql/ then
+      # TODO need postgresql grouping
+      all
+    else
+      all
+    end
+  end
+
+  def self.group_by_day
+    adapter = ActiveRecord::Base.connection.instance_values["config"][:adapter]
+    case adapter
+    when /sqlite3/ then
+      group('strftime("%Y", start_time)').group('strftime("%m", start_time)').group('strftime("%d", start_time)')
+    when 'mysql', 'mysql2' then
+      # TODO need mysql grouping
+      all
+    when /postgresql/ then
+      # TODO need postgresql grouping
+      all
+    else
+      all
+    end
+    
+  end
 
   def self.to_gon
     be = self.all
@@ -33,7 +64,7 @@ class Ttevent < ActiveRecord::Base
   # def duration
     # (self.end_time - self.start_time) / 60 / 60
   # end
-
+  private
   def set_duration
     self.duration = (self.end_time - self.start_time) / 60 / 60
   end

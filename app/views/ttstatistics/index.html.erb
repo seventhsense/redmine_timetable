@@ -5,30 +5,83 @@
 <h2>
   <%= l(:statistics)%>
 </h2>
-<% if @unreported_ttevents > 0 %>
 <p>
-  <b>
-   ＊未報告のイベントが
-   <%= @unreported_ttevents %> 個あります.
+  <b> * 
+    <% if @unreported_ttevents > 0 %>
+      <%= t(:notice_unreported_ttevents, unreported_ttevents: @unreported_ttevents) %>
+    <% else %>
+      <%= l(:notice_unreported_ttevents_none) %>
+    <% end %>
   </b>
 </p>
-<% end %>
-<p>
-  今月の終了イベント数：
-  <%= @total_ttevents %>　個
-</p>
-<p>
-  今月の総作業時間：
-  <%= @total_ttevents_hour %>　時間
-</p>
-<p>
-  月ごとの終了イベント数：
-  <%= @ttevents_by_month %>　個
-</p>
-<p>
-  月ごとの作業時間数：
-  <%= @ttevents_hours_by_month %>　時間
-</p>
+<h3>月ごとの終了イベント数</h3>
+<table class="list">
+  <tr>
+    <th>年月</th>
+    <th>個数</th>
+  </tr>
+  <% @ttevents_by_month.each do |key, value| %>
+    <tr>
+      <td>
+        <%= key[0] %> / <%= key[1] %>
+      </td>
+      <td>
+        <%= value %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+<h3>月ごとの作業時間数</h3>
+<table class="list">
+  <tr>
+    <th>年月</th>
+    <th>時間</th>
+  </tr>
+  <% @ttevents_hours_by_month.each do |key, value| %>
+    <tr>
+      <td>
+        <%= key[0] %> / <%= key[1] %>
+      </td>
+      <td>
+        <%= value %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+<h3>日ごとの終了イベント数</h3>
+<table class="list">
+  <tr>
+    <th>年月</th>
+    <th>個数</th>
+  </tr>
+  <% @ttevents_by_day.each do |key, value| %>
+    <tr>
+      <td>
+        <%= key[0] %> / <%= key[1] %> / <%= key[2] %>
+      </td>
+      <td>
+        <%= value %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+<h3>日ごとの作業時間数</h3>
+<table class="list">
+  <tr>
+    <th>年月</th>
+    <th>時間</th>
+  </tr>
+  <% @ttevents_hours_by_day.each do |key, value| %>
+    <tr>
+      <td>
+        <%= key[0] %> / <%= key[1] %> / <%= key[2] %>
+      </td>
+      <td>
+        <%= value %>
+      </td>
+    </tr>
+  <% end %>
+</table>
 <% content_for :sidebar do %>
   <h3>
     sidebar

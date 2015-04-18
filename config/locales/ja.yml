@@ -15,3 +15,6 @@ ja:
   hours: 時間
   link_to_destroy: 削除
   error_something_went_wrong: 保存できませんでした.
+
+  notice_unreported_ttevents: "未報告のイベントが%{unreported_ttevents}個あります."
+  notice_unreported_ttevents_none: 未報告のイベントはありません.
