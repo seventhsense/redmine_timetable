@@ -1,0 +1,45 @@
+<%= Gon::Base.render_data({}) %>
+<div class="contextual">
+  <%= link_to l(:timetable), ttevents_path %>
+</div>
+<h2>
+  <%= l(:statistics)%>
+</h2>
+<%= render 'notice' %>
+<h3>月ごとの終了イベント数</h3>
+<table class="list">
+  <tr>
+    <th>年月</th>
+    <th>個数</th>
+  </tr>
+  <% @ttevents_by_month.each do |key, value| %>
+    <tr>
+      <td>
+        <%= key[0] %> / <%= key[1] %>
+      </td>
+      <td>
+        <%= value %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+<h3>月ごとの作業時間数</h3>
+<table class="list">
+  <tr>
+    <th>年月</th>
+    <th>時間</th>
+  </tr>
+  <% @ttevents_hours_by_month.each do |key, value| %>
+    <tr>
+      <td>
+        <%= key[0] %> / <%= key[1] %>
+      </td>
+      <td>
+        <%= value %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+<% content_for :sidebar do %>
+  <%= render 'side_bar' %>
+<% end %>

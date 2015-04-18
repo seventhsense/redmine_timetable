@@ -1,0 +1,9 @@
+<p>
+  <b> * 
+    <% if @unreported_ttevents_count > 0 %>
+      <%= t(:notice_unreported_ttevents, unreported_ttevents: @unreported_ttevents_count) %>
+    <% else %>
+      <%= l(:notice_unreported_ttevents_none) %>
+    <% end %>
+  </b>
+</p>
