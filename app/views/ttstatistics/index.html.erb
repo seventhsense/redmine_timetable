@@ -1,10 +1,34 @@
+<%= Gon::Base.render_data({}) %>
 <div class="contextual">
   <%= link_to l(:timetable), ttevents_path %>
 </div>
 <h2>
   <%= l(:statistics)%>
 </h2>
-<p>context</p>
+<% if @unreported_ttevents > 0 %>
+<p>
+  <b>
+   ＊未報告のイベントが
+   <%= @unreported_ttevents %> 個あります.
+  </b>
+</p>
+<% end %>
+<p>
+  今月の終了イベント数：
+  <%= @total_ttevents %>　個
+</p>
+<p>
+  今月の総作業時間：
+  <%= @total_ttevents_hour %>　時間
+</p>
+<p>
+  月ごとの終了イベント数：
+  <%= @ttevents_by_month %>　個
+</p>
+<p>
+  月ごとの作業時間数：
+  <%= @ttevents_hours_by_month %>　時間
+</p>
 <% content_for :sidebar do %>
   <h3>
     sidebar

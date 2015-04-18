@@ -8,6 +8,8 @@ class Ttevent < ActiveRecord::Base
 
   before_save :set_duration
 
+  by_star_field :start_time
+
   def self.to_gon
     be = self.all
     s = {}

@@ -6,7 +6,7 @@ class TteventsController < ApplicationController
     # @ttevents to_gon
     set_issue_lists
     @ttevents = Ttevent.where(user_id: @current_user.id)
-    gon.watch.ttevents = @ttevents.to_gon
+    gon.ttevents = @ttevents.to_gon
     respond_to do |format|
       format.html
     end
@@ -25,10 +25,10 @@ class TteventsController < ApplicationController
     
     if @ttevent.save! && issue.save!
       set_issue_lists
-      msg = l('saved')
+      msg = l(:saved)
       status = :ok
     else 
-      msg = l('not_saved')
+      msg = l(:not_saved)
       status = :error
     end
     render json: @ttevent, msg: msg, status: status
@@ -123,16 +123,19 @@ class TteventsController < ApplicationController
   end
 
   def ttevent_params
-    params[:issue].require(:ttevent).permit(:id, :is_done,:time_entry, :issue,
-                                  time_entry: [:id, :hours, :activity_id]
-                                   )
+    params[:issue].require(:ttevent)
+      .permit(:id, :is_done,:time_entry, :issue,
+              time_entry: [:id, :hours, :activity_id]
+             )
   end
 
   def issue_params
-    params.require(:issue).permit(:id, :done_ratio, :status_id, :estimated_hours)
+    params.require(:issue)
+      .permit(:id, :done_ratio, :status_id, :estimated_hours)
   end
 
   def time_entry_params
-    params[:issue].require(:time_entry).permit(:id, :hours, :spent_on, :activity_id)
+    params[:issue].require(:time_entry)
+      .permit(:id, :hours, :spent_on, :activity_id)
   end
 end
