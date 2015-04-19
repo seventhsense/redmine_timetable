@@ -22,6 +22,7 @@ class TteventsController < ApplicationController
     @ttevent.user_id = @current_user.id
     issue = @ttevent.issue
     issue.assigned_to_id = @current_user.id
+    @ttevent.end_time ||= @ttevent.start_time + 30.minutes
     
     if @ttevent.save! && issue.save!
       set_issue_lists

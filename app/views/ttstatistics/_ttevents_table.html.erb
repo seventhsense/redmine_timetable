@@ -1,0 +1,34 @@
+<table class="list statistics">
+ <tr>
+   <th>1. 日ごとの平均終了イベント数(稼働日のみ)</th>
+  <td><%= @ttevents_average %> 個</td>
+ </tr>
+ <tr>
+   <th>2. 日ごとの最大終了イベント数(稼働日のみ)</th>
+  <td>(<%= @ttevents_max_date %>) <%= @ttevents_max %> 個</td>
+ </tr>
+ <tr>
+   <th>3. 日ごとの平均作業時間(稼働日のみ)</th>
+  <td><%= @ttevents_hour_average %> 時間</td> 
+ </tr>
+ <tr>
+   <th>4. 日ごとの最大作業時間(稼働日のみ)</th>
+  <td>(<%= @ttevents_hour_max_date %>) <%= @ttevents_hour_max %> 時間</td>
+ </tr>
+ <tr>
+   <th>5. 残イベント個数</th>
+   <td><%= @ttevents_undone %> 個</td>
+ </tr>
+ <tr>
+   <th>6. 残イベント時間数</th>
+  <td><%= @ttevents_undone_hour %> 時間</td>
+ </tr>
+ <tr>
+   <th>7. 残イベントの消化に要する日数( 5 / 1 )</th>
+   <td><%=  (@ttevents_undone / @ttevents_average).round(1) %> 日</td>
+ </tr>
+ <tr>
+   <th>8. 残イベントの消化に要する日数( 6 / 3 )</th>
+   <td><%= (@ttevents_undone_hour / @ttevents_hour_average).round(1) %> 日</td>
+ </tr>
+</table>

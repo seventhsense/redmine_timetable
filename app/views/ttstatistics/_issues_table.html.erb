@@ -1,0 +1,34 @@
+<table class="list statistics">
+  <tr>
+    <th>1. 担当プロジェクト数</th>
+    <td><%= @project_membered_count %> 件</td>
+  </tr>
+  <tr>
+    <th>2. 担当チケット数</th>
+    <td><%= @issues_assigned_count %> 個</td>
+  </tr>
+  <tr>
+    <th>3. 新規担当チケット数(先月)</th>
+    <td><%= @new_issues_assigned_last_month_count %> 個</td>
+  </tr>
+  <tr>
+    <th>4. 終了チケット数(先月)</th>
+    <td><%= @end_issues_assigned_last_month_count %> 個</td>
+  </tr>
+  <tr>
+    <th>5. 新規担当チケット数(今月)</th>
+    <td><%= @new_issues_assigned_this_month_count %> 個</td>
+  </tr>
+  <tr>
+    <th>6. 終了チケット数(今月)</th>
+    <td><%= @end_issues_assigned_this_month_count %> 個</td>
+  </tr>
+  <tr>
+    <th>7. 先月のチケットの収支( 4 - 3 )(マイナスは増加)</th>
+    <td><%= @end_issues_assigned_last_month_count - @new_issues_assigned_last_month_count%> 個/月</td>
+  </tr>
+  <tr>
+    <th>8. 今月のチケットの収支( 6 - 5 )(マイナスは増加)</th>
+    <td><%= @end_issues_assigned_this_month_count - @new_issues_assigned_this_month_count%> 個/月</td>
+  </tr>
+</table>

@@ -17,6 +17,10 @@ class Ttevent < ActiveRecord::Base
     where(is_done: true)
   end
 
+  def self.undone
+    where(is_done: false)
+  end
+
   def self.group_by_month
     adapter = ActiveRecord::Base.connection.instance_values["config"][:adapter]
     case adapter

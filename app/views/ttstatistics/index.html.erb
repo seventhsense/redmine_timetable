@@ -6,6 +6,10 @@
   <%= l(:statistics)%>
 </h2>
 <%= render 'notice' %>
+<h3>プロジェクトとチケットの状況</h3>
+<%= render 'issues_table' %>
+<h3>イベントの状況</h3>
+<%= render 'ttevents_table' %>
 <% content_for :sidebar do %>
   <%= render 'side_bar' %>
 <% end %>

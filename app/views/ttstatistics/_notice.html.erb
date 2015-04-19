@@ -1,27 +1,29 @@
-<p>
-  <b> * 
-    <% if @unreported_ttevents_count > 0 %>
-      <%= t(:notice_unreported_ttevents, unreported_ttevents: @unreported_ttevents_count) %>
-    <% else %>
-      <%= l(:notice_unreported_ttevents_none) %>
-    <% end %>
-  </b>
-</p>
-<p>
-  <b> * 
-    <% if @unplanned_ttevents_count > 0 %>
-      <%= t(:notice_unplanned_ttevents, unplanned_ttevents: @unplanned_ttevents_count) %>
-    <% else %>
-      <%= l(:notice_unplanned_ttevents_none) %>
-    <% end %>
-  </b>
-</p>
-<p>
-  <b> * 
-    <% if @issues_not_assigned_count > 0 %>
-      <%= t(:notice_issues_not_assigned, issues_not_assigned: @issues_not_assigned_count) %>
-    <% else %>
-      <%= l(:notice_issues_not_assigned_none) %>
-    <% end %>
-  </b>
-</p>
+<div class="box">
+ <p>
+   <b> * 
+     <% if @unreported_ttevents_count > 0 %>
+       <%= t(:notice_unreported_ttevents, unreported_ttevents: @unreported_ttevents_count) %>
+     <% else %>
+       <%= l(:notice_unreported_ttevents_none) %>
+     <% end %>
+   </b>
+ </p>
+ <p>
+   <b> * 
+     <% if @unplanned_ttevents_count > 0 %>
+       <%= t(:notice_unplanned_ttevents, unplanned_ttevents: @unplanned_ttevents_count) %>
+     <% else %>
+       <%= l(:notice_unplanned_ttevents_none) %>
+     <% end %>
+   </b>
+ </p>
+ <p>
+   <b> * 
+     <% if @issues_not_assigned_count > 0 %>
+       <%= t(:notice_issues_not_assigned, issues_not_assigned: @issues_not_assigned_count) %>
+     <% else %>
+       <%= l(:notice_issues_not_assigned_none) %>
+     <% end %>
+   </b>
+ </p>
+</div>
