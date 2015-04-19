@@ -8,7 +8,7 @@
 <% html_title l(:statistics) %>
 <%= render 'notice' %>
 <h3>月ごとの終了イベント数</h3>
-<% if @ttevents_by_month.nonzero? %>
+<% unless @ttevents_by_month == 0 %>
   <table class="list">
     <tr>
       <th>年月</th>
@@ -29,7 +29,7 @@
   <p class="nodata"><%= l(:label_no_data) %></p>
 <% end %>
 <h3>月ごとの作業時間数</h3>
-<% if @ttevents_hours_by_month.nonzero? %>
+<% unless @ttevents_hours_by_month == 0 %>
   <table class="list">
     <tr>
       <th>年月</th>
