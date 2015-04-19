@@ -3,6 +3,7 @@ class TtstatisticsController < ApplicationController
   before_action :set_user,:set_notice, only: [:index, :stats_by_month, :stats_by_day]
 
   def index
+    # イベントの状況
     aggregation = Ttevent.planned.done.order("start_time DESC").group_by_day.count
     @ttevents_average = get_average(aggregation)
     @ttevents_max = aggregation.values.max
@@ -16,6 +17,7 @@ class TtstatisticsController < ApplicationController
     @ttevents_undone = Ttevent.planned.undone.count 
     @ttevents_undone_hour = Ttevent.planned.undone.sum(:duration)
 
+    # プロジェクトとチケットの状況
     @project_membered_count = Project.active.visible.count
     issues_assigned = Issue.open.visible.where(assigned_to_id: @current_user.id)
     @issues_assigned_count = issues_assigned.count
