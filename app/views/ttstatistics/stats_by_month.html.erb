@@ -8,39 +8,47 @@
 <% html_title l(:statistics) %>
 <%= render 'notice' %>
 <h3>月ごとの終了イベント数</h3>
-<table class="list">
-  <tr>
-    <th>年月</th>
-    <th>個数</th>
-  </tr>
-  <% @ttevents_by_month.each do |key, value| %>
+<% if @ttevents_by_month.nonzero? %>
+  <table class="list">
     <tr>
-      <td>
-        <%= key[0] %> / <%= key[1] %>
-      </td>
-      <td>
-        <%= value %>
-      </td>
+      <th>年月</th>
+      <th>個数</th>
     </tr>
-  <% end %>
-</table>
+    <% @ttevents_by_month.each do |key, value| %>
+      <tr>
+        <td>
+          <%= key[0] %> / <%= key[1] %>
+        </td>
+        <td>
+          <%= value %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+<% else %>
+  <p class="nodata"><%= l(:label_no_data) %></p>
+<% end %>
 <h3>月ごとの作業時間数</h3>
-<table class="list">
-  <tr>
-    <th>年月</th>
-    <th>時間</th>
-  </tr>
-  <% @ttevents_hours_by_month.each do |key, value| %>
+<% if @ttevents_hours_by_month.nonzero? %>
+  <table class="list">
     <tr>
-      <td>
-        <%= key[0] %> / <%= key[1] %>
-      </td>
-      <td>
-        <%= value %>
-      </td>
+      <th>年月</th>
+      <th>時間</th>
     </tr>
-  <% end %>
-</table>
+    <% @ttevents_hours_by_month.each do |key, value| %>
+      <tr>
+        <td>
+          <%= key[0] %> / <%= key[1] %>
+        </td>
+        <td>
+          <%= value %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+<% else %>
+  <p class="nodata"><%= l(:label_no_data) %></p>
+<% end %>
 <% content_for :sidebar do %>
   <%= render 'side_bar' %>
 <% end %>
