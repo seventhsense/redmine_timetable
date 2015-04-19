@@ -7,12 +7,12 @@ class TtstatisticsController < ApplicationController
     aggregation = Ttevent.planned.done.order("start_time DESC").group_by_day.count
     @ttevents_average = get_average(aggregation)
     @ttevents_max = aggregation.values.max
-    @ttevents_max_date = Date.parse(aggregation.key(@ttevents_max).join('-')).strftime("%Y年 %m月 %d日")
+    @ttevents_max_date = Date.parse(aggregation.key(@ttevents_max).join('-')).strftime("%Y年 %m月 %d日") if aggregation.key @ttevents_max
 
     aggregation_hour = Ttevent.planned.done.order("start_time DESC").group_by_day.sum(:duration)
     @ttevents_hour_average = get_average(aggregation_hour)
     @ttevents_hour_max = aggregation_hour.values.max
-    @ttevents_hour_max_date = Date.parse(aggregation_hour.key(@ttevents_hour_max).join('-')).strftime("%Y年 %m月 %d日")
+    @ttevents_hour_max_date = Date.parse(aggregation_hour.key(@ttevents_hour_max).join('-')).strftime("%Y年 %m月 %d日") if aggregation_hour.key @ttevents_hour_max
 
     @ttevents_undone = Ttevent.planned.undone.count 
     @ttevents_undone_hour = Ttevent.planned.undone.sum(:duration)
@@ -47,7 +47,7 @@ class TtstatisticsController < ApplicationController
   end
 
   def set_notice
-    @unreported_ttevents_count = Ttevent.where('is_done = ? AND end_time < ?',false, Time.now).count
+    @unreported_ttevents_count = Ttevent.where('is_done = ? AND end_time < ? AND user_id = ?',false, Time.now, @current_user.id).count
     planned_issue_ids = Ttevent.where(user_id: @current_user.id, is_done:false).pluck(:issue_id)
     @unplanned_ttevents_count = Issue.open.visible.where(assigned_to_id: @current_user.id).where.not(id: planned_issue_ids).count
     @issues_not_assigned_count = Issue.open.visible.where(assigned_to_id: nil).count

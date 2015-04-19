@@ -22,8 +22,7 @@ class TteventsController < ApplicationController
     @ttevent.user_id = @current_user.id
     issue = @ttevent.issue
     issue.assigned_to_id = @current_user.id
-    @ttevent.end_time ||= @ttevent.start_time + 30.minutes
-    
+    @ttevent.end_time = @ttevent.start_time + 30.minutes if @ttevent.end_time == @ttevent.start_time
     if @ttevent.save! && issue.save!
       set_issue_lists
       msg = l(:saved)
@@ -77,6 +76,7 @@ class TteventsController < ApplicationController
     @ttevent = Ttevent.find(id)
     @issue = @ttevent.issue
     is_done = ttevent_params[:is_done]
+    # 終了時にTimeEntry作成
     if @ttevent.time_entry.nil? && is_done == "1"
       @ttevent.build_time_entry(
         issue_id: @ttevent.issue.id,
@@ -87,8 +87,13 @@ class TteventsController < ApplicationController
       set_user
       @ttevent.time_entry.user_id = @current_user.id
     end
+    #　すでに終了している場合には更新する
+    if @ttevent.is_done
+      @ttevent.time_entry.activity_id = time_entry_params[:activity_id]
+    end
     respond_to do |format|
       if @ttevent.update(ttevent_params) && @issue.update(issue_params) 
+        # 終了フラグを解除した場合はTimeEntryを削除する
         if @ttevent.is_done == false && @ttevent.time_entry
           @ttevent.time_entry.destroy
         end
