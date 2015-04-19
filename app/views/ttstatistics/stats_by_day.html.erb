@@ -1,13 +1,19 @@
-<%= Gon::Base.render_data({}) %>
+<%= render 'header' %>
 <div class="contextual">
-  <%= link_to l(:timetable), ttevents_path %>
+  <%= link_to l(:timetable), ttevents_path, class: 'icon icon-calendar' %>
 </div>
 <h2>
   <%= l(:statistics)%>
 </h2>
 <%= render 'notice' %>
-<h3>日毎の平均時間(稼働日のみ)</h3>
-<%= @ttevents_average %> 時間
+<h3>日ごとの平均イベント数(稼働日のみ)</h3>
+<%= @ttevents_average %> 個
+<h3>日ごとの最大終了イベント数(稼働日のみ)</h3>
+<%= @ttevents_max %> 個 (<%= @ttevents_max_date %>)
+<h3>日ごとの平均作業時間(稼働日のみ)</h3>
+<%= @ttevents_hour_average %> 時間 
+<h3>日ごとの最大作業時間(稼働日のみ)</h3>
+<%= @ttevents_hour_max %> 時間 (<%= @ttevents_hour_max_date %>)
 <h3>日ごとの終了イベント数（直近１０日）</h3>
 <table class="list">
   <tr>

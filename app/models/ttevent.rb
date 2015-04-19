@@ -8,6 +8,15 @@ class Ttevent < ActiveRecord::Base
 
   before_save :set_duration
 
+  def self.planned
+    current_user = User.current
+    where(user_id: current_user.id)
+  end
+
+  def self.done
+    where(is_done: true)
+  end
+
   def self.group_by_month
     adapter = ActiveRecord::Base.connection.instance_values["config"][:adapter]
     case adapter
@@ -38,7 +47,6 @@ class Ttevent < ActiveRecord::Base
     else
       all
     end
-    
   end
 
   def self.to_gon

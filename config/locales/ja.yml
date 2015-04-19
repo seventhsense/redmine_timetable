@@ -16,5 +16,12 @@ ja:
   link_to_destroy: 削除
   error_something_went_wrong: 保存できませんでした.
 
-  notice_unreported_ttevents: "未報告のイベントが%{unreported_ttevents}個あります."
+  notice_unreported_ttevents: "未報告のイベントが%{unreported_ttevents}個あります.
+    (未報告のイベントがありますと、正確な分析ができない可能性があります.)"
   notice_unreported_ttevents_none: 未報告のイベントはありません.
+
+  notice_unplanned_ttevents: "予定に登録していないチケットが%{unplanned_ttevents}個あります.(予定に登録していないチケットが増えるとあとで大変なことになる可能性があります.)"
+  notice_unplanned_ttevents_none: 予定に登録していないチケットはありません.
+
+  notice_issues_not_assigned: "プロジェクトに誰にもアサインされていないチケットが%{issues_not_assigned}個あります.(誰にもアサインされないままチケットが放置されると、あとでプロジェクトが大変なことになる可能性があります.)"
+  notice_issues_not_assigned_none: あなたのプロジェクトにアサインされていないチケットはありません.

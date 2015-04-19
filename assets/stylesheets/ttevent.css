@@ -1,6 +1,22 @@
 #fullcalendar .fc-clear {
   clear: none;
 }
+th.fc-sun {
+    color: red;
+    background-color: rgba(255, 127, 127, 0.25);
+    }
+td.fc-sun {
+    background-color: rgba(255, 127, 127, 0.25);
+    }
+
+th.fc-sat {
+    color: deepskyblue;
+    background-color: rgba(127, 127, 255, 0.25);
+    }
+td.fc-sat {
+    background-color: rgba(127, 127, 255, 0.25);
+    }
+
 .tt-event {
   background: #3A87AD;
   color: white;
@@ -39,3 +55,4 @@
   color: #9f0000;
   border-color: #cf9f9f;
 }
+

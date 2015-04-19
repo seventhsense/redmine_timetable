@@ -1,6 +1,6 @@
-<%= Gon::Base.render_data({}) %>
+<%= render 'header' %>
 <div class="contextual">
-  <%= link_to l(:timetable), ttevents_path %>
+  <%= link_to l(:timetable), ttevents_path, class: 'icon icon-calendar' %>
 </div>
 <h2>
   <%= l(:statistics)%>
