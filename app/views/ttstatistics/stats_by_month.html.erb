@@ -7,36 +7,23 @@
 </h2>
 <% html_title l(:statistics) %>
 <%= render 'notice' %>
-<h3>月ごとの終了イベント数</h3>
+<h3>月ごとの終了イベント数と作業時間（直近１０ヶ月）</h3>
 <table class="list">
   <tr>
     <th>年月</th>
     <th>個数</th>
-  </tr>
-  <% @ttevents_by_month.each do |key, value| %>
-    <tr>
-      <td>
-        <%= key[0] %> / <%= key[1] %>
-      </td>
-      <td>
-        <%= value %>
-      </td>
-    </tr>
-  <% end %>
-</table>
-<h3>月ごとの作業時間数</h3>
-<table class="list">
-  <tr>
-    <th>年月</th>
     <th>時間</th>
   </tr>
-  <% @ttevents_hours_by_month.each do |key, value| %>
+  <% @ttevents.each do |ttevent| %>
     <tr>
       <td>
-        <%= key[0] %> / <%= key[1] %>
+        <%= ttevent.year %> / <%= ttevent.month %>
       </td>
       <td>
-        <%= value %>
+        <%= ttevent.count %>
+      </td>
+      <td>
+        <%= ttevent.sum %>
       </td>
     </tr>
   <% end %>

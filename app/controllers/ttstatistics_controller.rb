@@ -32,13 +32,11 @@ class TtstatisticsController < ApplicationController
   end
 
   def stats_by_month
-    @ttevents_by_month = Ttevent.planned.done.group_by_month.count
-    @ttevents_hours_by_month = Ttevent.planned.done.group_by_month.sum(:duration)
+    @ttevents = Ttevent.select('count(id) as count, sum(duration) sum, strftime("%Y", start_time) as year, strftime("%m", start_time) as month').planned.done.order("start_time DESC").group_by_month
   end
 
   def stats_by_day
-    @ttevents_by_day = Ttevent.planned.done.order("start_time DESC").group_by_day.limit(10).count
-    @ttevents_hours_by_day = Ttevent.planned.done.order("start_time DESC").group_by_day.limit(10).sum(:duration)
+    @ttevents = Ttevent.select('count(id) as count, sum(duration) sum, strftime("%Y", start_time) as year, strftime("%m", start_time) as month, strftime("%d", start_time) as day').planned.done.order("start_time DESC").group_by_day.limit(10)
   end
 
   private
