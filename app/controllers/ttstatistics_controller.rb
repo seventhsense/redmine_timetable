@@ -5,14 +5,19 @@ class TtstatisticsController < ApplicationController
   def index
     # イベントの状況
     aggregation = Ttevent.planned.done.order("start_time DESC").group_by_day.count
-    @ttevents_average = get_average(aggregation)
-    @ttevents_max = aggregation.values.max
-    @ttevents_max_date = Date.parse(aggregation.key(@ttevents_max).join('-')).strftime("%Y年 %m月 %d日") if aggregation.key @ttevents_max
+    unless aggregation == 0
+      @ttevents_average = get_average(aggregation)
+      @ttevents_max = aggregation.values.max
+      @ttevents_max_date = Date.parse(aggregation.key(@ttevents_max).join('-')).strftime("%Y年 %m月 %d日") if aggregation.key @ttevents_max
+    end
+
 
     aggregation_hour = Ttevent.planned.done.order("start_time DESC").group_by_day.sum(:duration)
-    @ttevents_hour_average = get_average(aggregation_hour)
-    @ttevents_hour_max = aggregation_hour.values.max
-    @ttevents_hour_max_date = Date.parse(aggregation_hour.key(@ttevents_hour_max).join('-')).strftime("%Y年 %m月 %d日") if aggregation_hour.key @ttevents_hour_max
+    unless aggregation_hour == 0
+      @ttevents_hour_average = get_average(aggregation_hour)
+      @ttevents_hour_max = aggregation_hour.values.max
+      @ttevents_hour_max_date = Date.parse(aggregation_hour.key(@ttevents_hour_max).join('-')).strftime("%Y年 %m月 %d日") if aggregation_hour.key @ttevents_hour_max
+    end
 
     @ttevents_undone = Ttevent.planned.undone.count 
     @ttevents_undone_hour = Ttevent.planned.undone.sum(:duration)
@@ -52,6 +57,7 @@ class TtstatisticsController < ApplicationController
   end
 
   def get_average(aggregation)
+    return if aggregation == 0
     duration_array = aggregation.values
     (duration_array.inject(0.0){|r,i| r+=i}/duration_array.size).round(1)
   end

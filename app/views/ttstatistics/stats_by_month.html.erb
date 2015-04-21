@@ -8,26 +8,30 @@
 <% html_title l(:statistics) %>
 <%= render 'notice' %>
 <h3>月ごとの終了イベント数と作業時間（直近１０ヶ月）</h3>
-<table class="list">
-  <tr>
-    <th>年月</th>
-    <th>個数</th>
-    <th>時間</th>
-  </tr>
-  <% @ttevents.each do |ttevent| %>
+<% if @ttevents.present? %>
+  <table class="list">
     <tr>
-      <td>
-        <%= ttevent.year %> / <%= ttevent.month %>
-      </td>
-      <td>
-        <%= ttevent.count %>
-      </td>
-      <td>
-        <%= ttevent.sum %>
-      </td>
+      <th>年月</th>
+      <th>個数</th>
+      <th>時間</th>
     </tr>
-  <% end %>
-</table>
+    <% @ttevents.each do |ttevent| %>
+      <tr>
+        <td>
+          <%= ttevent.year %> / <%= ttevent.month %>
+        </td>
+        <td>
+          <%= ttevent.count %>
+        </td>
+        <td>
+          <%= ttevent.sum %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+<% else %>
+  <p class="nodata"><%= l(:label_no_data) %></p>
+<% end %>
 <% content_for :sidebar do %>
   <%= render 'side_bar' %>
 <% end %>

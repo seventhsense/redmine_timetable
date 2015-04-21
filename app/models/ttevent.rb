@@ -27,14 +27,14 @@ class Ttevent < ActiveRecord::Base
     when /sqlite3/ then
       group('strftime("%Y", start_time)').group('strftime("%m", start_time)')
     when 'mysql', 'mysql2' then
-      # TODO need mysql grouping
-      all
+      group('YEAR(start_time)').group('MONTH(start_time)')
     when /postgresql/ then
       # TODO need postgresql grouping
       all
     else
       all
     end
+
   end
 
   def self.group_by_day
@@ -43,8 +43,7 @@ class Ttevent < ActiveRecord::Base
     when /sqlite3/ then
       group('strftime("%Y", start_time)').group('strftime("%m", start_time)').group('strftime("%d", start_time)')
     when 'mysql', 'mysql2' then
-      # TODO need mysql grouping
-      all
+      group('YEAR(start_time)').group('MONTH(start_time)').group('DAY(start_time)')
     when /postgresql/ then
       # TODO need postgresql grouping
       all

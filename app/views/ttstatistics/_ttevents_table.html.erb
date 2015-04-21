@@ -25,10 +25,10 @@
  </tr>
  <tr>
    <th>7. 残イベントの消化に要する日数( 5 / 1 )</th>
-   <td><%=  (@ttevents_undone / @ttevents_average).round(1) %> 日</td>
+   <td><%=  (@ttevents_undone / @ttevents_average).round(1) if @ttevents_average %> 日</td>
  </tr>
  <tr>
    <th>8. 残イベントの消化に要する日数( 6 / 3 )</th>
-   <td><%= (@ttevents_undone_hour / @ttevents_hour_average).round(1) %> 日</td>
+   <td><%= (@ttevents_undone_hour / @ttevents_hour_average).round(1) if @ttevents_hour_average %> 日</td>
  </tr>
 </table>
