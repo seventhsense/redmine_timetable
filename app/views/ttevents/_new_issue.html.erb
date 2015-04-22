@@ -1,0 +1,56 @@
+<div id="dialog" title="新規チケット">
+  <%= form_for @issue, controller: :ttevents, action: :create_issue do |f| %>
+    <fieldset class="field box">
+      <%# プロジェクト %>
+      <p>
+        <%= f.label :project_id %>
+        <%= f.select :project_id, project_tree_options_for_select(@issue.allowed_target_projects), {:required => true, prompt: '選択してください'}, onchange: 'onSelectProject();' %>
+      </p>
+      <%# トラッカー %>
+      <p>
+        <%= f.label :tracker_id %>
+        <%= f.select :tracker_id, [], {:required => true,prompt: '先にプロジェクトを選択してください'} %>
+      </p>
+      <%# サブジェクト %>
+      <p>
+        <%= f.label :subject %>
+        <%= f.text_field :subject %>
+      </p>
+      <%# カテゴリ %>
+      <%# 親チケット %>
+      <%# バージョン %>
+      <%# 優先度 %>
+      <p>
+        <%= f.select :priority_id, (@priorities.collect {|p| [p.name, p.id]}), {:required => true} %>
+      </p>
+      <%= f.fields_for :ttentry do |builder| %>
+        <%# start_time %>
+        <p>
+          <%= builder.text_field :start_time %>
+        </p>
+
+        <%# end_time %>
+        <p>
+          <%= builder.text_field :end_time %>
+        </p>
+      <% end %>
+    </fieldset>
+    <%= f.submit class: 'button create' %>
+  <% end %>
+  <button type="button" class="button cancel" onClick="cancel();">
+    <%= l(:button_cancel) %>
+  </button>
+</div>
+<%= javascript_tag do %>
+  function cancel(){
+    $('#dialog').dialog("close");
+    $('#modal_area').html('');
+  }
+  function onSelectProject(){
+    val = $('#issue_project_id').val();
+    if(val==""){ return; }
+    console.log();
+    $('#issue_tracker_id').append($("<option>").val('999').text('text'));
+  
+  }
+<% end %>

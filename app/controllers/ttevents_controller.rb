@@ -1,6 +1,7 @@
 class TteventsController < ApplicationController
   # unloadable
   helper :timelog
+  helper :issues
 
   def index
     # @ttevents to_gon
@@ -14,6 +15,16 @@ class TteventsController < ApplicationController
 
   def issue_lists
     set_issue_lists   
+  end
+
+  def new_issue
+    @issue = Issue.new
+    @issue.ttevents.build
+    @priorities = IssuePriority.active
+  end
+
+  def create_issue
+    
   end
 
   def create
