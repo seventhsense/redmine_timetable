@@ -56,3 +56,16 @@ td.fc-sat {
   border-color: #cf9f9f;
 }
 
+#dialog label, input{
+  display: block;
+  float: left;
+  margin-bottom: 10px;
+}
+#dialog label {
+  width: 100px;
+  text-align: right;
+  padding-right: 15px;
+}
+#dialog legend label {
+  width: 300px;
+}

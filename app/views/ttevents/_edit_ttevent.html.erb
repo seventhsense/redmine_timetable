@@ -10,10 +10,6 @@
         <%= f.label :status_id %>
         <%= f.select :status_id, (@allowed_statuses.collect {|p| [p.name, p.id]}) %>
       </p>
-      <p>
-        <%= f.label :estimated_hours %>
-        <%= f.time_field :estimated_hours %> <%= l(:hours) %>
-      </p>
       <%= f.fields_for @ttevent do |builder|%>
       </fieldset>
       <fieldset class="box">
@@ -41,7 +37,7 @@
         </p>
         <p>
           <%= builder.label :comments %>
-          <%= builder.text_field :comments, size: 35 %>
+          <%= builder.text_field :comments, size: 25 %>
         </p>
       </fieldset>
     <% end %>

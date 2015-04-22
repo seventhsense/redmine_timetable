@@ -3,9 +3,9 @@
 </h3>
 <p>
   <ul>
-    <li><%= link_to '概要', ttstatistics_path %></li>
-    <li><%= link_to '月ごとの統計情報', ttstatistics_stats_by_month_path  %></li>
-    <li><%= link_to '日ごとの統計情報', ttstatistics_stats_by_day_path %></li>
-    <li><%= link_to '日報', ttstatistics_daily_report_path %></li>
+    <li><%= link_to_unless_current '概要', ttstatistics_path %></li>
+    <li><%= link_to_unless_current '月ごとの統計情報', ttstatistics_stats_by_month_path  %></li>
+    <li><%= link_to_unless_current '日ごとの統計情報', ttstatistics_stats_by_day_path %></li>
+    <li><%= link_to_unless_current '日報', ttstatistics_daily_report_path %></li>
   </ul>
 </p>
