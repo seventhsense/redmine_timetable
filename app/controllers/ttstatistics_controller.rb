@@ -1,6 +1,6 @@
 class TtstatisticsController < ApplicationController
   # unloadable
-  before_action :set_user,:set_notice, only: [:index, :stats_by_month, :stats_by_day]
+  before_action :set_user,:set_notice, only: [:index, :stats_by_month, :stats_by_day, :daily_report]
 
   def index
     # イベントの状況
@@ -42,6 +42,18 @@ class TtstatisticsController < ApplicationController
 
   def stats_by_day
     @ttevents = Ttevent.select('count(id) as count, sum(duration) sum, strftime("%Y", start_time) as year, strftime("%m", start_time) as month, strftime("%d", start_time) as day').planned.done.order("start_time DESC").group_by_day.limit(10)
+  end
+
+  def daily_report
+    # TODO think about timezone
+    @date = params[:date]? Date.parse(params[:date]) : Date.today.in_time_zone('Japan')
+    one_day = @date.beginning_of_day..@date.end_of_day
+    @ttevents = Ttevent.planned.done.where(start_time: one_day)
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   private

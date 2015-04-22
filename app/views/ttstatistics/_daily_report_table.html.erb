@@ -1,0 +1,19 @@
+<table class='list'>
+  <tr>
+    <th>プロジェクト名</th>
+    <th>チケット名</th>
+    <th>作業内容</th>
+    <th>開始時刻</th>
+    <th>時間</th>
+  </tr>
+  <% @ttevents.each do |ttevent| %>
+    <tr>
+      <td><%= ttevent.issue.project.name %></td>
+      <td><%= ttevent.issue.subject %></td>
+      <td><%= TimeEntryActivity.find(ttevent.time_entry.activity_id) %></td>
+      <%# TODO timezone %>
+      <td><%= ttevent.start_time.in_time_zone('Japan').strftime('%H:%M') %></td>
+      <td><%= ttevent.duration %></td>
+    </tr>
+  <% end %>
+</table>
