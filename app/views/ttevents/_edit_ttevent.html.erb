@@ -39,6 +39,10 @@
           <%= builder.label :activity_id %>
           <%= builder.select :activity_id, activity_collection_for_select_options(@ttevent.time_entry) %>
         </p>
+        <p>
+          <%= builder.label :comments %>
+          <%= builder.text_field :comments, size: 35 %>
+        </p>
       </fieldset>
     <% end %>
     <%= f.submit l(:button_update), class: 'button update' %>

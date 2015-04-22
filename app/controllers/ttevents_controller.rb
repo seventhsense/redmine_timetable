@@ -82,7 +82,8 @@ class TteventsController < ApplicationController
         issue_id: @ttevent.issue.id,
         hours: time_entry_params[:hours],
         activity_id: time_entry_params[:activity_id],
-        spent_on: time_entry_params[:spent_on]
+        spent_on: time_entry_params[:spent_on],
+        comments: time_entry_params[:comments]
       )
       set_user
       @ttevent.time_entry.user_id = @current_user.id
@@ -142,6 +143,6 @@ class TteventsController < ApplicationController
 
   def time_entry_params
     params[:issue].require(:time_entry)
-      .permit(:id, :hours, :spent_on, :activity_id)
+      .permit(:id, :hours, :spent_on, :activity_id, :comments)
   end
 end
