@@ -46,7 +46,8 @@ class TtstatisticsController < ApplicationController
 
   def daily_report
     # TODO think about timezone
-    @date = params[:date]? Date.parse(params[:date]) : Date.today.in_time_zone('Japan')
+    @date = params[:date]? Date.parse(params[:date]) : Date.today
+    @date = @date.in_time_zone('Japan')
     one_day = @date.beginning_of_day..@date.end_of_day
     @ttevents = Ttevent.planned.done.where(start_time: one_day)
 

@@ -16,22 +16,25 @@
       dateFormat: 'yy-mm-dd',
       onSelect: function(dateText){
         console.log(dateText);
-        url = '<%= ttstatistics_daily_report_path %>'
+        url = 'daily_report.js';
         $.ajax({
-          type: "GET",
-         url: url,
-         data: {
-           date: dateText
+          type: "POST",
+          url: url,
+          data: {
+            date: dateText
          },
          success: function(e){
            console.log('get data');
+           console.log(e);
            // console.log(e);
          }
         })
       }
     });
   </script>
-  <%= render 'daily_report_table' %>
+  <div id="daily_report_table">
+   <%= render 'daily_report_table' %>
+  </div>
 <% content_for :sidebar do %>
   <%= render 'side_bar' %>
 <% end %>
