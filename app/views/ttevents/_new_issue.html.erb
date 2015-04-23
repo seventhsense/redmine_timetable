@@ -1,5 +1,5 @@
 <div id="dialog" title="新規チケット">
-  <%= form_for @issue, controller: :ttevents, action: :create_issue do |f| %>
+  <%= form_for @issue, url: {controller: :ttevents, action: :create_issue}, remote: true do |f| %>
     <fieldset class="field box">
       <%# プロジェクト %>
       <p>
@@ -21,16 +21,19 @@
       <%# バージョン %>
       <%# 優先度 %>
       <p>
+        <%= f.label :priority_id %>
         <%= f.select :priority_id, (@priorities.collect {|p| [p.name, p.id]}), {:required => true} %>
       </p>
       <%= f.fields_for :ttentry do |builder| %>
         <%# start_time %>
         <p>
+          <%= builder.label :start_time %>
           <%= builder.text_field :start_time %>
         </p>
 
         <%# end_time %>
         <p>
+          <%= builder.label :end_time %>
           <%= builder.text_field :end_time %>
         </p>
       <% end %>
@@ -51,6 +54,5 @@
     if(val==""){ return; }
     console.log();
     $('#issue_tracker_id').append($("<option>").val('999').text('text'));
-  
   }
 <% end %>

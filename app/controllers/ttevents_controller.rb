@@ -24,7 +24,8 @@ class TteventsController < ApplicationController
   end
 
   def create_issue
-    
+    @issue = Issue.new
+    render json: @issue, status: :ok
   end
 
   def create
