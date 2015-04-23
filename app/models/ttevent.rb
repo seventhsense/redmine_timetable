@@ -4,7 +4,7 @@ class Ttevent < ActiveRecord::Base
   has_one :time_entry, dependent: :destroy
   accepts_nested_attributes_for :time_entry
 
-  attr_accessible :id, :title, :start_time, :end_time, :issue_id, :is_done, :time_entry
+  attr_accessible :id, :title, :start_time, :end_time, :issue_id, :is_done, :time_entry, :user_id
 
   before_save :set_duration
 

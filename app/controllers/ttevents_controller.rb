@@ -18,10 +18,13 @@ class TteventsController < ApplicationController
   end
 
   def new_issue
+    set_user
     @issue = Issue.new
+    start_time = DateTime.parse(params[:ttevent][:start_time])
+    end_time = DateTime.parse(params[:ttevent][:end_time])
     @issue.ttevents.build(
-      start_time: params[:ttevent][:start_time],
-      end_time: params[:ttevent][:end_time]
+      start_time: start_time,
+      end_time: end_time
     )
     @priorities = IssuePriority.active
   end
@@ -34,8 +37,13 @@ class TteventsController < ApplicationController
   end
 
   def create_issue
-    @issue = Issue.new
-    render json: @issue, status: :ok
+    @issue = Issue.new(params[:issue])
+    if @issue.save
+      @ttevent = @issue.ttevents.last
+      render 
+    else
+      render json: @issue.errors, status: :unprocessable_entry
+    end
   end
 
   def create

@@ -1,5 +1,5 @@
 options =
-  width: 400
+  width: 600
   height: 500
   modal: true
   close: ()->
@@ -9,4 +9,3 @@ $('#modal_area')
   .html('<%=j render :partial => 'new_issue', :locals => {:issue => @issue} %>')
   .hide()
 dialog = $('#dialog').dialog(options).show('blind')
-$(".button").button()

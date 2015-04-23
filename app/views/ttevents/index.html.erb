@@ -47,6 +47,7 @@
       events: gon.ttevents.events,
       // TODO Think about time zone
       timezone: 'local',
+      // TODO add redmine business Hour
       businessHours: {
         start: '9:30',
         end: '18:30',
@@ -74,6 +75,12 @@
           },
           success: function(e){
             console.log('new issue');
+            console.log(e);
+          },
+          error: function(e,status){
+            console.log('error');
+            console.log(e);
+            console.log(status);
           }
 
         })
