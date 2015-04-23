@@ -69,3 +69,9 @@ td.fc-sat {
 #dialog legend label {
   width: 300px;
 }
+#dialog input#issue_subject{
+  width: auto !important; 
+}
+#dialog br{
+  clear: left;
+}
