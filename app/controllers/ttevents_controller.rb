@@ -19,8 +19,18 @@ class TteventsController < ApplicationController
 
   def new_issue
     @issue = Issue.new
-    @issue.ttevents.build
+    @issue.ttevents.build(
+      start_time: params[:ttevent][:start_time],
+      end_time: params[:ttevent][:end_time]
+    )
     @priorities = IssuePriority.active
+  end
+
+  def tracker_list
+    id = params[:id]
+    @trackers = Project.find(id).trackers
+
+    render json: @trackers, status: :ok
   end
 
   def create_issue

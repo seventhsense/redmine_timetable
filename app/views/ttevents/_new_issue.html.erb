@@ -9,7 +9,7 @@
       <%# トラッカー %>
       <p>
         <%= f.label :tracker_id %>
-        <%= f.select :tracker_id, [], {:required => true,prompt: '先にプロジェクトを選択してください'} %>
+        <%= f.select :tracker_id, [], {:required => true,prompt: '選択してください'} %>
       </p>
       <%# サブジェクト %>
       <p>
@@ -24,7 +24,7 @@
         <%= f.label :priority_id %>
         <%= f.select :priority_id, (@priorities.collect {|p| [p.name, p.id]}), {:required => true} %>
       </p>
-      <%= f.fields_for :ttentry do |builder| %>
+      <%= f.fields_for :ttevent do |builder| %>
         <%# start_time %>
         <p>
           <%= builder.label :start_time %>
@@ -38,7 +38,7 @@
         </p>
       <% end %>
     </fieldset>
-    <%= f.submit class: 'button create' %>
+    <%= f.submit 'Create',  class: 'button create' %>
   <% end %>
   <button type="button" class="button cancel" onClick="cancel();">
     <%= l(:button_cancel) %>
@@ -53,6 +53,18 @@
     val = $('#issue_project_id').val();
     if(val==""){ return; }
     console.log();
-    $('#issue_tracker_id').append($("<option>").val('999').text('text'));
+    $.ajax({
+    type: "GET",
+      url: "ttevents/tracker_list",
+      data: {
+        id: val 
+      },
+      success: function(trackers,status){
+        $('#issue_tracker_id').html($("<option>").val('').text('選択してください'));
+        trackers.forEach(function(tracker){
+          $('#issue_tracker_id').append($("<option>").val(tracker.id).text(tracker.name));
+        })
+      }
+    })
   }
 <% end %>
