@@ -37,11 +37,11 @@ class TtstatisticsController < ApplicationController
   end
 
   def stats_by_month
-    @ttevents = Ttevent.select('count(id) as count, sum(duration) sum, strftime("%Y", start_time) as year, strftime("%m", start_time) as month').planned.done.order("start_time DESC").group_by_month
+    @ttevents = Ttevent.select_month.planned.done.order("start_time DESC").group_by_month
   end
 
   def stats_by_day
-    @ttevents = Ttevent.select('count(id) as count, sum(duration) sum, strftime("%Y", start_time) as year, strftime("%m", start_time) as month, strftime("%d", start_time) as day').planned.done.order("start_time DESC").group_by_day.limit(10)
+    @ttevents = Ttevent.select_day.planned.done.order("start_time DESC").group_by_day.limit(10)
   end
 
   def daily_report

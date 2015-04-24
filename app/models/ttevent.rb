@@ -21,6 +21,37 @@ class Ttevent < ActiveRecord::Base
     where(is_done: false)
   end
 
+  def self.select_month
+    adapter = ActiveRecord::Base.connection.instance_values["config"][:adapter]
+    case adapter
+    when /sqlite3/ then
+      select('count(id) as count, sum(duration) as sum, strftime("%Y", start_time) as year, strftime("%m", start_time) as month')
+    when 'mysql', 'mysql2' then
+      select('count(id) as count, sum(duration) as sum, YEAR(start_time) as year, MONTH(start_time) as month')
+    when /postgresql/ then
+      # TODO need postgresql grouping
+      all
+    else
+      all
+    end
+  end
+
+  def self.select_day
+    adapter = ActiveRecord::Base.connection.instance_values["config"][:adapter]
+    case adapter
+    when /sqlite3/ then
+    select('count(id) as count, sum(duration) sum, strftime("%Y", start_time) as year, strftime("%m", start_time) as month, strftime("%d", start_time) as day')
+    when 'mysql', 'mysql2' then
+      select('count(id) as count, sum(duration) as sum, YEAR(start_time) as year, MONTH(start_time) as month, DAY(start_time) as day')
+    when /postgresql/ then
+      # TODO need postgresql grouping
+      all
+    else
+      all
+    end
+
+  end
+
   def self.group_by_month
     adapter = ActiveRecord::Base.connection.instance_values["config"][:adapter]
     case adapter
@@ -34,7 +65,6 @@ class Ttevent < ActiveRecord::Base
     else
       all
     end
-
   end
 
   def self.group_by_day
