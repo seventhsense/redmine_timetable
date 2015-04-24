@@ -6,7 +6,7 @@ class TteventsController < ApplicationController
   def index
     # @ttevents to_gon
     set_issue_lists
-    @ttevents = Ttevent.where(user_id: @current_user.id)
+    @ttevents = Ttevent.includes(:issue).where(user_id: @current_user.id)
     gon.ttevents = @ttevents.to_gon
     respond_to do |format|
       format.html
