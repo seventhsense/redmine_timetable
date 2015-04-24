@@ -1,0 +1,75 @@
+<div id="dialog" title="新規チケットと新規イベント">
+  <%= form_for @issue, url: {controller: :ttevents, action: :create_issue}, remote: true do |f| %>
+    <fieldset class="field box">
+      <%# プロジェクト %>
+      <p>
+        <%= f.label :project_id %>
+        <%= f.select :project_id, project_tree_options_for_select(@issue.allowed_target_projects), {:required => true, prompt: '選択してください'}, onchange: 'onSelectProject();' %>
+      </p>
+      <%# トラッカー %>
+      <p>
+        <%= f.label :tracker_id %>
+        <%= f.select :tracker_id, [], {:required => true,prompt: '選択してください'} %>
+      </p>
+      <%# サブジェクト %>
+      <p>
+        <%= f.label :subject %>
+        <%= f.text_field :subject, size: 50 %><br>
+      </p>
+      <%# カテゴリ %>
+      <%# 親チケット %>
+      <%# バージョン %>
+      <%# 著者 %>
+      <%= f.hidden_field :author_id, value: @current_user.id %>
+      <%# 優先度 %>
+      <%# アサイン%>
+      <%= f.hidden_field :assigned_to_id, value: @current_user.id %>
+      <p>
+        <%= f.label :priority_id %>
+        <%= f.select :priority_id, (@priorities.collect {|p| [p.name, p.id]}), {:required => true} %>
+      </p>
+    </fieldset>
+
+      <fieldset class="field box">
+        <%= f.fields_for :ttevents do |builder| %>
+          <%= builder.hidden_field :user_id, value: @current_user.id %>
+         <p>
+           <%= builder.label :start_time %>
+           <%= builder.datetime_select :start_time %><br>
+         </p>
+         <p>
+           <%= builder.label :end_time %>
+           <%= builder.datetime_select :end_time %><br>
+         </p>
+       <% end %>
+      </fieldset>
+    <%= f.submit l(:button_create), class: 'button update'%>
+  <% end %>
+  <button type="button" class="button cancel" onClick="cancel();">
+    <%= l(:button_cancel) %>
+  </button>
+</div>
+<script>
+  function cancel(){
+    $('#dialog').dialog("close");
+    $('#modal_area').html('');
+  }
+  function onSelectProject(){
+    val = $('#issue_project_id').val();
+    if(val==""){ return; }
+      $.ajax({
+        type: "GET",
+      url: "ttevents/tracker_list",
+      data: {
+        id: val 
+      },
+      success: function(trackers,status){
+        $('#issue_tracker_id').html($("<option>").val('').text('選択してください'));
+        trackers.forEach(function(tracker){
+          $('#issue_tracker_id').append($("<option>").val(tracker.id).text(tracker.name));
+        })
+      }
+      })
+  }
+  $(".button").button();
+</script>

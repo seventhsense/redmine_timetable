@@ -1,11 +1,12 @@
 class TteventsController < ApplicationController
   # unloadable
   helper :timelog
+  helper :issues
 
   def index
     # @ttevents to_gon
     set_issue_lists
-    @ttevents = Ttevent.where(user_id: @current_user.id)
+    @ttevents = Ttevent.includes(:issue).where(user_id: @current_user.id)
     gon.ttevents = @ttevents.to_gon
     respond_to do |format|
       format.html
@@ -14,6 +15,35 @@ class TteventsController < ApplicationController
 
   def issue_lists
     set_issue_lists   
+  end
+
+  def new_issue
+    set_user
+    @issue = Issue.new
+    start_time = DateTime.parse(params[:ttevent][:start_time])
+    end_time = DateTime.parse(params[:ttevent][:end_time])
+    @issue.ttevents.build(
+      start_time: start_time,
+      end_time: end_time
+    )
+    @priorities = IssuePriority.active
+  end
+
+  def tracker_list
+    id = params[:id]
+    @trackers = Project.find(id).trackers
+
+    render json: @trackers, status: :ok
+  end
+
+  def create_issue
+    @issue = Issue.new(params[:issue])
+    if @issue.save
+      @ttevent = @issue.ttevents.last
+      render 
+    else
+      render json: @issue.errors, status: :unprocessable_entry
+    end
   end
 
   def create
@@ -82,7 +112,8 @@ class TteventsController < ApplicationController
         issue_id: @ttevent.issue.id,
         hours: time_entry_params[:hours],
         activity_id: time_entry_params[:activity_id],
-        spent_on: time_entry_params[:spent_on]
+        spent_on: time_entry_params[:spent_on],
+        comments: time_entry_params[:comments]
       )
       set_user
       @ttevent.time_entry.user_id = @current_user.id
@@ -123,7 +154,7 @@ class TteventsController < ApplicationController
     # search @issues
     set_user
     planned_issue_ids = Ttevent.where(user_id: @current_user.id, is_done:false).pluck(:issue_id)
-    @planned_issues = Issue.open.visible.where(id: planned_issue_ids)
+    @planned_issues = Issue.includes(:project).open.visible.where(id: planned_issue_ids)
     @issues = Issue.open.visible.where(assigned_to_id: @current_user.id).where.not(id: planned_issue_ids)
     @issues_not_assigned = Issue.open.visible.where(assigned_to_id: nil)
   end
@@ -137,11 +168,11 @@ class TteventsController < ApplicationController
 
   def issue_params
     params.require(:issue)
-      .permit(:id, :done_ratio, :status_id, :estimated_hours)
+      .permit(:id, :done_ratio, :status_id)
   end
 
   def time_entry_params
     params[:issue].require(:time_entry)
-      .permit(:id, :hours, :spent_on, :activity_id)
+      .permit(:id, :hours, :spent_on, :activity_id, :comments)
   end
 end
