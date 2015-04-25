@@ -128,19 +128,23 @@ class TteventsController < ApplicationController
       set_user
       @ttevent.time_entry.user_id = @current_user.id
     end
-    #　すでに終了している場合には更新する
+    #　すでに終了している場合には単にTimeEntryを更新する
     if @ttevent.is_done
       @ttevent.time_entry.activity_id = time_entry_params[:activity_id]
+      @ttevent.time_entry.comments = time_entry_params[:comments]
     end
+
     respond_to do |format|
       if @ttevent.update(ttevent_params) && @issue.update(issue_params) 
         # 終了フラグを解除した場合はTimeEntryを削除する
         if @ttevent.is_done == false && @ttevent.time_entry
           @ttevent.time_entry.destroy
         end
-        format.html {redirect_to ttevents_path, notice: l(:notice_successful_update) }
+        format.html {redirect_to ttevents_path, notice: l(:notice_successful_update)}
+        format.js
       else
         format.html {redirect_to ttevents_path, alert: l(:error_something_went_wrong)}
+        format.js
       end
     end
   end

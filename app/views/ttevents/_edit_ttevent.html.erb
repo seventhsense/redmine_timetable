@@ -1,5 +1,5 @@
 <div id="dialog" title="<%=h "#{l(:edit_event)} | #{@ttevent.issue.project.name} - #{@ttevent.issue.subject}" %>">
-  <%= form_for @ttevent.issue, url: ttevent_with_issue_path do |f| %>
+  <%= form_for @ttevent.issue, url: ttevent_with_issue_path, remote: true do |f| %>
     <fieldset class="field box">
       <legend><%= l(:edit_issue)%></legend>
       <p>

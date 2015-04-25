@@ -182,6 +182,7 @@
         // console.log('View: ' + view.name);
         id = calEvent.id;
         url = "ttevents/" + id + "/edit";
+        window.event = calEvent;
         
         $.ajax({
           type: "GET",
