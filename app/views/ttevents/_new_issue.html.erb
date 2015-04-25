@@ -36,8 +36,8 @@
       </p>
     <%= f.fields_for :ttevents do |builder| %>
       <%= builder.hidden_field :user_id, value: @current_user.id %>
-      <%= builder.hidden_field :start_time %><br>
-      <%= builder.hidden_field :end_time %><br>
+      <%= builder.hidden_field :start_time %>
+      <%= builder.hidden_field :end_time %>
     <% end %>
     </fieldset>
     <%= f.submit l(:button_create), class: 'button create'%>

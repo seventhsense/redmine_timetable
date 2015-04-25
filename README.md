@@ -26,6 +26,8 @@ Timetable using fullcalendar
 - 残イベントの消化に要する日数
 - 月ごとの作業時間・終了したイベント数
 - 日ごとの作業時間・終了したイベント数
+- 日報
+- 日報のcsvダウンロード
 
 ## Requirement
 - Redmine 3.0.1

@@ -2,6 +2,7 @@ class TteventsController < ApplicationController
   # unloadable
   helper :timelog
   helper :issues
+  before_action :set_timezone
 
   def index
     # @ttevents to_gon
@@ -20,8 +21,9 @@ class TteventsController < ApplicationController
   def new_issue
     set_user
     @issue = Issue.new
-    start_time = DateTime.parse(params[:ttevent][:start_time])
-    end_time = DateTime.parse(params[:ttevent][:end_time])
+
+    start_time = Time.zone.parse(params[:ttevent][:start_time])
+    end_time = Time.zone.parse(params[:ttevent][:end_time])
     @issue.ttevents.build(
       start_time: start_time,
       end_time: end_time
@@ -37,7 +39,7 @@ class TteventsController < ApplicationController
   end
 
   def create_issue
-    params[:issue][:due_date] = Date.parse params[:issue][:due_date] if params[:issue][:due_date].present? 
+    params[:issue][:due_date] = params[:issue][:due_date].in_time_zone if params[:issue][:due_date].present? 
     @issue = Issue.new(params[:issue])
     if @issue.save
       @ttevent = @issue.ttevents.last
@@ -86,8 +88,8 @@ class TteventsController < ApplicationController
     id = params[:id]
     @ttevent = Ttevent.find(id)
     if @ttevent.is_done
-      start_time = DateTime.parse params[:ttevent][:start_time]
-      end_time = DateTime.parse params[:ttevent][:end_time]
+      start_time = Time.parse params[:ttevent][:start_time]
+      end_time = Time.parse params[:ttevent][:end_time]
       duration = ((end_time - start_time) * 24).to_f
       @ttevent.time_entry.hours = duration
       @ttevent.time_entry.spent_on = start_time
@@ -104,7 +106,7 @@ class TteventsController < ApplicationController
 
   def update_with_issue
     id = params[:id]
-    params[:issue][:due_date] = Date.parse params[:issue][:due_date] if params[:issue][:due_date].present? 
+    params[:issue][:due_date] = params[:issue][:due_date].in_time_zone if params[:issue][:due_date].present? 
     @ttevent = Ttevent.find(id)
     @issue = @ttevent.issue
     is_done = ttevent_params[:is_done]
@@ -150,6 +152,16 @@ class TteventsController < ApplicationController
   private
   def set_user
     @current_user ||= User.current
+  end
+
+  def set_timezone
+    set_user
+    @timezone = @current_user.pref.time_zone
+    if @timezone.present?
+      Time.zone = @timezone
+    end
+    logger.debug Time.zone.name
+    logger.debug @timezone
   end
 
   def set_issue_lists

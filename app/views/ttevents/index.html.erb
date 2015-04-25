@@ -51,8 +51,7 @@
     // Calendar
     $('#fullcalendar').fullCalendar({
       events: gon.ttevents.events,
-      // TODO Think about time zone
-      timezone: 'local',
+      timezone: "<%= @timezone %>",
       // TODO add redmine business Hour
       businessHours: {
         start: '9:30',

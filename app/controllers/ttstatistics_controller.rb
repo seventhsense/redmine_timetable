@@ -1,6 +1,7 @@
 require 'csv'
 class TtstatisticsController < ApplicationController
   # unloadable
+  before_action :set_timezone
   before_action :set_user,:set_notice, only: [:index, :stats_by_month, :stats_by_day, :daily_report]
 
   def index
@@ -9,6 +10,7 @@ class TtstatisticsController < ApplicationController
     unless aggregation == 0
       @ttevents_average = get_average(aggregation)
       @ttevents_max = aggregation.values.max
+      ## localization
       @ttevents_max_date = Date.parse(aggregation.key(@ttevents_max).join('-')).strftime("%Y年 %m月 %d日") if aggregation.key @ttevents_max
     end
 
@@ -17,6 +19,7 @@ class TtstatisticsController < ApplicationController
     unless aggregation_hour == 0
       @ttevents_hour_average = get_average(aggregation_hour)
       @ttevents_hour_max = aggregation_hour.values.max
+      ## localization
       @ttevents_hour_max_date = Date.parse(aggregation_hour.key(@ttevents_hour_max).join('-')).strftime("%Y年 %m月 %d日") if aggregation_hour.key @ttevents_hour_max
     end
 
@@ -46,10 +49,8 @@ class TtstatisticsController < ApplicationController
   end
 
   def daily_report
-    # TODO think about timezone
-    @date = params[:date] ? Date.parse(params[:date]) : Date.today
-    @date = @date.in_time_zone('Japan')
-    one_day = @date.beginning_of_day..@date.end_of_day
+    @date = params[:date] ? Time.parse(params[:date]) : Time.current
+    one_day = @date.all_day
     @ttevents = Ttevent.planned.done.where(start_time: one_day).order(:start_time).includes(:time_entry, issue: {project: :parent})
 
     respond_to do |format|
@@ -64,8 +65,18 @@ class TtstatisticsController < ApplicationController
     @current_user ||= User.current
   end
 
+  def set_timezone
+    set_user
+    @timezone = @current_user.pref.time_zone
+    if @timezone.present?
+      Time.zone = @timezone
+    end
+    logger.debug Time.zone.name
+    logger.debug @timezone
+  end
+
   def set_notice
-    @unreported_ttevents_count = Ttevent.where('is_done = ? AND end_time < ? AND user_id = ?',false, Time.now, @current_user.id).count
+    @unreported_ttevents_count = Ttevent.where('is_done = ? AND end_time < ? AND user_id = ?',false, Time.current, @current_user.id).count
     planned_issue_ids = Ttevent.where(user_id: @current_user.id, is_done:false).pluck(:issue_id)
     @unplanned_ttevents_count = Issue.open.visible.where(assigned_to_id: @current_user.id).where.not(id: planned_issue_ids).count
     @issues_not_assigned_count = Issue.open.visible.where(assigned_to_id: nil).count
@@ -78,12 +89,12 @@ class TtstatisticsController < ApplicationController
   end
 
   def generate_csv(ttevents)
+    # localization
     headers = %w(開始時刻 時間 プロジェクト名 チケット名 作業内容)
     data = CSV.generate(headers: headers, write_headers: true, force_quotes: true) do |csv|
       ttevents.each do |ttevent|
-        # TODO think timezone
         csv << [
-          ttevent.start_time.in_time_zone('Japan').strftime('%H:%M'),
+          ttevent.start_time.in_time_zone.strftime('%H:%M'),
           ttevent.duration,
           ttevent.issue.project.name,
           ttevent.issue.subject,
