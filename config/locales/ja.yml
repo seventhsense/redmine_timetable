@@ -7,6 +7,7 @@ ja:
   issues: チケット
   my_issues: 自分に割り当てられたチケット
   not_assigned_issues: 担当者がいないチケット
+  planned_issues: 予定済みのチケット
 
   field_is_done: 作業時間を報告してこのイベントをクローズする.
   field_start_time: 開始日時

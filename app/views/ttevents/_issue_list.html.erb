@@ -1,27 +1,42 @@
 <h4>
   <%= l(:my_issues)%>
 </h4>
-<% issues.each do |issue| %>
-  <div class="draggable tt-event box"
-    data-duration="00:30" 
-    data-issue_id='<%=issue.id %>'>
-    <%= issue.project.name%> - <%= issue.subject %>
-  </div>
-<% end %>
-<% @planned_issues.each do |issue| %>
-  <div class="draggable tt-event box ui-draggable-disabled"
-    data-duration="00:30" 
-    data-issue_id='<%=issue.id %>'>
-    <%= issue.project.name%> - <%= issue.subject %>
-  </div>
+<% if issues.present? %>
+  <% issues.each do |issue| %>
+    <div class="draggable tt-event box"
+      data-duration="00:30" 
+      data-issue_id='<%=issue.id %>'>
+      <%= issue.project.name%> - <%= issue.subject %>
+    </div>
+  <% end %>
+<% else %>
+  <p class="nodata"><%= l(:label_no_data) %></p>
 <% end %>
 <h4>
   <%= l(:not_assigned_issues) %>
 </h4>
-<% @issues_not_assigned.each do |issue| %>
-  <div class="draggable tt-event box"
-    data-duration="00:30" 
-    data-issue_id='<%=issue.id %>'>
-    <%= issue.project.name%> - <%= issue.subject %>
-  </div>
+<% if @issues_not_assigned.present? %>
+  <% @issues_not_assigned.each do |issue| %>
+    <div class="draggable tt-event box"
+      data-duration="00:30" 
+      data-issue_id='<%=issue.id %>'>
+      <%= issue.project.name%> - <%= issue.subject %>
+    </div>
+  <% end %>
+<% else %>
+  <p class="nodata"><%= l(:label_no_data) %></p>
+<% end %>
+<h4>
+  <%= l(:planned_issues) %>
+</h4>
+<% if @planned_issues.present? %>
+  <% @planned_issues.each do |issue| %>
+    <div class="draggable tt-event box ui-draggable-disabled"
+      data-duration="00:30" 
+      data-issue_id='<%=issue.id %>'>
+      <%= issue.project.name%> - <%= issue.subject %>
+    </div>
+  <% end %>
+<% else %>
+  <p class="nodata"><%= l(:label_no_data) %></p>
 <% end %>

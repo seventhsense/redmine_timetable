@@ -1,6 +1,6 @@
 options =
   width: 500
-  height: 420
+  height: 340
   modal: true
   close: ()->
     dialog.dialog("destroy")
