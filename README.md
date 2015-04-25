@@ -14,6 +14,7 @@ Timetable using fullcalendar
 - 月のカレンダーをクリックすると日のカレンダーに移動
 - 週のカレンダーと日のカレンダーからチケット作成
 - チケットの期限に応じたイベントの色
+- Railsのconfig.time_zoneとユーザーごとのタイムゾーン設定に対応
 
 ### 統計情報
 - 担当プロジェクト数
@@ -31,3 +32,37 @@ Timetable using fullcalendar
 
 ## Requirement
 - Redmine 3.0.1
+
+## Usage
+### 1. ダウンロード
+  
+```
+git clone https://github.com/seventhsense/redmine_timetable plugins/
+```
+
+### 2. データベースの作成
+
+```
+bundle exec rake redmine:plugins:migrate NAME=redmine_timetable`
+```
+
+### 3. timezoneの設定
+
+タイムゾーンの設定を奨励します.
+```
+cp config/additional_enviroment.rb.example config/additional_enviroment.rb
+echo "config.time_zone = 'Tokyo'" >> config/additional_environment.rb
+```
+
+## Uninstall
+### 1. データベースの削除
+
+```
+bundle exec rake redmine:plugins:migrate NAME=redmine_timetable` VERSION=0
+```
+
+### 2. プラグインの削除
+
+```
+rm -rf plugins/redmine_timetable
+```
