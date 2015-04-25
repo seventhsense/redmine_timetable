@@ -14,6 +14,11 @@ class TteventsController < ApplicationController
     end
   end
 
+  def get_ttevent
+    @ttevent = Ttevent.where(issue_id: params[:id], is_done: false).take
+    render json: @ttevent,status: :ok
+  end
+
   def issue_lists
     set_issue_lists   
   end
@@ -88,8 +93,8 @@ class TteventsController < ApplicationController
     id = params[:id]
     @ttevent = Ttevent.find(id)
     if @ttevent.is_done
-      start_time = Time.parse params[:ttevent][:start_time]
-      end_time = Time.parse params[:ttevent][:end_time]
+      start_time = DateTime.parse params[:ttevent][:start_time]
+      end_time = DateTime.parse params[:ttevent][:end_time]
       duration = ((end_time - start_time) * 24).to_f
       @ttevent.time_entry.hours = duration
       @ttevent.time_entry.spent_on = start_time

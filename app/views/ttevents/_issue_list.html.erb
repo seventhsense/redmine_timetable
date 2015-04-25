@@ -33,10 +33,26 @@
   <% @planned_issues.each do |issue| %>
     <div class="draggable tt-event box ui-draggable-disabled <%= set_due_date(issue) %>"
       data-duration="00:30" 
-      data-issue_id='<%=issue.id %>'>
+      data-issue_id='<%=issue.id %>'
+      data-id=''>
       <%= issue.project.name%> - <%= issue.subject %>
     </div>
   <% end %>
 <% else %>
   <p class="nodata"><%= l(:label_no_data) %></p>
 <% end %>
+<script>
+  $('.draggable.tt-event.ui-draggable-disabled').on('click', function(e){
+    id = $(this).data('event').issue_id
+    $.ajax({
+      type: 'GET',
+      url: 'ttevents/get_ttevent/' + id,
+      success: function(data){
+        console.log(data)
+        date = data.start_time
+        $('#fullcalendar').fullCalendar('gotoDate', date)
+      }
+    })
+
+  })
+</script>

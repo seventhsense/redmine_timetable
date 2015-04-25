@@ -2,6 +2,7 @@
 # See: http://guides.rubyonrails.org/routing.html
 get 'ttevents/issue_lists' => 'ttevents#issue_lists'
 get 'ttevents/new_issue' => 'ttevents#new_issue'
+get 'ttevents/get_ttevent/:id' => 'ttevents#get_ttevent'
 get 'ttevents/tracker_list' => 'ttevents#tracker_list'
 post 'ttevents/create_issue' => 'ttevents#create_issue'
 resources :ttevents

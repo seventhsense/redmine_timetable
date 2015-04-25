@@ -38,7 +38,7 @@ td.fc-sat {
   cursor: pointer;
 }
 .tt-event.ui-draggable-disabled {
-  background: darkgrey;
+  opacity: 0.4;
 }
 .tt-event.ui-draggable-disabled:hover {
   cursor: normal;
