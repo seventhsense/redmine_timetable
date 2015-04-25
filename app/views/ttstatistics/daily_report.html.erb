@@ -36,7 +36,7 @@
    <%= render 'daily_report_table' %>
   </div>
   <p class="other-formats">他の形式にエクスポート:
-    <%= link_to 'CSV', '#' %>
+    <%= link_to 'CSV', ttstatistics_daily_report_path(format: :csv) %>
   </p>
 <% content_for :sidebar do %>
   <%= render 'side_bar' %>

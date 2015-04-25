@@ -1,3 +1,4 @@
+require 'csv'
 class TtstatisticsController < ApplicationController
   # unloadable
   before_action :set_user,:set_notice, only: [:index, :stats_by_month, :stats_by_day, :daily_report]
@@ -46,14 +47,16 @@ class TtstatisticsController < ApplicationController
 
   def daily_report
     # TODO think about timezone
-    @date = params[:date]? Date.parse(params[:date]) : Date.today
+    @date = params[:date] ? Date.parse(params[:date]) : Date.today
     @date = @date.in_time_zone('Japan')
+    cookies[:report_date] = @date.to_s 
     one_day = @date.beginning_of_day..@date.end_of_day
-    @ttevents = Ttevent.planned.done.where(start_time: one_day)
+    @ttevents = Ttevent.planned.done.where(start_time: one_day).order(:start_time).includes(:time_entry, issue: {project: :parent})
 
     respond_to do |format|
       format.html
       format.js
+      format.csv {send_data generate_csv(@ttevents), type: 'text/csv; charset=shift_jis', filename: generate_filename(@date)}
     end
   end
 
@@ -73,5 +76,26 @@ class TtstatisticsController < ApplicationController
     return if aggregation == 0
     duration_array = aggregation.values
     (duration_array.inject(0.0){|r,i| r+=i}/duration_array.size).round(1)
+  end
+
+  def generate_csv(ttevents)
+    headers = %w(開始時刻 時間 プロジェクト名 チケット名 作業内容)
+    data = CSV.generate(headers: headers, write_headers: true, force_quotes: true) do |csv|
+      ttevents.each do |ttevent|
+        # TODO think timezone
+        csv << [
+          ttevent.start_time.in_time_zone('Japan').strftime('%H:%M'),
+          ttevent.duration,
+          ttevent.issue.project.name,
+          ttevent.issue.subject,
+          TimeEntryActivity.find(ttevent.time_entry.activity_id)
+        ]
+      end
+    end
+    data.encode(Encoding::SJIS)
+  end
+
+  def generate_filename(date)
+    date.strftime('%Y-%m-%d') + '.csv'
   end
 end
