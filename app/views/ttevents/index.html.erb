@@ -70,7 +70,7 @@
         $(this).draggable('disable');
       },
       select: function(start, end, jsEvent, view){
-        if (view.name == 'month' ){ return; }
+        if (view.name == 'month' || view.name == 'agendaWeek' ){ return; }
         console.log(jsEvent);
         $.ajax({
           type: 'GET',
@@ -170,7 +170,7 @@
         });
       },
       dayClick: function(date, jsEvent, view) {
-        if (view.name == 'agendaDay' || view.name == 'agendaWeek' ){ return; }
+        if (view.name == 'agendaDay' ){ return; }
         $('#fullcalendar').fullCalendar('gotoDate', date.format() );
         $('#fullcalendar').fullCalendar('changeView', 'agendaDay');
       },
