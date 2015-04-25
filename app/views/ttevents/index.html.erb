@@ -64,6 +64,8 @@
         $(this).draggable('disable');
       },
       select: function(start, end, jsEvent, view){
+        if (view.name == 'month' ){ return; }
+        console.log(jsEvent);
         $.ajax({
           type: 'GET',
           url: "ttevents/new_issue",
@@ -75,12 +77,12 @@
           },
           success: function(e){
             console.log('new issue');
-            console.log(e);
+            // console.log(e);
           },
           error: function(e,status){
             console.log('error');
-            console.log(e);
-            console.log(status);
+            // console.log(e);
+            // console.log(status);
           }
 
         })
@@ -162,7 +164,7 @@
         });
       },
       dayClick: function(date, jsEvent, view) {
-        if (view.name == 'agendaDay'){ return; }
+        if (view.name == 'agendaDay' || view.name == 'agendaWeek' ){ return; }
         $('#fullcalendar').fullCalendar('gotoDate', date.format() );
         $('#fullcalendar').fullCalendar('changeView', 'agendaDay');
       },
