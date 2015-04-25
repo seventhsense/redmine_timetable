@@ -108,3 +108,7 @@ td.fc-sat {
   height: 20px;
   vertical-align: middle;
 }
+#description .description {
+  display: inline-block;
+  width: 20%;
+}

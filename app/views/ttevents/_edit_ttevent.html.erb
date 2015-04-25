@@ -45,12 +45,15 @@
         </p>
       </fieldset>
     <% end %>
+      <p>
+       * <%= l(:notice_link_to_ttevent_destroy) %>
+      </p>
     <%= f.submit l(:button_update), class: 'button update' %>
   <% end %>
   <button type="button" class="button cancel" onClick="cancel();">
     <%= l(:button_cancel) %>
   </button>
-  <%= link_to l(:link_to_destroy), @ttevent, method: :delete, data: { confirm: 'Are you sure?' }, class: 'button destroy' %>
+  <%= link_to l(:link_to_ttevent_destroy), @ttevent, method: :delete, data: { confirm: 'Are you sure?' }, class: 'button destroy' %>
 </div>
 <script>
   $(".button").button();

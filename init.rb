@@ -2,7 +2,7 @@ Redmine::Plugin.register :redmine_timetable do
   name 'Redmine Timetable plugin'
   author 'Seventh'
   description 'Timetable using fullcalendar'
-  version '0.6.5'
+  version '0.6.6'
   url 'https://github.com/seventhsense/redmine_timetable'
   author_url 'http://blog.scimpr.com'
 
