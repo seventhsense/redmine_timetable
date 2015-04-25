@@ -4,6 +4,12 @@ ja:
   permission_view_timetable: 時間表を閲覧する
   permission_edit_timetable: 時間表を編集する
 
+  description_not_sure: 期限不明
+  description_out_of_time: 期限遅れ
+  description_on_time: 期限まで３日以内
+  description_in_time: 期限まで４日以上
+  description_closed: 報告したイベント
+
   issues: チケット
   my_issues: 自分に割り当てられたチケット
   not_assigned_issues: 担当者がいないチケット

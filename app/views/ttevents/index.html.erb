@@ -17,10 +17,11 @@
 
 <div id="fullcalendar"></div>
 <div id="description">
-  <span class="description"><span class="boxes not-sure"></span> 期限不明</span>
-  <span class="description"><span class="boxes out-of-time"></span> 期限遅れ</span>
-  <span class="description"><span class="boxes on-time"></span> 期限まで３日以内</span>
-  <span class="description"><span class="boxes in-time"></span> 期限まで４日以上</span>
+  <span class="description"><span class="boxes not-sure"></span><%= l(:description_not_sure)%></span>
+  <span class="description"><span class="boxes out-of-time"></span><%= l(:description_out_of_time)%></span>
+  <span class="description"><span class="boxes on-time"></span><%= l(:description_on_time)%></span>
+  <span class="description"><span class="boxes in-time"></span><%= l(:description_in_time)%></span>
+  <span class="description"><span class="boxes closed"></span><%= l(:description_closed)%></span>
 </div>
 <div id="modal_area" class="hidden"></div>
 

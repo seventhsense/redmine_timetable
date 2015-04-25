@@ -34,6 +34,9 @@ td.fc-sat {
 .in-time {
   background: #3AAD87;
 }
+.closed {
+  background: #a9a9a9;
+}
 .tt-event:hover {
   cursor: pointer;
 }
@@ -107,8 +110,9 @@ td.fc-sat {
   width: 30px;
   height: 20px;
   vertical-align: middle;
+  margin-right: 10px;
 }
 #description .description {
   display: inline-block;
-  width: 20%;
+  width: 18%;
 }
