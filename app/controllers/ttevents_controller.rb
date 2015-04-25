@@ -11,6 +11,7 @@ class TteventsController < ApplicationController
     gon.ttevents = @ttevents.to_gon
     respond_to do |format|
       format.html
+      format.js {render json: @ttevents, status: :ok}
     end
   end
 
@@ -175,7 +176,7 @@ class TteventsController < ApplicationController
     # search @issues
     set_user
     planned_issue_ids = Ttevent.where(user_id: @current_user.id, is_done:false).pluck(:issue_id)
-    @planned_issues = Issue.open.visible.where(id: planned_issue_ids).includes(:project)
+    @planned_issues = Issue.open.visible.where(id: planned_issue_ids).order(:due_date).order(:start_date).includes(:project)
     @issues = Issue.open.visible.where(assigned_to_id: @current_user.id).where.not(id: planned_issue_ids).includes(:project)
     @issues_not_assigned = Issue.open.visible.where(assigned_to_id: nil).includes(:project)
   end

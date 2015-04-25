@@ -51,6 +51,8 @@
     // Calendar
     $('#fullcalendar').fullCalendar({
       events: gon.ttevents.events,
+      startParam: "<%= Time.current.ago(3.months)%>",
+      endParam: "<%= Time.current.since(3.months)%>",
       timezone: "<%= @timezone %>",
       // TODO add redmine business Hour
       businessHours: {
