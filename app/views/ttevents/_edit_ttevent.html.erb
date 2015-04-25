@@ -10,6 +10,10 @@
         <%= f.label :status_id %>
         <%= f.select :status_id, (@allowed_statuses.collect {|p| [p.name, p.id]}) %>
       </p>
+      <p>
+        <%= f.label :due_date %>
+        <%= f.date_field :due_date %>
+      </p>
       <%= f.fields_for @ttevent do |builder|%>
       </fieldset>
       <fieldset class="box">
@@ -54,4 +58,5 @@
     $('#dialog').dialog("close");
     $('#modal_area').html('');
   }
+  $("input#issue_due_date").datepicker()
 </script>

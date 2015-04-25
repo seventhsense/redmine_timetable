@@ -37,6 +37,7 @@ class TteventsController < ApplicationController
   end
 
   def create_issue
+    params[:issue][:due_date] = Date.parse params[:issue][:due_date] 
     @issue = Issue.new(params[:issue])
     if @issue.save
       @ttevent = @issue.ttevents.last
@@ -103,6 +104,7 @@ class TteventsController < ApplicationController
 
   def update_with_issue
     id = params[:id]
+    params[:issue][:due_date] = Date.parse params[:issue][:due_date] 
     @ttevent = Ttevent.find(id)
     @issue = @ttevent.issue
     is_done = ttevent_params[:is_done]
@@ -168,7 +170,7 @@ class TteventsController < ApplicationController
 
   def issue_params
     params.require(:issue)
-      .permit(:id, :done_ratio, :status_id)
+      .permit(:id, :done_ratio, :status_id, :due_date)
   end
 
   def time_entry_params

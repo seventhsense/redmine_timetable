@@ -88,7 +88,7 @@ class Ttevent < ActiveRecord::Base
     s[:events] = []
     be.each do |obj|
       title = [obj.issue.project.name, obj.issue.subject].join('-')
-      color = obj.is_done ? 'darkgrey' : 'green'
+      color = set_color(obj)
       hash = {
         id: obj.id,
         title: title,
@@ -108,6 +108,10 @@ class Ttevent < ActiveRecord::Base
   private
   def set_duration
     self.duration = (self.end_time - self.start_time) / 60 / 60
+  end
+
+  def self.set_color(ttevent)
+    color = ttevent.is_done ? 'darkgrey' : '#3a87ad'
   end
 
 end

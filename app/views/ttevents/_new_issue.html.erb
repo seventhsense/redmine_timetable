@@ -17,6 +17,12 @@
         <%= f.text_field :subject %><br>
       </p>
       <%# カテゴリ %>
+      <%# 期日 %>
+      <p>
+        <%= f.label :due_date %>
+        <%= f.date_field :due_date %><br>
+      </p>
+
       <%# 親チケット %>
       <%# バージョン %>
       <%# 著者 %>
@@ -63,4 +69,6 @@
       })
   }
   $(".button").button();
+  $("input#issue_due_date").datepicker()
+  console.log(1)
 </script>
