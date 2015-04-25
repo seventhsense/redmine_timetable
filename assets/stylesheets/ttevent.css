@@ -36,10 +36,39 @@ td.fc-sat {
   display: none;
 }
 
+#dialog p {
+  padding: 0;
+  margin: 0;
+  margin-bottom: 10px;
+}
+
+#dialog label {
+  display: inline-block;
+  margin-right: 1em;
+  text-align: right;
+}
+#dialog form.edit_issue fieldset legend label {
+  width: auto;
+}
+#dialog form.edit_issue fieldset legend label:hover {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+#dialog form.edit_issue label{
+  width: 5em;
+}
+#dialog form.new_issue label{
+  width: 6em;
+}
+#dialog form.new_issue input#issue_subject{
+  width: 70%;
+}
+
 #dialog .button {
   padding: initial;
 }
-#dialog .button.update {
+#dialog .button.update, #dialog .button.create {
   padding: 0.4em 1em;
   color: #090;
 }

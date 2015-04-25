@@ -4,19 +4,19 @@
       <legend><%= l(:edit_issue)%></legend>
       <p>
         <%= f.label :done_ratio %> 
-        <%= f.number_field :done_ratio, step: 10, max: 100, min: 0 %> % <br>
+        <%= f.number_field :done_ratio, step: 10, max: 100, min: 0 %> % 
       </p>
       <p>
         <%= f.label :status_id %>
-        <%= f.select :status_id, (@allowed_statuses.collect {|p| [p.name, p.id]}) %><br>
+        <%= f.select :status_id, (@allowed_statuses.collect {|p| [p.name, p.id]}) %>
       </p>
       <%= f.fields_for @ttevent do |builder|%>
       </fieldset>
       <fieldset class="box">
         <legend>
           <p>
-            <%= builder.check_box :is_done %> <br>
-            <%= builder.label :is_done %><br>
+            <%= builder.check_box :is_done %> 
+            <%= builder.label :is_done %>
           </p>
         </legend>
       <% end %>
@@ -33,7 +33,7 @@
         <%= builder.hidden_field :hours,value: @ttevent.duration %>
         <p>
           <%= builder.label :activity_id %>
-          <%= builder.select :activity_id, activity_collection_for_select_options(@ttevent.time_entry) %><br>
+          <%= builder.select :activity_id, activity_collection_for_select_options(@ttevent.time_entry) %>
         </p>
         <p>
           <%= builder.label :comments %>
