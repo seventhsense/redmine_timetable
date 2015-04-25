@@ -7,7 +7,7 @@ class TteventsController < ApplicationController
   def index
     # @ttevents to_gon
     set_issue_lists
-    @ttevents = Ttevent.includes(:issue).where(user_id: @current_user.id)
+    @ttevents = Ttevent.includes(:issue).where(user_id: @current_user.id).order(:start_time).limit(1000)
     gon.ttevents = @ttevents.to_gon
     respond_to do |format|
       format.html
@@ -159,6 +159,8 @@ class TteventsController < ApplicationController
     @timezone = @current_user.pref.time_zone
     if @timezone.present?
       Time.zone = @timezone
+    else
+      @timezone = Time.zone.name
     end
     logger.debug Time.zone.name
     logger.debug @timezone
