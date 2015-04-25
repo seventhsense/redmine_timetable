@@ -22,6 +22,18 @@ td.fc-sat {
   color: white;
   box-shadow: 5px 5px 2px rgba(0,0,0,.4);
 }
+.not-sure {
+  background: #AD3AAD;
+}
+.out-of-time {
+  background: #DA3A3A;
+}
+.on-time {
+  background: #DA873A;
+}
+.in-time {
+  background: #3AAD87;
+}
 .tt-event:hover {
   cursor: pointer;
 }
@@ -85,3 +97,14 @@ td.fc-sat {
   border-color: #cf9f9f;
 }
 
+#description {
+  margin-top: 10px;
+  border: thin solid #999;
+  padding: 5px;
+}
+#description .boxes {
+  display: inline-block;
+  width: 30px;
+  height: 20px;
+  vertical-align: middle;
+}

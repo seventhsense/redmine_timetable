@@ -16,6 +16,12 @@
 <% html_title l(:timetable) %>
 
 <div id="fullcalendar"></div>
+<div id="description">
+  <span class="boxes not-sure"></span> 期限不明
+  <span class="boxes out-of-time"></span> 期限遅れ
+  <span class="boxes on-time"></span> 期限まで３日以内
+  <span class="boxes in-time"></span> 期限まで４日以上
+</div>
 <div id="modal_area" class="hidden"></div>
 
 <% content_for :sidebar do %>

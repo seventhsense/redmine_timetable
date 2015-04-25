@@ -102,16 +102,30 @@ class Ttevent < ActiveRecord::Base
     s
   end
 
-  # def duration
-    # (self.end_time - self.start_time) / 60 / 60
-  # end
+  def set_color(ttevent)
+    set_color(ttevent)
+  end
+
   private
   def set_duration
     self.duration = (self.end_time - self.start_time) / 60 / 60
   end
 
   def self.set_color(ttevent)
-    color = ttevent.is_done ? 'darkgrey' : '#3a87ad'
+    return 'darkgrey' if ttevent.is_done
+    due_date = ttevent.issue.due_date
+    return '#da3aad' if due_date.nil?
+    end_date = ttevent.end_time.to_date
+    if due_date < end_date
+      # out of time
+      '#da3a3a'
+    elsif due_date > end_date.since(3.days)
+      # in time
+      '#3aad87'
+    else
+      # on time
+      '#da873a'
+    end
   end
 
 end
