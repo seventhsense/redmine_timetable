@@ -30,7 +30,7 @@ class Ttevent < ActiveRecord::Base
       group('YEAR(start_time)').group('MONTH(start_time)')
     when /postgresql/ then
       # TODO need postgresql grouping
-      all
+      group('date_trunc("year", start_time)').group('date_trunc("month", start_time)')   
     else
       all
     end
@@ -45,8 +45,8 @@ class Ttevent < ActiveRecord::Base
     when 'mysql', 'mysql2' then
       group('YEAR(start_time)').group('MONTH(start_time)').group('DAY(start_time)')
     when /postgresql/ then
-      # TODO need postgresql grouping
-      all
+      # TODO need test postgresql grouping
+      group('date_trunc("year", start_time)').group('date_trunc("month", start_time)').group('date_trunc("day", start_time)')
     else
       all
     end
