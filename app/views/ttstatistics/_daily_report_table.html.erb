@@ -17,3 +17,6 @@
     </tr>
   <% end %>
 </table>
+<p class="other-formats">他の形式にエクスポート:
+  <%= link_to 'CSV', ttstatistics_daily_report_path + '/' + @date.to_date.to_s + '.csv' %>
+</p>

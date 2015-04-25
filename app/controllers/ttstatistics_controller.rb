@@ -49,7 +49,6 @@ class TtstatisticsController < ApplicationController
     # TODO think about timezone
     @date = params[:date] ? Date.parse(params[:date]) : Date.today
     @date = @date.in_time_zone('Japan')
-    cookies[:report_date] = @date.to_s 
     one_day = @date.beginning_of_day..@date.end_of_day
     @ttevents = Ttevent.planned.done.where(start_time: one_day).order(:start_time).includes(:time_entry, issue: {project: :parent})
 
