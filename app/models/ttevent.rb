@@ -87,14 +87,13 @@ class Ttevent < ActiveRecord::Base
     s[:events] = []
     be.each do |obj|
       title = [obj.issue.project.name, obj.issue.subject].join('-')
-      color = set_color(obj)
       hash = {
         id: obj.id,
         title: title,
         start: obj.start_time,
         end: obj.end_time,
         sticky: true,
-        color: color
+        color: obj.color
       }
       s[:events] << hash
     end
