@@ -54,11 +54,16 @@ cp config/additional_enviroment.rb.example config/additional_enviroment.rb
 echo "config.time_zone = 'Tokyo'" >> config/additional_environment.rb
 ```
 
+データベースの設定はデフォルトのlocalで構いません.(in config/application.rb)
+```
+config.active_record.default_timezone = :local
+```
+
 ## Uninstall
 ### 1. データベースの削除
 
 ```
-bundle exec rake redmine:plugins:migrate NAME=redmine_timetable` VERSION=0
+bundle exec rake redmine:plugins:migrate NAME=redmine_timetable VERSION=0
 ```
 
 ### 2. プラグインの削除
