@@ -112,10 +112,8 @@
           }},
           success: function(ttevent,status){
             console.log('data posted');
-            //console.log(ttevent);
-            //console.log(status);
-            //console.log(event);
-            event.color = '#3a87ad';
+            console.log(ttevent);
+            event.color = ttevent.color;
             event.id = ttevent.id;
             $('#fullcalendar').fullCalendar('updateEvent', event);
             $.ajax({
@@ -133,7 +131,8 @@
         id = event.id;
         // console.log(id);
         stick = event.stick;
-        url = "ttevents/" + id
+        url = "ttevents/" + id;
+        window.event = event;
         $.ajax({
           type: "PUT",
           url: url,
@@ -156,6 +155,7 @@
         id = event.id
         stick = event.stick;
         url = "ttevents/" + id;
+        window.event = event;
         // console.log(url);
         $.ajax({
           type: "PUT",

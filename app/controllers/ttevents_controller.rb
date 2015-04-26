@@ -103,9 +103,9 @@ class TteventsController < ApplicationController
 
     respond_to do |format|
       if @ttevent.update(params[:ttevent])
-        format.js {render json: @ttevent, status: :ok}
+        format.js
       else
-        format.js {render json: @ttevent, status: :error}
+        format.js
       end
     end
   end
@@ -135,15 +135,13 @@ class TteventsController < ApplicationController
     end
 
     respond_to do |format|
-      if @ttevent.update(ttevent_params) && @issue.update(issue_params) 
+      if @issue.update(issue_params) && @ttevent.update(ttevent_params) 
         # 終了フラグを解除した場合はTimeEntryを削除する
         if @ttevent.is_done == false && @ttevent.time_entry
           @ttevent.time_entry.destroy
         end
-        format.html {redirect_to ttevents_path, notice: l(:notice_successful_update)}
         format.js
       else
-        format.html {redirect_to ttevents_path, alert: l(:error_something_went_wrong)}
         format.js
       end
     end
