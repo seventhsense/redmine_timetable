@@ -21,6 +21,22 @@ class Ttevent < ActiveRecord::Base
     where(is_done: false)
   end
 
+  def self.select_for_json
+    adapter = ActiveRecord::Base.connection.instance_values["config"][:adapter]
+    case adapter
+    when /sqlite3/ then
+      joins(issue: :project).select('ttevents.id as id, ttevents.start_time as start, ttevents.end_time as end , ttevents.color as color, ttevents.issue_id as issue_id, ttevents.user_id as user_id, ttevents.time_entry_id as time_entry_id,ttevents.is_done as is_done, ttevents.duration as duration, issues.subject||" - "|| projects.name as title')
+    when 'mysql', 'mysql2' then
+      joins(issue: :project).select('ttevents.id as id, ttevents.start_time as start, ttevents.end_time as end , ttevents.color as color, ttevents.issue_id as issue_id, ttevents.user_id as user_id, ttevents.time_entry_id as time_entry_id,ttevents.is_done as is_done, ttevents.duration as duration, CONCAT(issues.subject," - ", projects.name) as title')
+    when /postgresql/ then
+      # TODO need postgresql grouping
+      all
+    else
+      all
+    end
+    
+  end
+
   def self.select_month
     adapter = ActiveRecord::Base.connection.instance_values["config"][:adapter]
     case adapter
@@ -81,24 +97,24 @@ class Ttevent < ActiveRecord::Base
     end
   end
 
-  def self.to_gon
-    be = self.all
-    s = {}
-    s[:events] = []
-    be.each do |obj|
-      title = [obj.issue.project.name, obj.issue.subject].join('-')
-      hash = {
-        id: obj.id,
-        title: title,
-        start: obj.start_time,
-        end: obj.end_time,
-        sticky: true,
-        color: obj.color
-      }
-      s[:events] << hash
-    end
-    s
-  end
+  # def self.to_gon
+    # be = self.all
+    # s = {}
+    # s[:events] = []
+    # be.each do |obj|
+      # title = [obj.issue.project.name, obj.issue.subject].join('-')
+      # hash = {
+        # id: obj.id,
+        # title: title,
+        # start: obj.start_time,
+        # end: obj.end_time,
+        # sticky: true,
+        # color: obj.color
+      # }
+      # s[:events] << hash
+    # end
+    # s
+  # end
 
   def define_color
     return self.color = 'darkgrey' if self.is_done

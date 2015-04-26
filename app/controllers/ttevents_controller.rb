@@ -4,15 +4,17 @@ class TteventsController < ApplicationController
   helper :issues
   before_action :set_timezone
 
-  def index
-    # @ttevents to_gon
+  def ttevents_list
     set_issue_lists
-    @ttevents = Ttevent.includes(:issue).where(user_id: @current_user.id).order(:start_time).limit(1000)
-    gon.ttevents = @ttevents.to_gon
-    respond_to do |format|
-      format.html
-      format.js {render json: @ttevents, status: :ok}
-    end
+    Time.zone = params[:timezone]
+    start_time = Time.zone.parse params[:start_time]
+    end_time = Time.zone.parse params[:end_time]
+    @ttevents = Ttevent.select_for_json.where(user_id: @current_user.id, start_time: start_time..end_time)
+    render json: @ttevents, status: :ok
+  end
+
+  def index
+    set_issue_lists
   end
 
   def get_ttevent

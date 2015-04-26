@@ -48,7 +48,7 @@
       <p>
        * <%= l(:notice_link_to_ttevent_destroy) %>
       </p>
-    <%= f.submit l(:button_update), class: 'button update' %>
+    <%= f.submit l(:button_update), disabled_with: 'loading..', class: 'button update' %>
   <% end %>
   <button type="button" class="button cancel" onClick="cancel();">
     <%= l(:button_cancel) %>
