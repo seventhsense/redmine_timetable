@@ -14,7 +14,6 @@ class TtstatisticsController < ApplicationController
       @ttevents_max_date = Date.parse(aggregation.key(@ttevents_max).join('-')).strftime("%Y年 %m月 %d日") if aggregation.key @ttevents_max
     end
 
-
     aggregation_hour = Ttevent.planned.done.order("start_time DESC").group_by_day.sum(:duration)
     unless aggregation_hour == 0
       @ttevents_hour_average = get_average(aggregation_hour)
@@ -42,10 +41,28 @@ class TtstatisticsController < ApplicationController
 
   def stats_by_month
     @ttevents = Ttevent.select_month.planned.done.order("start_time DESC").group_by_month
+    dates = ['x']
+    counts = ['個数']
+    sums = ['時間']
+    @ttevents.each do |data|
+      dates << "#{data.year}#{data.month}01"
+      counts << data.count
+      sums << data.sum
+    end
+    gon.ttevents = [dates, counts, sums]
   end
 
   def stats_by_day
-    @ttevents = Ttevent.select_day.planned.done.order("start_time DESC").group_by_day.limit(10)
+    @ttevents = Ttevent.select_day.planned.done.order("start_time DESC").group_by_day.limit(20)
+    dates = ['x']
+    counts = ['個数']
+    sums = ['時間']
+    @ttevents.each do |data|
+      dates << "#{data.year}#{data.month}#{data.day}"
+      counts << data.count
+      sums << data.sum
+    end
+    gon.ttevents = [dates, counts, sums]
   end
 
   def daily_report

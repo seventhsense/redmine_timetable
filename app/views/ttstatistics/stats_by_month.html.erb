@@ -8,6 +8,7 @@
 <% html_title l(:statistics) %>
 <%= render 'notice' %>
 <h3>月ごとの終了イベント数と作業時間（直近１０ヶ月）</h3>
+<div id="chart"></div>
 <% if @ttevents.present? %>
   <table class="list">
     <tr>
@@ -35,3 +36,19 @@
 <% content_for :sidebar do %>
   <%= render 'side_bar' %>
 <% end %>
+<script>
+  console.log(gon.ttevents)
+  var chart = c3.generate({
+    bindto: '#chart',
+    data: {
+      x: 'x',
+      columns: gon.ttevents,
+      type: 'bar'
+    },
+    bar: {
+      width: {
+        ratio: 0.3
+      }
+    }
+  });
+</script>
