@@ -54,10 +54,11 @@ cp config/additional_enviroment.rb.example config/additional_enviroment.rb
 echo "config.time_zone = 'Tokyo'" >> config/additional_environment.rb
 ```
 
-データベースの設定はデフォルトのlocalで構いません.(in config/application.rb)
+データベースの設定はRedmineのデフォルトのlocalで構いません.(in config/application.rb)
 ```
 config.active_record.default_timezone = :local
 ```
+ただし、その場合、データベースのタイムゾーンをrailsのタイムゾーンと一致させてください.
 
 ## Uninstall
 ### 1. データベースの削除
