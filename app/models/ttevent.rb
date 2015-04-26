@@ -25,7 +25,7 @@ class Ttevent < ActiveRecord::Base
     adapter = ActiveRecord::Base.connection.instance_values["config"][:adapter]
     case adapter
     when /sqlite3/ then
-      select('count(id) as count, sum(duration) as sum, strftime("%Y", start_time) as year, strftime("%m", start_time) as month')
+      select('count(id) as count, sum(duration) as sum, strftime("%Y", datetime(start_time, "localtime")) as year, strftime("%m", datetime(start_time, "localtime")) as month')
     when 'mysql', 'mysql2' then
       select('count(id) as count, sum(duration) as sum, YEAR(start_time) as year, MONTH(start_time) as month')
     when /postgresql/ then
@@ -40,7 +40,7 @@ class Ttevent < ActiveRecord::Base
     adapter = ActiveRecord::Base.connection.instance_values["config"][:adapter]
     case adapter
     when /sqlite3/ then
-    select('count(id) as count, sum(duration) sum, strftime("%Y", start_time) as year, strftime("%m", start_time) as month, strftime("%d", start_time) as day')
+    select('count(id) as count, sum(duration) sum, strftime("%Y", datetime(start_time, "localtime")) as year, strftime("%m", datetime(start_time, "localtime")) as month, strftime("%d", datetime(start_time, "localtime")) as day')
     when 'mysql', 'mysql2' then
       select('count(id) as count, sum(duration) as sum, YEAR(start_time) as year, MONTH(start_time) as month, DAY(start_time) as day')
     when /postgresql/ then
@@ -56,7 +56,7 @@ class Ttevent < ActiveRecord::Base
     adapter = ActiveRecord::Base.connection.instance_values["config"][:adapter]
     case adapter
     when /sqlite3/ then
-      group('strftime("%Y", start_time)').group('strftime("%m", start_time)')
+      group('strftime("%Y", datetime(start_time, "localtime"))').group('strftime("%m", datetime(start_time, "localtime"))')
     when 'mysql', 'mysql2' then
       group('YEAR(start_time)').group('MONTH(start_time)')
     when /postgresql/ then
@@ -71,7 +71,7 @@ class Ttevent < ActiveRecord::Base
     adapter = ActiveRecord::Base.connection.instance_values["config"][:adapter]
     case adapter
     when /sqlite3/ then
-      group('strftime("%Y", start_time)').group('strftime("%m", start_time)').group('strftime("%d", start_time)')
+      group('strftime("%Y", datetime(start_time, "localtime"))').group('strftime("%m", datetime(start_time, "localtime"))').group('strftime("%d", datetime(start_time, "localtime"))')
     when 'mysql', 'mysql2' then
       group('YEAR(start_time)').group('MONTH(start_time)').group('DAY(start_time)')
     when /postgresql/ then

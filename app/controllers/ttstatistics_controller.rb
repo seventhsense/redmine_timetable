@@ -49,7 +49,7 @@ class TtstatisticsController < ApplicationController
   end
 
   def daily_report
-    @date = params[:date] ? Time.parse(params[:date]) : Time.current
+    @date = params[:date] ? Time.zone.parse(params[:date]) : Time.current
     one_day = @date.all_day
     @ttevents = Ttevent.planned.done.where(start_time: one_day).order(:start_time).includes(:time_entry, issue: {project: :parent})
 
