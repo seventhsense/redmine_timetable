@@ -19,6 +19,10 @@ ja:
   field_start_time: 開始日時
   field_end_time: 終了日時
 
+  field_project_name: プロジェクト名
+  field_issue_subject: チケット名
+  field_duration: 作業時間
+
   edit_event: イベントの編集
   edit_issue: チケットを編集する
   hours: 時間
