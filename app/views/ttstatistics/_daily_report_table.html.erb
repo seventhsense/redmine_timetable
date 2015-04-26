@@ -1,15 +1,14 @@
 <table class='list'>
   <tr>
-    <th>開始時刻</th>
-    <th>時間</th>
-    <th>プロジェクト名</th>
-    <th>チケット名</th>
-    <th>作業内容</th>
+    <th><%= l(:field_start_time)%></th>
+    <th><%= l(:field_duration) %></th>
+    <th><%= l(:field_project_name) %></th>
+    <th><%= l(:field_issue_subject)%></th>
+    <th><%= l(:field_activity) %></th>
   </tr>
   <% @ttevents.each do |ttevent| %>
     <tr>
-      <%# TODO timezone %>
-      <td><%= ttevent.start_time.in_time_zone('Japan').strftime('%H:%M') %></td>
+      <td><%= ttevent.start_time.strftime('%H:%M') %></td>
       <td><%= ttevent.duration %></td>
       <td><%= ttevent.issue.project.name %></td>
       <td><%= ttevent.issue.subject %></td>

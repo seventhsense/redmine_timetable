@@ -4,14 +4,7 @@ id = "<%= @ttevent.id %>"
 title = "<%= @ttevent.issue.project.name%> - <%= @ttevent.issue.subject %>"
 start = "<%= @ttevent.start_time.iso8601 %>"
 end = "<%= @ttevent.end_time.iso8601 %>"
-# TODO set color
-color =  "<%=
-  if @ttevent.is_done
-    '#a9a9a9'
-  else
-    '#3a87ad'
-  end
-  %>"
+color = "<%= @ttevent.color %>"
 duration = "<%= @ttevent.duration %>"
 event = window.event
 event.id = id

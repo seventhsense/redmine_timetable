@@ -4,15 +4,17 @@ class TteventsController < ApplicationController
   helper :issues
   before_action :set_timezone
 
-  def index
-    # @ttevents to_gon
+  def ttevents_list
     set_issue_lists
-    @ttevents = Ttevent.includes(:issue).where(user_id: @current_user.id).order(:start_time).limit(1000)
-    gon.ttevents = @ttevents.to_gon
-    respond_to do |format|
-      format.html
-      format.js {render json: @ttevents, status: :ok}
-    end
+    Time.zone = params[:timezone]
+    start_time = Time.zone.parse params[:start_time]
+    end_time = Time.zone.parse params[:end_time]
+    @ttevents = Ttevent.select_for_json.where(user_id: @current_user.id, start_time: start_time..end_time)
+    render json: @ttevents, status: :ok
+  end
+
+  def index
+    set_issue_lists
   end
 
   def get_ttevent
@@ -103,9 +105,9 @@ class TteventsController < ApplicationController
 
     respond_to do |format|
       if @ttevent.update(params[:ttevent])
-        format.js {render json: @ttevent, status: :ok}
+        format.js
       else
-        format.js {render json: @ttevent, status: :error}
+        format.js
       end
     end
   end
@@ -135,15 +137,13 @@ class TteventsController < ApplicationController
     end
 
     respond_to do |format|
-      if @ttevent.update(ttevent_params) && @issue.update(issue_params) 
+      if @issue.update(issue_params) && @ttevent.update(ttevent_params) 
         # 終了フラグを解除した場合はTimeEntryを削除する
         if @ttevent.is_done == false && @ttevent.time_entry
           @ttevent.time_entry.destroy
         end
-        format.html {redirect_to ttevents_path, notice: l(:notice_successful_update)}
         format.js
       else
-        format.html {redirect_to ttevents_path, alert: l(:error_something_went_wrong)}
         format.js
       end
     end

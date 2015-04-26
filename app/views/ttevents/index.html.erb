@@ -1,4 +1,3 @@
-<%= Gon::Base.render_data({}) %>
 <% content_for :header_tags do %>
   <%= stylesheet_link_tag 'fullcalendar/fullcalendar.min', :plugin => 'redmine_timetable' %>
   <%= stylesheet_link_tag 'ttevent', :plugin => 'redmine_timetable' %>
@@ -51,10 +50,14 @@
     
     // Calendar
     $('#fullcalendar').fullCalendar({
-      events: gon.ttevents.events,
-      startParam: "<%= Time.current.ago(3.months)%>",
-      endParam: "<%= Time.current.since(3.months)%>",
+      // events: gon.ttevents.events,
+      startParam: "start_time",
+      endParam: "end_time",
       timezone: "<%= @timezone %>",
+      events: {
+        url: 'ttevents/ttevents_list',
+        type: 'POST'
+      },
       // TODO add redmine business Hour
       businessHours: {
         start: '9:30',
@@ -112,10 +115,8 @@
           }},
           success: function(ttevent,status){
             console.log('data posted');
-            //console.log(ttevent);
-            //console.log(status);
-            //console.log(event);
-            event.color = '#3a87ad';
+            console.log(ttevent);
+            event.color = ttevent.color;
             event.id = ttevent.id;
             $('#fullcalendar').fullCalendar('updateEvent', event);
             $.ajax({
@@ -133,7 +134,8 @@
         id = event.id;
         // console.log(id);
         stick = event.stick;
-        url = "ttevents/" + id
+        url = "ttevents/" + id;
+        window.event = event;
         $.ajax({
           type: "PUT",
           url: url,
@@ -156,6 +158,7 @@
         id = event.id
         stick = event.stick;
         url = "ttevents/" + id;
+        window.event = event;
         // console.log(url);
         $.ajax({
           type: "PUT",

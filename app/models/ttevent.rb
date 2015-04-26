@@ -4,9 +4,9 @@ class Ttevent < ActiveRecord::Base
   has_one :time_entry, dependent: :destroy
   accepts_nested_attributes_for :time_entry
 
-  attr_accessible :id, :title, :start_time, :end_time, :issue_id, :is_done, :time_entry, :user_id
+  attr_accessible :id, :title, :start_time, :end_time, :issue_id, :is_done, :time_entry, :user_id, :color
 
-  before_save :set_duration
+  before_save :set_duration, :define_color
 
   def self.planned
     current_user = User.current
@@ -19,6 +19,22 @@ class Ttevent < ActiveRecord::Base
 
   def self.undone
     where(is_done: false)
+  end
+
+  def self.select_for_json
+    adapter = ActiveRecord::Base.connection.instance_values["config"][:adapter]
+    case adapter
+    when /sqlite3/ then
+      joins(issue: :project).select('ttevents.id as id, ttevents.start_time as start, ttevents.end_time as end , ttevents.color as color, ttevents.issue_id as issue_id, ttevents.user_id as user_id, ttevents.time_entry_id as time_entry_id,ttevents.is_done as is_done, ttevents.duration as duration, issues.subject||" - "|| projects.name as title')
+    when 'mysql', 'mysql2' then
+      joins(issue: :project).select('ttevents.id as id, ttevents.start_time as start, ttevents.end_time as end , ttevents.color as color, ttevents.issue_id as issue_id, ttevents.user_id as user_id, ttevents.time_entry_id as time_entry_id,ttevents.is_done as is_done, ttevents.duration as duration, CONCAT(issues.subject," - ", projects.name) as title')
+    when /postgresql/ then
+      # TODO need postgresql grouping
+      all
+    else
+      all
+    end
+    
   end
 
   def self.select_month
@@ -49,7 +65,6 @@ class Ttevent < ActiveRecord::Base
     else
       all
     end
-
   end
 
   def self.group_by_month
@@ -82,28 +97,40 @@ class Ttevent < ActiveRecord::Base
     end
   end
 
-  def self.to_gon
-    be = self.all
-    s = {}
-    s[:events] = []
-    be.each do |obj|
-      title = [obj.issue.project.name, obj.issue.subject].join('-')
-      color = set_color(obj)
-      hash = {
-        id: obj.id,
-        title: title,
-        start: obj.start_time,
-        end: obj.end_time,
-        sticky: true,
-        color: color
-      }
-      s[:events] << hash
-    end
-    s
-  end
+  # def self.to_gon
+    # be = self.all
+    # s = {}
+    # s[:events] = []
+    # be.each do |obj|
+      # title = [obj.issue.project.name, obj.issue.subject].join('-')
+      # hash = {
+        # id: obj.id,
+        # title: title,
+        # start: obj.start_time,
+        # end: obj.end_time,
+        # sticky: true,
+        # color: obj.color
+      # }
+      # s[:events] << hash
+    # end
+    # s
+  # end
 
-  def set_color(ttevent)
-    set_color(ttevent)
+  def define_color
+    return self.color = 'darkgrey' if self.is_done
+    due_date = self.issue.due_date
+    return self.color = '#da3aad' if due_date.nil?
+    end_date = self.end_time.to_date
+    if due_date < end_date
+      # out of time
+      self.color = '#da3a3a'
+    elsif due_date > end_date.since(3.days)
+      # in time
+      self.color = '#3aad87'
+    else
+      # on time
+      self.color = '#da873a'
+    end
   end
 
   private
@@ -127,5 +154,4 @@ class Ttevent < ActiveRecord::Base
       '#da873a'
     end
   end
-
 end
