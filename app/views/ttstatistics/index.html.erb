@@ -7,10 +7,11 @@
 </h2>
 <% html_title l(:statistics) %>
 <%= render 'notice' %>
-<h3>プロジェクトとチケットの状況</h3>
+<h3>1. プロジェクトとチケットの状況</h3>
 <%= render 'issues_table' %>
-<h3>イベントの状況</h3>
+<h3>2. イベントの状況</h3>
 <%= render 'ttevents_table' %>
+<div id="graph"></div>
 <% content_for :sidebar do %>
   <%= render 'side_bar' %>
 <% end %>
