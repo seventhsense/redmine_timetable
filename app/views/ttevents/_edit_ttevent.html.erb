@@ -53,7 +53,7 @@
   <button type="button" class="button cancel" onClick="cancel();">
     <%= l(:button_cancel) %>
   </button>
-  <%= link_to l(:link_to_ttevent_destroy), ttevent_path(@ttevent), method: :delete, data: { confirm: 'Are you sure?' },remote: true, class: 'button destroy' %>
+  <%= link_to l(:link_to_ttevent_destroy), ttevent_path(@ttevent), method: :delete, data: { confirm: l(:message_destroy_confirm) },remote: true, class: 'button destroy' %>
 </div>
 <script>
   $(".button").button();

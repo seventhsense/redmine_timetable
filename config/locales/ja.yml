@@ -18,7 +18,6 @@ ja:
   field_is_done: 作業時間を報告してこのイベントをクローズする.
   field_start_time: 開始日時
   field_end_time: 終了日時
-
   field_project_name: プロジェクト名
   field_issue_subject: チケット名
   field_duration: 作業時間
@@ -28,6 +27,7 @@ ja:
   hours: 時間
   link_to_destroy: 削除
   link_to_ttevent_destroy: イベントの削除
+  message_destroy_confirm: イベントを削除しますか？（チケットは削除されません.）
   notice_link_to_ttevent_destroy: イベントの削除では、チケットは削除されません.
   error_something_went_wrong: 保存できませんでした.
 
