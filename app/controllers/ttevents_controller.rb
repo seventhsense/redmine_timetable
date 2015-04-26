@@ -154,8 +154,8 @@ class TteventsController < ApplicationController
     @ttevent = Ttevent.find(id)
     @ttevent.destroy
     respond_to do |format|
-      format.html { redirect_to ttevents_url, notice: l(:notice_successful_delete) }
-      format.json { head :no_content }
+      # format.html { redirect_to ttevents_url, notice: l(:notice_successful_delete) }
+      format.js
     end
   end
 
