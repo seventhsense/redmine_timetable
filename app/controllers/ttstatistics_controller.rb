@@ -53,7 +53,7 @@ class TtstatisticsController < ApplicationController
   end
 
   def stats_by_day
-    @ttevents = Ttevent.select_day.planned.done.order("start_time DESC").group_by_day.limit(20)
+    @ttevents = Ttevent.select_day.planned.done.order("start_time DESC").group_by_day.limit(10)
     dates = ['x']
     counts = ['個数']
     sums = ['時間']
