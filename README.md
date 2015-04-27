@@ -40,14 +40,17 @@ Timetable using fullcalendar
 ```
 git clone https://github.com/seventhsense/redmine_timetable plugins/
 ```
-
-### 2. データベースの作成
+### 2. Gemのインストール
+```
+bundle
+```
+### 3. データベースの作成
 
 ```
 bundle exec rake redmine:plugins:migrate NAME=redmine_timetable`
 ```
 
-### 3. timezoneの設定
+### 4. timezoneの設定
 
 タイムゾーンの設定を奨励します.
 ```
@@ -73,3 +76,6 @@ bundle exec rake redmine:plugins:migrate NAME=redmine_timetable VERSION=0
 ```
 rm -rf plugins/redmine_timetable
 ```
+
+## 対応するデータベース
+SQLite3, MySQL
