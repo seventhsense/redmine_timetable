@@ -37,6 +37,8 @@ class TtstatisticsController < ApplicationController
     this_month = [tm.beginning_of_month..tm.end_of_month]
     @new_issues_assigned_this_month_count = Issue.visible.where(assigned_to_id: @current_user.id).where(start_date: this_month).count
     @end_issues_assigned_this_month_count = Issue.visible.where(assigned_to_id: @current_user.id).where(closed_on: this_month).count
+
+    gon.project_ratio = Ttevent.planned.done.joins(issue: :project).group('projects.name').sum(:duration).to_a
   end
 
   def stats_by_month
