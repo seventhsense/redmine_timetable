@@ -2,7 +2,7 @@ require 'csv'
 class TtstatisticsController < ApplicationController
   # unloadable
   before_action :set_timezone
-  before_action :set_user,:set_notice, only: [:index, :stats_by_month, :stats_by_day, :daily_report]
+  before_action :set_user,:set_notice, only: [:index, :stats_by_month, :stats_by_day, :daily_report, :business]
 
   def index
     # イベントの状況
@@ -37,6 +37,30 @@ class TtstatisticsController < ApplicationController
     this_month = [tm.beginning_of_month..tm.end_of_month]
     @new_issues_assigned_this_month_count = Issue.visible.where(assigned_to_id: @current_user.id).where(start_date: this_month).count
     @end_issues_assigned_this_month_count = Issue.visible.where(assigned_to_id: @current_user.id).where(closed_on: this_month).count
+    # count issue and project
+    months = ['x']
+    projects = ['担当プロジェクト数']
+    issues = ['担当チケット数']
+    newly_issues = ['新規チケット数']
+    done_issues = ['終了チケット数']
+    # TODO this is for sqlite3 only
+    case ActiveRecord::Base.connection.instance_values["config"][:adapter]
+    when /sqlite3/ then
+      ni = Issue.select('subject, count(id) as count, strftime("%Y", datetime(created_on, "localtime")) as year,strftime("%m", datetime(created_on, "localtime")) as month').where(assigned_to_id: @current_user.id).group('strftime("%Y", datetime(created_on, "localtime"))').group('strftime("%m", datetime(created_on, "localtime"))').to_json(except: [:subject, :id])
+      di = Issue.select('subject, count(id) as count, strftime("%Y", datetime(closed_on, "localtime")) as year,strftime("%m", datetime(closed_on, "localtime")) as month').where(assigned_to_id: @current_user.id).where('closed_on IS NOT NULL').group('strftime("%Y", datetime(closed_on, "localtime"))').group('strftime("%m", datetime(closed_on, "localtime"))').to_json(except: [:subject, :id])
+    when 'mysql', 'mysql2' then
+      ni = Issue.where(assigned_to_id: @current_user.id).group('YEAR(created_on)').group('MONTH(created_on)').count
+      # di = Issue.where(assigned_to_id: @current_user.id).where('closed_on IS NOT NULL').group('YEAR(closed_on)').group('MONTH(closed_on)'.count
+    #when /postgresql/ then
+      # TODO need postgresql grouping testing
+      # group('date_trunc("year", start_time)').group('date_trunc("month", start_time)')   
+    else
+      ni = Issue.none
+      di = Issue.none
+    end
+
+    gon.newly_issues_count = ni
+    gon.done_issues_count = di
 
     gon.project_ratio = Ttevent.planned.done.joins(issue: :project).group('projects.name').sum(:duration).to_a
   end
@@ -77,6 +101,10 @@ class TtstatisticsController < ApplicationController
       format.js
       format.csv {send_data generate_csv(@ttevents), type: 'text/csv; charset=shift_jis', filename: generate_filename(@date)}
     end
+  end
+
+  def business
+    
   end
 
   private

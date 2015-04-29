@@ -1,0 +1,30 @@
+<%= render 'header' %>
+<div class="contextual">
+  <%= link_to l(:timetable), ttevents_path, class: 'icon icon-calendar' %>
+</div>
+<h2>
+  <%= l(:statistics)%>
+</h2>
+<% html_title l(:statistics) %>
+<%= render 'notice' %>
+<h3>いそがしさ</h3>
+<div id="heatmap"></div>
+<% content_for :sidebar do %>
+  <%= render 'side_bar' %>
+<% end %>
+
+<script>
+  drawHeatmap = function(view){
+    console.log('drawHeatmap');
+    console.log(view);
+    $('.fc-past').css('background', 'red');
+    //$("td[data-date = '"+ holiday_date +"']").addClass("holiday");
+    $('.fc-today, .fc-future').css('color', 'lightgray')
+
+  };
+  $('#heatmap').fullCalendar({
+    eventAfterAllRender: function(view){drawHeatmap(view);}
+  });
+
+</script>
+
