@@ -1,11 +1,11 @@
 $('#dialog').dialog('close')
 $('#modal_area').html('')
-console.log event
 event = window_event
 console.log event.id
 console.log typeof(event.id)
+id = <%= @ttevent.id %>
 
-$('#fullcalendar').fullCalendar('removeEvents', event.id)
+$('#fullcalendar').fullCalendar('removeEvents', id)
 delete window_event
 $.ajax
   type: 'GET'
