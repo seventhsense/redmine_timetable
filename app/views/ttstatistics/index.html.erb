@@ -8,24 +8,31 @@
 <% html_title l(:statistics) %>
 <%= render 'notice' %>
 <h3>1. プロジェクトとチケットの状況</h3>
+<div id="graph2"></div>
 <%= render 'issues_table' %>
 <h3>2. イベントの状況</h3>
 <%= render 'ttevents_table' %>
 <h3>3. プロジェクトごとの作業時間の割合</h3>
-<div id="graph"></div>
+<div id="graph1"></div>
 <% content_for :sidebar do %>
   <%= render 'side_bar' %>
 <% end %>
 <script>
   var chart = c3.generate({
-    bindto: '#graph',
+    bindto: '#graph1',
     data: {
       columns: gon.project_ratio,
         type : 'donut'
     },
     donut: {
-        title: "作業時間の割合"
+      title: "作業時間の割合"
     }
-});
-
+  });
+  var chart = c3.generate({
+    bindto: '#graph2',
+    data: {
+      xs: ['year', 'month'],
+        json: gon.newly_issues_count,
+    },
+  });
 </script>
