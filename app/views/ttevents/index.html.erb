@@ -51,7 +51,6 @@
     
     // Calendar
     $('#fullcalendar').fullCalendar({
-      // events: gon.ttevents.events,
       startParam: "start_time",
       endParam: "end_time",
       timezone: "<%= @timezone %>",
@@ -125,6 +124,7 @@
             console.log(ttevent);
             event.color = ttevent.color;
             event.id = ttevent.id;
+            console.log(event);
             console.log(event.id);
             console.log(typeof(event.id));
             $('#fullcalendar').fullCalendar('updateEvent', event);
@@ -193,6 +193,8 @@
         // console.log('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
         // console.log('View: ' + view.name);
         id = calEvent.id;
+        console.log('eventClick');
+        console.log(typeof(id));
         if (id == 'holiday'){
           return false;
         }
@@ -214,6 +216,8 @@
       },
       eventAfterRender: function(event, element, view){
         console.log('event after render');
+        console.log(event.id);
+        console.log(typeof(event.id));
         if (event.id == 'holiday'){
           holiday_date = event.start.format()
           // console.log(holiday_date);
