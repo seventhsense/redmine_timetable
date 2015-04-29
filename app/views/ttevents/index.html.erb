@@ -2,7 +2,7 @@
   <%= stylesheet_link_tag 'fullcalendar/fullcalendar.min', :plugin => 'redmine_timetable' %>
   <%= stylesheet_link_tag 'ttevent', :plugin => 'redmine_timetable' %>
   <%= javascript_include_tag 'lib/moment.min', plugin: 'redmine_timetable' %>
-  <%= javascript_include_tag 'lib/gcals', plugin: 'redmine_timetable' %>
+  <%= javascript_include_tag 'lib/gcal', plugin: 'redmine_timetable' %>
   <%= javascript_include_tag 'lib/fullcalendar', plugin: 'redmine_timetable' %>
   <%= javascript_include_tag 'lib/lang/ja', plugin: 'redmine_timetable' %>
 <% end %>
@@ -55,10 +55,13 @@
       startParam: "start_time",
       endParam: "end_time",
       timezone: "<%= @timezone %>",
-      events: {
-        url: 'ttevents/ttevents_list',
-        type: 'POST'
-      },
+      eventSources: [
+        'http://www.google.com/calendar/feeds/ja.japanese%23holiday%40group.v.calendar.google.com/public/full/'
+      ],
+      // events: {
+      //   url: 'ttevents/ttevents_list',
+      //   type: 'POST'
+      // },
       // TODO add redmine business Hour
       businessHours: {
         start: '9:30',
