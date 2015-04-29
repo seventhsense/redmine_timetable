@@ -5,7 +5,7 @@ module TteventsHelper
     today = Date.today.in_time_zone
     if due_date < today
       'out-of-time'
-    elsif due_date > today.ago(3.days)
+    elsif due_date > today.since(3.days)
       'in-time'
     else
       'on-time'
