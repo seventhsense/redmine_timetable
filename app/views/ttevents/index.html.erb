@@ -2,7 +2,6 @@
   <%= stylesheet_link_tag 'fullcalendar/fullcalendar.min', :plugin => 'redmine_timetable' %>
   <%= stylesheet_link_tag 'ttevent', :plugin => 'redmine_timetable' %>
   <%= javascript_include_tag 'lib/moment.min', plugin: 'redmine_timetable' %>
-  <%= javascript_include_tag 'lib/gcal', plugin: 'redmine_timetable' %>
   <%= javascript_include_tag 'lib/fullcalendar', plugin: 'redmine_timetable' %>
   <%= javascript_include_tag 'lib/lang/ja', plugin: 'redmine_timetable' %>
 <% end %>
@@ -35,6 +34,7 @@
 <% end %>
 
 <script>
+  var window_event;
   $(document).ready(function() {
     // Initialize
     $('#tt-events .draggable').each(function(){
@@ -56,12 +56,15 @@
       endParam: "end_time",
       timezone: "<%= @timezone %>",
       eventSources: [
-        'http://www.google.com/calendar/feeds/ja.japanese%23holiday%40group.v.calendar.google.com/public/full/'
+        {
+          url: 'ttevents/ttevents_list',
+         type: 'POST'
+        },
+        {
+          url: 'ttevents/holiday_list', 
+          type: 'POST'
+        }
       ],
-      // events: {
-      //   url: 'ttevents/ttevents_list',
-      //   type: 'POST'
-      // },
       // TODO add redmine business Hour
       businessHours: {
         start: '9:30',
@@ -122,7 +125,10 @@
             console.log(ttevent);
             event.color = ttevent.color;
             event.id = ttevent.id;
+            console.log(event.id);
+            console.log(typeof(event.id));
             $('#fullcalendar').fullCalendar('updateEvent', event);
+            console.log('data post updated');
             $.ajax({
               type: 'GET',
               url: "ttevents/issue_lists"
@@ -139,7 +145,6 @@
         // console.log(id);
         stick = event.stick;
         url = "ttevents/" + id;
-        window.event = event;
         $.ajax({
           type: "PUT",
           url: url,
@@ -162,7 +167,6 @@
         id = event.id
         stick = event.stick;
         url = "ttevents/" + id;
-        window.event = event;
         // console.log(url);
         $.ajax({
           type: "PUT",
@@ -184,13 +188,16 @@
         $('#fullcalendar').fullCalendar('changeView', 'agendaDay');
       },
       eventClick: function(calEvent, jsEvent, view) {
-        // console.log('Event: ' + calEvent.title);
-        // console.log('Event: ' + calEvent.id);
+        console.log('Event: ' + calEvent.title);
+        console.log('Event: ' + calEvent.id);
         // console.log('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
         // console.log('View: ' + view.name);
         id = calEvent.id;
+        if (id == 'holiday'){
+          return false;
+        }
         url = "ttevents/" + id + "/edit";
-        window.event = calEvent;
+        window_event = calEvent;
         
         $.ajax({
           type: "GET",
@@ -200,9 +207,20 @@
           }},
           success: function(e){
             console.log('get data');
-            console.log(e);
+            //console.log(e);
+
           }
         });
+      },
+      eventAfterRender: function(event, element, view){
+        console.log('event after render');
+        if (event.id == 'holiday'){
+          holiday_date = event.start.format()
+          // console.log(holiday_date);
+          $("td[data-date = '"+ holiday_date +"']").addClass("holiday");
+        } else{
+          return false;
+        }
       }
     });
   });

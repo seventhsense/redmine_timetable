@@ -6,7 +6,7 @@ start = "<%= @ttevent.start_time.iso8601 %>"
 end = "<%= @ttevent.end_time.iso8601 %>"
 color = "<%= @ttevent.color %>"
 duration = "<%= @ttevent.duration %>"
-event = window.event
+event = window_event
 event.id = id
 event.title = title
 event.start = start
@@ -15,7 +15,7 @@ event.color = color
 event.duration = duration
 $('#fullcalendar').fullCalendar('updateEvent', event)
 # $('#fullcalendar').fullCalendar('refetchEvents')
-delete window.event
+delete window_event
 $.ajax
   type: 'GET'
   url: "ttevents/issue_lists"

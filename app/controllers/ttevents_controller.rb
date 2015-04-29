@@ -13,6 +13,17 @@ class TteventsController < ApplicationController
     render json: @ttevents, status: :ok
   end
 
+  def holiday_list
+    Time.zone = params[:timezone]
+    start_time = Time.zone.parse params[:start_time]
+    end_time = Time.zone.parse params[:end_time]
+    holidays = HolidayJp.between(start_time.to_date, end_time.to_date)
+    @holidays = holidays.map do |holiday|
+      {id: 'holiday', title: holiday.name, start: holiday.date.to_time.iso8601, end: holiday.date.to_time.iso8601, allDay: true, stick:true, color: '#ff8888' }
+    end
+    render json: @holidays, status: :ok
+  end
+
   def index
     set_issue_lists
   end

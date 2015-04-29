@@ -26,8 +26,8 @@ ja:
   edit_issue: チケットを編集する
   hours: 時間
   link_to_destroy: 削除
-  link_to_ttevent_destroy: イベントの削除
-  message_destroy_confirm: イベントを削除しますか？（チケットは削除されません.）
+  link_to_ttevent_destroy: イベントをカレンダーから削除
+  message_destroy_confirm: イベントをカレンダーから削除しますか？（チケットは削除されません.）
   notice_link_to_ttevent_destroy: イベントの削除では、チケットは削除されません.
   error_something_went_wrong: 保存できませんでした.
 

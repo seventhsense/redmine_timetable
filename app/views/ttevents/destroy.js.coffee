@@ -1,8 +1,12 @@
 $('#dialog').dialog('close')
 $('#modal_area').html('')
-event = window.event
+console.log event
+event = window_event
+console.log event.id
+console.log typeof(event.id)
+
 $('#fullcalendar').fullCalendar('removeEvents', event.id)
-delete window.event
+delete window_event
 $.ajax
   type: 'GET'
   url: "ttevents/issue_lists"

@@ -1,5 +1,6 @@
 # Plugin's routes
 # See: http://guides.rubyonrails.org/routing.html
+post 'ttevents/holiday_list' => 'ttevents#holiday_list'
 post 'ttevents/ttevents_list' => 'ttevents#ttevents_list'
 get 'ttevents/issue_lists' => 'ttevents#issue_lists'
 get 'ttevents/new_issue' => 'ttevents#new_issue'
