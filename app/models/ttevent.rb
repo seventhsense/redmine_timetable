@@ -75,7 +75,7 @@ class Ttevent < ActiveRecord::Base
     when 'mysql', 'mysql2' then
       group('YEAR(start_time)').group('MONTH(start_time)')
     when /postgresql/ then
-      # TODO need postgresql grouping
+      # TODO need postgresql grouping testing
       group('date_trunc("year", start_time)').group('date_trunc("month", start_time)')   
     else
       all
@@ -90,31 +90,18 @@ class Ttevent < ActiveRecord::Base
     when 'mysql', 'mysql2' then
       group('YEAR(start_time)').group('MONTH(start_time)').group('DAY(start_time)')
     when /postgresql/ then
-      # TODO need test postgresql grouping
+      # TODO need postgresql grouping test
       group('date_trunc("year", start_time)').group('date_trunc("month", start_time)').group('date_trunc("day", start_time)')
     else
       all
     end
   end
 
-  # def self.to_gon
-    # be = self.all
-    # s = {}
-    # s[:events] = []
-    # be.each do |obj|
-      # title = [obj.issue.project.name, obj.issue.subject].join('-')
-      # hash = {
-        # id: obj.id,
-        # title: title,
-        # start: obj.start_time,
-        # end: obj.end_time,
-        # sticky: true,
-        # color: obj.color
-      # }
-      # s[:events] << hash
-    # end
-    # s
-  # end
+
+  private
+  def set_duration
+    self.duration = (self.end_time - self.start_time) / 60 / 60
+  end
 
   def define_color
     return self.color = 'darkgrey' if self.is_done
@@ -130,28 +117,6 @@ class Ttevent < ActiveRecord::Base
     else
       # on time
       self.color = '#da873a'
-    end
-  end
-
-  private
-  def set_duration
-    self.duration = (self.end_time - self.start_time) / 60 / 60
-  end
-
-  def self.set_color(ttevent)
-    return 'darkgrey' if ttevent.is_done
-    due_date = ttevent.issue.due_date
-    return '#da3aad' if due_date.nil?
-    end_date = ttevent.end_time.to_date
-    if due_date < end_date
-      # out of time
-      '#da3a3a'
-    elsif due_date > end_date.since(3.days)
-      # in time
-      '#3aad87'
-    else
-      # on time
-      '#da873a'
     end
   end
 end
