@@ -42,6 +42,7 @@
     bindto: '#chart',
     data: {
       x: 'x',
+      xFormat: '%Y%m%d',
       columns: gon.ttevents,
       type: 'bar',
       axes: {
@@ -49,6 +50,12 @@
       }
     },
     axis: {
+      x : {
+        type: 'timeseries',
+        tick: {
+          format: '%Y/%m'
+        }
+      },
       y2: {
         show: true
       }
