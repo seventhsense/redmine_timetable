@@ -31,12 +31,12 @@ class TtstatisticsController < ApplicationController
     @issues_assigned_count = issues_assigned.count
     pm = 1.month.ago
     last_month = [pm.beginning_of_month..pm.end_of_month]
-    @new_issues_assigned_last_month_count = Issue.visible.where(assigned_to_id: @current_user.id).where(start_date: last_month).count
-    @end_issues_assigned_last_month_count = Issue.visible.where(assigned_to_id: @current_user.id).where(closed_on: last_month).count
+    @new_issues_assigned_last_month_count = Issue.where(assigned_to_id: @current_user.id).where(created_on: last_month).count
+    @end_issues_assigned_last_month_count = Issue.where(assigned_to_id: @current_user.id).where(closed_on: last_month).count
     tm = Date.today
     this_month = [tm.beginning_of_month..tm.end_of_month]
-    @new_issues_assigned_this_month_count = Issue.visible.where(assigned_to_id: @current_user.id).where(start_date: this_month).count
-    @end_issues_assigned_this_month_count = Issue.visible.where(assigned_to_id: @current_user.id).where(closed_on: this_month).count
+    @new_issues_assigned_this_month_count = Issue.where(assigned_to_id: @current_user.id).where(created_on: this_month).count
+    @end_issues_assigned_this_month_count = Issue.where(assigned_to_id: @current_user.id).where(closed_on: this_month).count
     # count issue and project
     months = ['x']
     projects = ['担当プロジェクト数']
