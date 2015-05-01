@@ -46,8 +46,8 @@ class TtstatisticsController < ApplicationController
     # TODO this is for sqlite3 only
     case ActiveRecord::Base.connection.instance_values["config"][:adapter]
     when /sqlite3/ then
-      ni = Issue.select('subject, count(id) as count, strftime("%Y", datetime(created_on, "localtime")) as year,strftime("%m", datetime(created_on, "localtime")) as month').where(assigned_to_id: @current_user.id).group('strftime("%Y", datetime(created_on, "localtime"))').group('strftime("%m", datetime(created_on, "localtime"))').to_json(except: [:subject, :id])
-      di = Issue.select('subject, count(id) as count, strftime("%Y", datetime(closed_on, "localtime")) as year,strftime("%m", datetime(closed_on, "localtime")) as month').where(assigned_to_id: @current_user.id).where('closed_on IS NOT NULL').group('strftime("%Y", datetime(closed_on, "localtime"))').group('strftime("%m", datetime(closed_on, "localtime"))').to_json(except: [:subject, :id])
+      ni = Issue.select('subject, count(id) as count, strftime("%Y", datetime(created_on, "localtime")) as year,strftime("%m", datetime(created_on, "localtime")) as month').where(assigned_to_id: @current_user.id).group('strftime("%Y", datetime(created_on, "localtime"))').group('strftime("%m", datetime(created_on, "localtime"))')
+      di = Issue.select('subject, count(id) as count, strftime("%Y", datetime(closed_on, "localtime")) as year,strftime("%m", datetime(closed_on, "localtime")) as month').where(assigned_to_id: @current_user.id).where('closed_on IS NOT NULL').group('strftime("%Y", datetime(closed_on, "localtime"))').group('strftime("%m", datetime(closed_on, "localtime"))')
     when 'mysql', 'mysql2' then
       ni = Issue.where(assigned_to_id: @current_user.id).group('YEAR(created_on)').group('MONTH(created_on)').count
       # di = Issue.where(assigned_to_id: @current_user.id).where('closed_on IS NOT NULL').group('YEAR(closed_on)').group('MONTH(closed_on)'.count
@@ -59,8 +59,19 @@ class TtstatisticsController < ApplicationController
       di = Issue.none
     end
 
-    gon.newly_issues_count = ni
-    gon.done_issues_count = di
+    dates1 = ['x1']
+    counts1 = ['新規チケット']
+    ni.each do |data|
+      dates1 << "#{data.year}-#{data.month}-01"
+      counts1 << data.count
+    end
+    dates2 = ['x2']
+    counts2 = ['終了チケット']
+    di.each do |data|
+      dates2 << "#{data.year}-#{data.month}-01"
+      counts2 << data.count
+    end
+    gon.issues_count = [dates1, dates2, counts1, counts2]
 
     gon.project_ratio = Ttevent.planned.done.joins(issue: :project).group('projects.name').sum(:duration).to_a
   end

@@ -28,11 +28,23 @@
       title: "作業時間の割合"
     }
   });
+  console.log(gon.issues_count);
   var chart = c3.generate({
     bindto: '#graph2',
     data: {
-      xs: ['year', 'month'],
-        json: gon.newly_issues_count,
+      xs: {
+        '新規チケット' : 'x1',
+        '終了チケット' : 'x2'
+      },
+      columns: gon.issues_count
     },
+    axis: {
+      x : {
+        type: 'timeseries',
+        tick: {
+          format: '%Y/%m'
+        }
+      },
+    }
   });
 </script>
