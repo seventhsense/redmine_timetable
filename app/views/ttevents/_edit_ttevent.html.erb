@@ -2,10 +2,12 @@
   <%= form_for @ttevent.issue, url: ttevent_with_issue_path, remote: true do |f| %>
     <fieldset class="field box">
       <legend><%= l(:edit_issue)%></legend>
-      <p>
+      <div class="slider_field">
         <%= f.label :done_ratio %> 
-        <%= f.number_field :done_ratio, step: 10, max: 100, min: 0 %> % 
-      </p>
+        <%= f.hidden_field :done_ratio %> 
+        <span id="done_ratio"><%= @ttevent.issue.done_ratio %></span> %
+        <div id="slider"></div>
+      </div>
       <p>
         <%= f.label :status_id %>
         <%= f.select :status_id, (@allowed_statuses.collect {|p| [p.name, p.id]}) %>
@@ -63,4 +65,16 @@
     delete window.event
   }
   $("input#issue_due_date").datepicker()
+  $('#slider').slider({
+    value: <%= @ttevent.issue.done_ratio %>,
+    min: 0,
+    max: 100,
+    step: 10,
+    animate: 'fast',
+    slide: function(event, ui){
+      $('#done_ratio').html(ui.value)
+      $('#issue_done_ratio').val(ui.value)
+    }
+  
+  });
 </script>

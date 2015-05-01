@@ -82,6 +82,16 @@ td.fc-sat {
   width: 70%;
 }
 
+#dialog form .slider_field {
+  margin: 10px 0;
+}
+
+#dialog form #slider {
+  display: inline-block;
+  width: 150px;
+  margin-left: 20px
+}
+
 #dialog .button {
   padding: initial;
 }
