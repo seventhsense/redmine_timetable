@@ -35,4 +35,4 @@ bower.json
 .powenv
 
 *.swp
-
+coverage
