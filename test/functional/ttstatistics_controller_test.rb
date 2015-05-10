@@ -1,8 +1,23 @@
 require File.expand_path('../../test_helper', __FILE__)
 
 class TtstatisticsControllerTest < ActionController::TestCase
-  # Replace this with your real tests.
-  def test_truth
-    assert true
+  def test_index
+    get :index
+    assert_response :success
+  end
+
+  def test_stats_by_month
+    get :stats_by_month
+    assert_response :success
+  end
+
+  def test_stats_by_day
+    get :stats_by_day
+    assert_response :success
+  end
+
+  def test_daily_report
+    get :daily_report
+    assert_response :success
   end
 end
