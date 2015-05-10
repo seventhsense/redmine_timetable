@@ -38,7 +38,7 @@ Timetable using fullcalendar
   - 日時の終了イベント数とイベント作業時間
 
 ## Requirement
-- Redmine 3.0.1
+- Redmine 3.0.3
 
 ## Usage
 ### 1. ダウンロード

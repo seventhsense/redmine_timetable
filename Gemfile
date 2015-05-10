@@ -9,7 +9,7 @@ group :development do
   gem 'compass'
   gem 'guard'
   gem 'guard-sass'
-  gem 'guard-sprockets'
+  # gem 'guard-sprockets'
   gem 'guard-shell'
 end
 
