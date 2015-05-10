@@ -1,8 +1,14 @@
 require File.expand_path('../../test_helper', __FILE__)
 
 class TteventsControllerTest < ActionController::TestCase
-  # Replace this with your real tests.
-  def test_truth
-    assert true
+  def test_index
+    get :index
+    assert_response :success
+  end
+
+  def test_issue_lists
+    skip
+    get 'issue_lists'
+    assert_response :success
   end
 end

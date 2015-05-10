@@ -10,7 +10,7 @@ group :development do
   gem 'guard'
   gem 'guard-sass'
   gem 'guard-sprockets'
-  gem 'guard-minitest'
+  gem 'guard-shell'
 end
 
 group :test do
