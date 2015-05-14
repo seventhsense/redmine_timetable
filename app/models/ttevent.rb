@@ -1,6 +1,7 @@
 class Ttevent < ActiveRecord::Base
   # unloadable
   belongs_to :issue
+  belongs_to :user
   has_one :time_entry, dependent: :destroy
   accepts_nested_attributes_for :time_entry
 

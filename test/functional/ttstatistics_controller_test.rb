@@ -1,6 +1,11 @@
 require File.expand_path('../../test_helper', __FILE__)
 
 class TtstatisticsControllerTest < ActionController::TestCase
+  fixtures :users, :issues, :ttevents
+  def setup
+    @request.session[:user_id] = 1
+    Setting.default_language = 'ja'
+  end
   def test_index
     get :index
     assert_response :success
