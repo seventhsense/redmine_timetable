@@ -20,8 +20,9 @@ class TteventsControllerTest < ActionController::TestCase
   def test_new_issue
     start_time = Time.now
     end_time = start_time.since(30.minutes)
-    @current_user = users(:users_001)
-    xhr :get, :new_issue, ttevent: {start_time: start_time, end_time: end_time}
+    # @current_user = users(:users_001)
+    xhr :get, :new_issue,
+      ttevent: {start_time: start_time, end_time: end_time}
     assert_response :success
   end
 end

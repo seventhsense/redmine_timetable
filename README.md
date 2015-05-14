@@ -85,3 +85,6 @@ rm -rf plugins/redmine_timetable
 
 ## 対応するデータベース
 SQLite3, MySQL
+
+## 開発/テスト
+テストをする際は、`test/fixtures`にあるymlファイルをRedmineルートの`text/fixtures`にコピーないしシンボリックリンクを貼る.
