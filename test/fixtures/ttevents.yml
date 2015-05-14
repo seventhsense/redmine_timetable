@@ -1,4 +1,16 @@
 ---
-Ttevents_001: 
+ttevents_001: 
   user: users_002
-  issue: issues_001
+  issue: issues_004
+ttevents_002: 
+  user: users_002
+  issue: issues_004
+  is_done: true
+ttevents_003: 
+  user: users_002
+  issue: issues_004
+  is_done: true
+ttevents_004: 
+  user: users_002
+  issue: issues_004
+  is_done: true
