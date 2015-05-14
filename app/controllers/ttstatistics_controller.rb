@@ -1,8 +1,8 @@
 require 'csv'
 class TtstatisticsController < ApplicationController
   # unloadable
-  before_action :set_timezone
-  before_action :set_user,:set_notice, only: [:index, :stats_by_month, :stats_by_day, :daily_report, :business]
+  before_action :global_authorize, :set_timezone
+  before_action :set_notice, only: [:index, :stats_by_month, :stats_by_day, :daily_report, :business]
 
   def index
     # イベントの状況
@@ -165,5 +165,10 @@ class TtstatisticsController < ApplicationController
 
   def generate_filename(date)
     date.strftime('%Y-%m-%d') + '.csv'
+  end
+
+  def global_authorize
+    set_user
+    head(403) unless @current_user.type == 'User'
   end
 end

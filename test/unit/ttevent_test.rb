@@ -29,12 +29,10 @@ class TteventTest < ActiveSupport::TestCase
     assert { @ttevent.is_done == false }
   end
 
-  def test_done
+  def test_default_is_done_is_false
     set_one_ttevent_sample
-    @done_count = Ttevent.done.count
-    assert { @done_count == 0 }
-    @undone_count = Ttevent.undone.count
-    assert { @undone_count == 1}
+    is_done = Ttevent.find(@ttevent.id).is_done
+    assert { is_done == false }
   end
 
   def test_duration
@@ -42,9 +40,10 @@ class TteventTest < ActiveSupport::TestCase
     assert { @ttevent.duration == 0.5 }
   end
 
-  def test_color
+  def test_default_color
     # due_date is nil
     set_one_ttevent_sample(:issues_002)
+    p @ttevent.start_time
     assert { @ttevent.color == "#da3aad" }
     # due_date is 10 days after
     set_one_ttevent_sample

@@ -2,7 +2,7 @@ class TteventsController < ApplicationController
   # unloadable
   helper :timelog
   helper :issues
-  before_action :set_timezone
+  before_action :global_authorize, :set_timezone
 
   def ttevents_list
     set_issue_lists
@@ -211,5 +211,10 @@ class TteventsController < ApplicationController
   def time_entry_params
     params[:issue].require(:time_entry)
       .permit(:id, :hours, :spent_on, :activity_id, :comments)
+  end
+
+  def global_authorize
+    set_user
+    head(403) unless @current_user.type == 'User'
   end
 end

@@ -1,9 +1,10 @@
 require File.expand_path('../../test_helper', __FILE__)
 
 class TteventsControllerTest < ActionController::TestCase
-  fixtures :users, :issues, :ttevents
+  fixtures :users, :issues
+  plugin_fixtures :ttevents
   def setup
-    @request.session[:user_id] = nil
+    @request.session[:user_id] = 2
     Setting.default_language = 'ja'
   end
 
