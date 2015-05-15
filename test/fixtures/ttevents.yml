@@ -1,16 +1,36 @@
 ---
+<% s = Time.now %>
 ttevents_001: 
-  user: users_002
-  issue: issues_004
+  user_id: 2
+  issue_id: 4
+  start_time: <%= s.ago(1.day).to_s(:db) %>
+  end_time: <%= s.ago(1.day).since(30.minutes).to_s(:db) %>
+  duration: 0.5
 ttevents_002: 
-  user: users_002
-  issue: issues_004
+  user_id: 2
+  issue_id: 4
   is_done: true
+  start_time: <%= s.ago(2.days).to_s(:db) %>
+  end_time: <%= s.ago(2.days).since(30.minutes).to_s(:db) %>
+  duration: 0.5
 ttevents_003: 
-  user: users_002
-  issue: issues_004
+  user_id: 2
+  issue_id: 4
   is_done: true
+  start_time: <%= s.ago(3.days).to_s(:db) %>
+  end_time: <%= s.ago(3.days).since(1.hour).to_s(:db) %>
+  duration: 1.0
 ttevents_004: 
-  user: users_002
-  issue: issues_004
+  user_id: 2
+  issue_id: 4
   is_done: true
+  start_time: <%= s.ago(3.days).to_s(:db) %>
+  end_time: <%= s.ago(3.days).since(2.hours).to_s(:db) %>
+  duration: 2.0
+ttevents_005: 
+  user_id: 2
+  issue_id: 4
+  is_done: true
+  start_time: <%= s.ago(1.month).to_s(:db) %>
+  end_time: <%= s.ago(1.month).since(2.hours).to_s(:db) %>
+  duration: 2.0

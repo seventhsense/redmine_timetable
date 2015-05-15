@@ -215,6 +215,6 @@ class TteventsController < ApplicationController
 
   def global_authorize
     set_user
-    head(403) unless @current_user.type == 'User'
+    render_403 unless @current_user.type == 'User'
   end
 end
