@@ -34,3 +34,10 @@ ttevents_005:
   start_time: <%= s.ago(1.month).to_s(:db) %>
   end_time: <%= s.ago(1.month).since(2.hours).to_s(:db) %>
   duration: 2.0
+ttevents_006: 
+  user_id: 2
+  issue_id: 4
+  is_done: true
+  start_time: <%= s.ago(1.month).to_s(:db) %>
+  end_time: <%= s.ago(1.month).since(30.minutes).to_s(:db) %>
+  duration: 2.0

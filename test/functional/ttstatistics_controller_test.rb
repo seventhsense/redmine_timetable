@@ -15,11 +15,11 @@ class TtstatisticsControllerTest < ActionController::TestCase
     assert_response :success
     assert {assigns(:current_user) == users(:users_002)}
     # p assigns(:issues_assigned_count)
-    assert {assigns(:ttevents_average) == 1.3}
+    assert {assigns(:ttevents_average) == 1.7}
     assert {assigns(:ttevents_max) == 2}
     # p assigns(:ttevents_max_date)
-    assert {assigns(:ttevents_hour_average) == 1.8}
-    assert {assigns(:ttevents_hour_max) == 3.0}
+    assert {assigns(:ttevents_hour_average) == 2.5}
+    assert {assigns(:ttevents_hour_max) == 4.0}
     # p assigns(:ttevents_hour_date)
     assert {assigns(:ttevents_undone) == 1}
     assert {assigns(:ttevents_undone_hour) == 0.5}
