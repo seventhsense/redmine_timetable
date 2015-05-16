@@ -1,5 +1,6 @@
 [![GitHub version](https://badge.fury.io/gh/seventhsense%2Fredmine_timetable.svg)](http://badge.fury.io/gh/seventhsense%2Fredmine_timetable)
 [![Build Status](https://travis-ci.org/seventhsense/redmine_timetable.svg)](https://travis-ci.org/seventhsense/redmine_timetable)
+[![Dependency Status](https://gemnasium.com/seventhsense/redmine_timetable.svg)](https://gemnasium.com/seventhsense/redmine_timetable)
 
 # redmine_timetable
 Timetable using fullcalendar
