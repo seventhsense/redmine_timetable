@@ -10,7 +10,7 @@ class TtstatisticsController < ApplicationController
     unless aggregation == 0
       @ttevents_average = get_average(aggregation)
       @ttevents_max = aggregation.values.max
-      ## localization
+      ## TODO localization
       @ttevents_max_date = Date.parse(aggregation.key(@ttevents_max).join('-')).strftime("%Y年 %m月 %d日") if aggregation.key @ttevents_max
     end
 
@@ -18,7 +18,7 @@ class TtstatisticsController < ApplicationController
     unless aggregation_hour == 0
       @ttevents_hour_average = get_average(aggregation_hour)
       @ttevents_hour_max = aggregation_hour.values.max
-      ## localization
+      ## TODO localization
       @ttevents_hour_max_date = Date.parse(aggregation_hour.key(@ttevents_hour_max).join('-')).strftime("%Y年 %m月 %d日") if aggregation_hour.key @ttevents_hour_max
     end
 
@@ -38,19 +38,20 @@ class TtstatisticsController < ApplicationController
     @new_issues_assigned_this_month_count = Issue.where(assigned_to_id: @current_user.id).where(created_on: this_month).count
     @end_issues_assigned_this_month_count = Issue.where(assigned_to_id: @current_user.id).where(closed_on: this_month).count
     # count issue and project
+    # TODO localization
     months = ['x']
     projects = ['担当プロジェクト数']
     issues = ['担当チケット数']
     newly_issues = ['新規チケット数']
     done_issues = ['終了チケット数']
-    # TODO this is for sqlite3 only
+    # TODO this is for sqlite3 and mysql only
     case ActiveRecord::Base.connection.instance_values["config"][:adapter]
     when /sqlite3/ then
       ni = Issue.select('subject, count(id) as count, strftime("%Y", datetime(created_on, "localtime")) as year,strftime("%m", datetime(created_on, "localtime")) as month').where(assigned_to_id: @current_user.id).group('strftime("%Y", datetime(created_on, "localtime"))').group('strftime("%m", datetime(created_on, "localtime"))')
       di = Issue.select('subject, count(id) as count, strftime("%Y", datetime(closed_on, "localtime")) as year,strftime("%m", datetime(closed_on, "localtime")) as month').where(assigned_to_id: @current_user.id).where('closed_on IS NOT NULL').group('strftime("%Y", datetime(closed_on, "localtime"))').group('strftime("%m", datetime(closed_on, "localtime"))')
     when 'mysql', 'mysql2' then
-      ni = Issue.where(assigned_to_id: @current_user.id).group('YEAR(created_on)').group('MONTH(created_on)').count
-      # di = Issue.where(assigned_to_id: @current_user.id).where('closed_on IS NOT NULL').group('YEAR(closed_on)').group('MONTH(closed_on)'.count
+      ni = Issue.select('subject, count(id) as count, YEAR(created_on) as year,MONTH(created_on) as month').where(assigned_to_id: @current_user.id).group('YEAR(created_on)').group('MONTH(created_on)')
+      di = Issue.select('subject, count(id) as count, YEAR(closed_on) as year,MONTH(closed_on) as month').where(assigned_to_id: @current_user.id).group('YEAR(closed_on)').group('MONTH(closed_on)')
     #when /postgresql/ then
       # TODO need postgresql grouping testing
       # group('date_trunc("year", start_time)').group('date_trunc("month", start_time)')   
@@ -59,6 +60,7 @@ class TtstatisticsController < ApplicationController
       di = Issue.none
     end
 
+    # TODO localization
     dates1 = ['x1']
     counts1 = ['新規チケット']
     ni.each do |data|
@@ -77,6 +79,7 @@ class TtstatisticsController < ApplicationController
   end
 
   def stats_by_month
+    # TODO localization
     @ttevents = Ttevent.select_month.planned.done.order("start_time DESC").group_by_month
     dates = ['x']
     counts = ['個数']
@@ -90,6 +93,7 @@ class TtstatisticsController < ApplicationController
   end
 
   def stats_by_day
+    # TODO localization
     @ttevents = Ttevent.select_day.planned.done.order("start_time DESC").group_by_day.limit(10)
     dates = ['x']
     counts = ['個数']
@@ -145,7 +149,7 @@ class TtstatisticsController < ApplicationController
   end
 
   def generate_csv(ttevents)
-    # localization
+    # TODO localization
     headers = %w(開始時刻 時間 プロジェクト名 チケット名 作業内容)
     data = CSV.generate(headers: headers, write_headers: true, force_quotes: true) do |csv|
       ttevents.each do |ttevent|

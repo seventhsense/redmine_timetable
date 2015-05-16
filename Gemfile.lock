@@ -162,7 +162,7 @@ DEPENDENCIES
   guard-sass
   guard-shell
   guard-sprockets
-  holiday_jp
+  holiday_jp (= 0.4.3)
   minitest-ar-assertions (= 0.1.1)
   minitest-power_assert (= 0.0.3)
   minitest-reporters (= 1.0.14)
