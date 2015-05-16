@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/seventhsense/redmine_timetable.svg)](https://travis-ci.org/seventhsense/redmine_timetable)
+
 # redmine_timetable
 Timetable using fullcalendar
 
