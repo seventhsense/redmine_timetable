@@ -19,7 +19,12 @@ class TteventsController < ApplicationController
     end_time = Time.zone.parse params[:end_time]
     holidays = HolidayJp.between(start_time.to_date, end_time.to_date)
     @holidays = holidays.map do |holiday|
-      {id: 'holiday', title: holiday.name, start: holiday.date.to_time.iso8601, end: holiday.date.to_time.iso8601, allDay: true, stick:true, color: '#ff8888' }
+      {id: 'holiday',
+       title: holiday.name, 
+       start: holiday.date.to_time.iso8601, 
+       end: holiday.date.to_time.iso8601, 
+       allDay: true, stick:true, 
+       color: '#ff8888' }
     end
     render json: @holidays, status: :ok
   end
