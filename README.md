@@ -3,9 +3,9 @@
 [![Dependency Status](https://gemnasium.com/seventhsense/redmine_timetable.svg)](https://gemnasium.com/seventhsense/redmine_timetable)
 
 # redmine_timetable
-自分の時間割表に、ドラッグ・アンド・ドロップでチケットの予定を登録できます.
+自分の時間表に、ドラッグ・アンド・ドロップでチケットの予定を登録できます.
 ![イベントの作成](https://raw.github.com/wiki/seventhsense/redmine_timetable/images/redmine_timetable_1_create_event.gif)
-やることを全部書き出して、予定表に登録しておけば、安心して今のタスクに集中できます.
+やることを全部書き出して、時間表に登録しておけば、安心して今のタスクに集中できます.
 
 
 ## 機能
