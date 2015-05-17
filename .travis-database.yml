@@ -1,5 +1,31 @@
-test:
+# test:
+  # adapter: mysql2
+  # database: redmine_timetable_test
+  # username: root
+  # encoding: utf8
+
+sqlite: &sqlite
+  adapter: sqlite3
+  database: db/redmine_timetable_test.sqlite3
+ 
+mysql: &mysql
   adapter: mysql2
-  database: redmine_timetable_test
   username: root
-  encoding: utf8
+  password:
+  database: redmine_timetable_test
+ 
+postgresql: &postgresql
+  adapter: postgresql
+  username: postgres
+  password:
+  database: redmine_timetable_test
+  min_messages: ERROR
+ 
+defaults: &defaults
+  pool: 5
+  timeout: 5000
+  host: localhost
+  <<: *<%= ENV['DB'] || "postgresql" %>
+ 
+test:
+  <<: *defaults

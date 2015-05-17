@@ -6,7 +6,8 @@ branches:
   only:
     - master
 env:
-  - REDMINE_VERSION=3.0.3 VERBOSE=yes
+  - DB=sqlite REDMINE_VERSION=3.0.3 VERBOSE=yes
+  - DB=mysql REDMINE_VERSION=3.0.3 VERBOSE=yes
 script:
   - export PLUGIN=redmine_timetable
   - export WORKSPACE=$(pwd)/workspace
