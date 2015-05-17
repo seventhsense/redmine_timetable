@@ -16,3 +16,9 @@ $('#fullcalendar').fullCalendar('renderEvent', event)
 $.ajax
   type: 'GET'
   url: "ttevents/issue_lists"
+
+noty
+  text: "<%= l(:success_create_issue_and_ttevent)%>: <br>" + title
+  layout: 'center'
+  type: 'success'
+  timeout: 800

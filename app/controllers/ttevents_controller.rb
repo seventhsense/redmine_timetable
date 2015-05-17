@@ -160,6 +160,7 @@ class TteventsController < ApplicationController
         end
         format.js
       else
+        @error = true
         format.js
       end
     end

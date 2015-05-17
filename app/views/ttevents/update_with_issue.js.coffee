@@ -19,3 +19,16 @@ delete window_event
 $.ajax
   type: 'GET'
   url: "ttevents/issue_lists"
+<% if @error != true %>
+  text = "<%= l(:success_update_issue_and_ttevent)%>"
+  type = 'success'
+<% else %>
+  text = "<%= l(:error_something_went_wrong)%>"
+  type = 'error'
+<% end %> 
+
+noty
+  text: text
+  layout: 'center'
+  type: type
+  timeout: 800
