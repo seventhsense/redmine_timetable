@@ -1,6 +1,7 @@
 [![GitHub version](https://badge.fury.io/gh/seventhsense%2Fredmine_timetable.svg)](http://badge.fury.io/gh/seventhsense%2Fredmine_timetable)
 [![Build Status](https://travis-ci.org/seventhsense/redmine_timetable.svg)](https://travis-ci.org/seventhsense/redmine_timetable)
 [![Dependency Status](https://gemnasium.com/seventhsense/redmine_timetable.svg)](https://gemnasium.com/seventhsense/redmine_timetable)
+[![Coverage Status](https://coveralls.io/repos/seventhsense/redmine_timetable/badge.svg?branch=master)](https://coveralls.io/r/seventhsense/redmine_timetable?branch=master)
 
 # redmine_timetable
 自分の時間表に、ドラッグ・アンド・ドロップでチケットの予定を登録できます.
