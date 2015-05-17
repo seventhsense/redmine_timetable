@@ -1,4 +1,14 @@
 # Load the Redmine helper
+require 'coveralls'
+Coveralls.wear!
+SimpleCov.formatter = Coveralls::SimpleCov::Formatter
+SimpleCov.start do
+  add_filter do |source_file|
+    # redmine プラグインの ruby ファイルだけ対象にする
+    !source_file.filename.include?("plugins/redmine_timetable") || !source_file.filename.end_with?(".rb")
+  end
+end
+
 require File.expand_path(File.dirname(__FILE__) + '/../../../test/test_helper')
 module Redmine
   module PluginFixturesLoader

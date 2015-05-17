@@ -14,6 +14,7 @@ group :development do
 end
 
 group :test do
+  gem 'coveralls', require: false
   gem 'minitest-reporters', '1.0.16'
   gem 'minitest-ar-assertions', "0.1.1", :require => 'minitest_activerecord_assertions'
   gem "minitest-power_assert", "0.2.0"    
