@@ -3,9 +3,12 @@
 [![Dependency Status](https://gemnasium.com/seventhsense/redmine_timetable.svg)](https://gemnasium.com/seventhsense/redmine_timetable)
 
 # redmine_timetable
-Timetable using fullcalendar
+自分の時間割表に、ドラッグ・アンド・ドロップでチケットの予定を登録できます.
+![イベントの作成](https://raw.github.com/wiki/seventhsense/redmine_timetable/images/redmine_timetable_1_create_event.gif)
+やることを全部書き出して、予定表に登録しておけば、安心して今のタスクに集中できます.
 
-## Features
+
+## 機能
 ### カレンダー
 - 開始時間と終了時間を保存することができるイベントというモデルを追加
 - イベントはカレンダー上のドラッグアンドドロップで自由に移動できる
@@ -15,8 +18,8 @@ Timetable using fullcalendar
 - イベントの終了時に作業時間を登録できる
 - 終了したイベントをドラッグアンドドロップすることで作業時間を編集できる
 - イベントを削除すると作業時間も削除できる
-- 月のカレンダーをクリックすると日のカレンダーに移動
-- 週のカレンダーと日のカレンダーからチケット作成
+- 週のカレンダーと月のカレンダーをクリックすると日のカレンダーに移動
+- 日のカレンダーからチケット作成
 - チケットの期限に応じたイベントの色
 - 期限の設定やイベントの移動に応じて自動的に色が変わる
 - Railsのconfig.time_zoneとユーザーごとのタイムゾーン設定に対応
@@ -41,10 +44,10 @@ Timetable using fullcalendar
   - 月次の終了イベント数とイベント作業時間
   - 日時の終了イベント数とイベント作業時間
 
-## Requirement
+## 環境
 - Redmine 3.0.3
 
-## Usage
+## インストール
 ### 1. ダウンロード
   
 ```
@@ -62,7 +65,7 @@ bundle exec rake redmine:plugins:migrate NAME=redmine_timetable`
 
 ### 4. timezoneの設定
 
-タイムゾーンの設定を奨励します.
+MySQLでは、タイムゾーンの設定を奨励します.
 ```
 cp config/additional_enviroment.rb.example config/additional_enviroment.rb
 echo "config.time_zone = 'Tokyo'" >> config/additional_environment.rb
@@ -74,7 +77,10 @@ config.active_record.default_timezone = :local
 ```
 ただし、その場合、データベースのタイムゾーンをrailsのタイムゾーンと一致させてください.
 
-## Uninstall
+## 使い方
+[Wiki](https://github.com/seventhsense/redmine_timetable/wiki)を参照してください.
+
+## アンインストール
 ### 1. データベースの削除
 
 ```
@@ -84,7 +90,8 @@ bundle exec rake redmine:plugins:migrate NAME=redmine_timetable VERSION=0
 ### 2. プラグインの削除
 
 ```
-rm -rf plugins/redmine_timetable
+cd plugins
+rm -rf redmine_timetable
 ```
 
 ## 対応するデータベース
