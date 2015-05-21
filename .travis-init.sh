@@ -103,6 +103,7 @@ run_install() {
   bundle exec rake redmine:load_default_data REDMINE_LANG=ja $TRACE
   bundle exec rake $GENERATE_SECRET $TRACE
   bundle exec rake $MIGRATE_PLUGINS $TRACE
+  bundle exec rails s -e test -p 3001 -d
 }
 
 while getopts :irtu opt
