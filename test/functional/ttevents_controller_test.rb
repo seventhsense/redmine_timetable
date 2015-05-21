@@ -1,9 +1,7 @@
 require File.expand_path('../../test_helper', __FILE__)
 
 class TteventsControllerTest < ActionController::TestCase
-  plugin_fixtures :ttevents
-  # fixtures :users, :issues, :projects, :ttevents, :trackers, :projects_trackers, :members, :roles, :member_roles, :workflows
-  # fixtures :all
+  plugin_fixtures :ttevents, :users
   fixtures :projects, :versions, :users, :email_addresses, :roles, :members,
            :member_roles, :issues, :journals, :journal_details,
            :trackers, :projects_trackers, :issue_statuses,
