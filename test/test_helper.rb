@@ -25,6 +25,9 @@ end
 unless ActionController::TestCase.included_modules.include?(Redmine::PluginFixturesLoader)
   ActionController::TestCase.send :include, Redmine::PluginFixturesLoader
 end
+unless Redmine::IntegrationTest.included_modules.include?(Redmine::PluginFixturesLoader)
+  Redmine::IntegrationTest.send :include, Redmine::PluginFixturesLoader
+end
 # require 'simplecov'
 require 'minitest/hell'
 require 'minitest/reporters'

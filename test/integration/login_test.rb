@@ -1,7 +1,8 @@
 require File.expand_path('../../test_helper', __FILE__)
 
 require "json"
-class  LoginTest < ActionController::TestCase
+class  LoginTest < Redmine::IntegrationTest
+  plugin_fixtures :users
   fixtures :projects, :versions, :users, :email_addresses, :roles, :members,
            :member_roles, :issues, :journals, :journal_details,
            :trackers, :projects_trackers, :issue_statuses,
