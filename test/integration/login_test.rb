@@ -16,13 +16,17 @@ class  LoginTest < Redmine::IntegrationTest
     # Capybara.current_driver = Capybara.javascript_driver 
     # Capybara.run_server = true
     # Capybara.server_port = 3001
-    # Capybara.current_driver = :selenium
+    Capybara.default_driver = :poltergeist
     # Capybara.app_host = 'http://127.0.0.1:3001/'
     # @driver = Selenium::WebDriver.for :firefox
-    # @base_url = "http://127.0.0.1:3001"
+    # host = Capybara.current_session.server.host
+    # port = Capybara.current_session.server.port
+    # @base_url = "#{host}:#{port}"
+    # p @base_url
     # @accept_next_alert = true
     # @driver.manage.timeouts.implicit_wait = 10
     # @verification_errors = []
+    # Capybara.use_default_driver 
   end
   
   def teardown
