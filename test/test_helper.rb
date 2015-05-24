@@ -36,3 +36,7 @@ require 'selenium-webdriver'
 Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 
 include MiniTest::ActiveRecordAssertions
+
+Capybara.register_driver :poltergeist do |app|
+  Capybara::Poltergeist::Driver.new(app, inspector: true)
+end

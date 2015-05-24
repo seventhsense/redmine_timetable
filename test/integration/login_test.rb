@@ -16,7 +16,7 @@ class  LoginTest < Redmine::IntegrationTest
     # Capybara.current_driver = Capybara.javascript_driver 
     # Capybara.run_server = true
     # Capybara.server_port = 3001
-    Capybara.default_driver = :poltergeist
+    # Capybara.default_driver = :poltergeist
     # Capybara.app_host = 'http://127.0.0.1:3001/'
     # @driver = Selenium::WebDriver.for :firefox
     # host = Capybara.current_session.server.host
@@ -38,6 +38,8 @@ class  LoginTest < Redmine::IntegrationTest
   def test_login
     log_user('admin', 'admin')
     get '/ttevents'
+    # visit ttevents_path
+    # page.driver.debug
     assert_response :success
     assert_template 'ttevents/index'
     # binding.pry
