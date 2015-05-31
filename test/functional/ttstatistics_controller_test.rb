@@ -20,7 +20,7 @@ class TtstatisticsControllerTest < ActionController::TestCase
     get :index
     assert_response :success
     assert { assigns(:current_user) == users(:users_002) }
-    binding.pry
+    # binding.pry
     assert { assigns(:issues_assigned_count) == 1 }
     assert { assigns(:ttevents_average) == 5.0 }
     assert { assigns(:ttevents_max) == 5 }
