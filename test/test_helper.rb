@@ -1,4 +1,4 @@
-# Load the Redmine helper
+# setting coveralls
 require 'coveralls'
 Coveralls.wear!
 SimpleCov.formatter = Coveralls::SimpleCov::Formatter
@@ -9,7 +9,11 @@ SimpleCov.start do
   end
 end
 
+# load redmine test_helper
 require File.expand_path(File.dirname(__FILE__) + '/../../../test/test_helper')
+# multithreading
+require 'minitest/hell'
+# method plugin_fixtures
 module Redmine
   module PluginFixturesLoader
     def self.included(base)
@@ -28,15 +32,9 @@ end
 unless Redmine::IntegrationTest.included_modules.include?(Redmine::PluginFixturesLoader)
   Redmine::IntegrationTest.send :include, Redmine::PluginFixturesLoader
 end
-require 'minitest/rails/capybara'
-require 'minitest/hell'
+# setting minitest_reporters
 require 'minitest/reporters'
-require 'capybara/poltergeist'
-require 'selenium-webdriver'
 Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 
+# include MiniTest::ActiveRecordAssertions
 include MiniTest::ActiveRecordAssertions
-
-Capybara.register_driver :poltergeist do |app|
-  Capybara::Poltergeist::Driver.new(app, inspector: true)
-end

@@ -1,10 +1,8 @@
-require File.expand_path('../../test_helper', __FILE__)
+require File.expand_path(File.dirname(__FILE__) + '/../../../../test/ui/base')
+require 'capybara/poltergeist'
 
-# require "json"
-require 'capybara/rails'
-class  LoginTest < Redmine::IntegrationTest
-  include Capybara::DSL
-  plugin_fixtures :users
+class  LoginTest < Redmine::UiTest::Base
+  # plugin_fixtures :users
   fixtures :projects, :versions, :users, :email_addresses, :roles, :members,
            :member_roles, :issues, :journals, :journal_details,
            :trackers, :projects_trackers, :issue_statuses,
@@ -16,7 +14,7 @@ class  LoginTest < Redmine::IntegrationTest
     # Capybara.current_driver = Capybara.javascript_driver 
     # Capybara.run_server = true
     # Capybara.server_port = 3001
-    # Capybara.default_driver = :poltergeist
+    Capybara.default_driver = :poltergeist
     # Capybara.app_host = 'http://127.0.0.1:3001/'
     # @driver = Selenium::WebDriver.for :firefox
     # host = Capybara.current_session.server.host
@@ -30,18 +28,18 @@ class  LoginTest < Redmine::IntegrationTest
   end
   
   def teardown
-    Capybara.use_default_driver 
+    # Capybara.use_default_driver 
     # @driver.quit
     # assert_equal [], @verification_errors
   end
   
   def test_login
     log_user('admin', 'admin')
-    get '/ttevents'
-    # visit ttevents_path
+    # get '/ttevents'
+    visit ttevents_path
     # page.driver.debug
-    assert_response :success
-    assert_template 'ttevents/index'
+    # assert_response :success
+    # assert_template 'ttevents/index'
     # binding.pry
     # @driver.get(@base_url + "/")
     # @driver.find_element(:link, "ログイン").click
