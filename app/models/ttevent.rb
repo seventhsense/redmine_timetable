@@ -101,7 +101,7 @@ class Ttevent < ActiveRecord::Base
   end
 
   def self.group_by_month
-    adapter = ActiveRecord::Base.connection.instance_values["config"][:adapter]
+    adapter = ActiveRecord::Base.connection.instance_values['config'][:adapter]
     case adapter
     when /sqlite3/ then
       group('strftime("%Y", datetime(start_time, "localtime"))').group('strftime("%m", datetime(start_time, "localtime"))')
@@ -109,7 +109,7 @@ class Ttevent < ActiveRecord::Base
       group('YEAR(start_time)').group('MONTH(start_time)')
     when /postgresql/ then
       # TODO: need postgresql grouping testing
-      group('date_trunc("year", start_time)').group('date_trunc("month", start_time)')   
+      group('date_trunc("year", start_time)').group('date_trunc("month", start_time)')
     else
       all
     end
@@ -133,14 +133,14 @@ class Ttevent < ActiveRecord::Base
   private
 
   def set_duration
-    self.duration = (self.end_time - self.start_time) / 60 / 60
+    self.duration = (end_time - start_time) / 60 / 60
   end
 
   def define_color
-    return self.color = 'darkgrey' if self.is_done
-    due_date = self.issue.due_date
+    return self.color = 'darkgrey' if is_done
+    due_date = issue.due_date
     return self.color = '#da3aad' if due_date.nil?
-    end_date = self.end_time.to_date
+    end_date = end_time.to_date
     if due_date < end_date # out of time
       self.color = '#da3a3a'
     elsif due_date > end_date.since(3.days) # in time
