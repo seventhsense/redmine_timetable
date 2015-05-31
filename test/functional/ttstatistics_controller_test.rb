@@ -20,12 +20,12 @@ class TtstatisticsControllerTest < ActionController::TestCase
     get :index
     assert_response :success
     assert { assigns(:current_user) == users(:users_002) }
-    # binding.pry
+    binding.pry
     assert { assigns(:issues_assigned_count) == 1 }
-    assert { assigns(:ttevents_average) == 4.9 }
+    assert { assigns(:ttevents_average) == 5.0 }
     assert { assigns(:ttevents_max) == 5 }
     assert { assigns(:ttevents_max_date) == Date.today.strftime('%Y年 %m月 %d日') }
-    assert { assigns(:ttevents_hour_average) == 4.9 }
+    assert { assigns(:ttevents_hour_average) == 5.0 }
     assert { assigns(:ttevents_hour_max) == 5.0 }
     # p assigns(:ttevents_hour_date)
     assert { assigns(:ttevents_undone) == 0 }
