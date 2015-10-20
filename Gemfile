@@ -5,7 +5,7 @@ gem 'gon', '5.2.3'
 gem 'holiday_jp', '0.4.3'
 
 group :development do
-  gem 'uglifier'
+  gem 'uglifier', '2.7.2'
   gem 'compass'
   gem 'guard'
   gem 'guard-sass'
