@@ -63,11 +63,11 @@ GEM
     execjs (2.5.2)
     ffi (1.9.10)
     formatador (0.2.5)
-    gon (5.2.3)
-      actionpack (>= 2.3.0)
+    gon (6.0.1)
+      actionpack (>= 3.0)
       json
       multi_json
-      request_store (>= 1.0.5)
+      request_store (>= 1.0)
     guard (2.12.8)
       formatador (>= 0.2.4)
       listen (>= 2.7, <= 4.0)
@@ -165,7 +165,7 @@ GEM
     rb-fsevent (0.9.5)
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
-    request_store (1.1.0)
+    request_store (1.2.0)
     rest-client (1.8.0)
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 3.0)
@@ -211,7 +211,7 @@ DEPENDENCIES
   coffee-rails (= 4.1.0)
   compass
   coveralls
-  gon (= 5.2.3)
+  gon (= 6.0.1)
   guard
   guard-sass
   guard-shell
