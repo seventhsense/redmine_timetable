@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
 
-gem 'coffee-rails', '4.1.0'
-gem 'gon', '6.0.1'
-gem 'holiday_jp', '0.4.3'
+gem 'coffee-rails', '4.2.1'
+gem 'gon', '6.1.0'
+gem 'holiday_jp', '0.5.0'
 
 group :development do
   gem 'uglifier', '2.7.2'
