@@ -31,13 +31,13 @@ GEM
     chunky_png (1.3.4)
     cliver (0.3.2)
     coderay (1.1.0)
-    coffee-rails (4.1.0)
+    coffee-rails (4.2.1)
       coffee-script (>= 2.2.0)
-      railties (>= 4.0.0, < 5.0)
+      railties (>= 4.0.0, < 5.2.x)
     coffee-script (2.4.1)
       coffee-script-source
       execjs
-    coffee-script-source (1.9.1.1)
+    coffee-script-source (1.10.0)
     compass (1.0.3)
       chunky_png (~> 1.2)
       compass-core (~> 1.0.2)
@@ -63,7 +63,7 @@ GEM
     execjs (2.5.2)
     ffi (1.9.10)
     formatador (0.2.5)
-    gon (6.0.1)
+    gon (6.1.0)
       actionpack (>= 3.0)
       json
       multi_json
@@ -89,7 +89,7 @@ GEM
       guard (~> 2.0)
       sprockets (~> 2.0)
     hike (1.2.3)
-    holiday_jp (0.4.3)
+    holiday_jp (0.5.0)
     http-cookie (1.0.2)
       domain_name (~> 0.5)
     i18n (0.7.0)
@@ -165,7 +165,7 @@ GEM
     rb-fsevent (0.9.5)
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
-    request_store (1.2.0)
+    request_store (1.3.1)
     rest-client (1.8.0)
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 3.0)
@@ -208,15 +208,15 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  coffee-rails (= 4.1.0)
+  coffee-rails (= 4.2.1)
   compass
   coveralls
-  gon (= 6.0.1)
+  gon (= 6.1.0)
   guard
   guard-sass
   guard-shell
   guard-sprockets
-  holiday_jp (= 0.4.3)
+  holiday_jp (= 0.5.0)
   minitest-ar-assertions (= 0.1.1)
   minitest-power_assert (= 0.2.0)
   minitest-rails-capybara
@@ -225,4 +225,4 @@ DEPENDENCIES
   uglifier (= 2.7.2)
 
 BUNDLED WITH
-   1.10.6
+   1.12.5
