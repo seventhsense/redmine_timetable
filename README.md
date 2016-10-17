@@ -50,23 +50,23 @@
 
 ## インストール
 ### 1. ダウンロード
-  
+ Redmineのpluginsにダウンロードします。 
 ```
 git clone https://github.com/seventhsense/redmine_timetable plugins/
 ```
 ### 2. Gemのインストール
 ```
-bundle
+bundle --without development,test
 ```
 ### 3. データベースの作成
 
 ```
-bundle exec rake redmine:plugins:migrate NAME=redmine_timetable`
+RAILS_ENV=production bundle exec rake redmine:plugins:migrate NAME=redmine_timetable
 ```
 
 ### 4. timezoneの設定
 
-MySQLでは、タイムゾーンの設定を奨励します.
+Redmineのタイムゾーンも設定します.
 ```
 cp config/additional_enviroment.rb.example config/additional_enviroment.rb
 echo "config.time_zone = 'Tokyo'" >> config/additional_environment.rb
@@ -77,6 +77,8 @@ echo "config.time_zone = 'Tokyo'" >> config/additional_environment.rb
 config.active_record.default_timezone = :local
 ```
 ただし、その場合、データベースのタイムゾーンをrailsのタイムゾーンと一致させてください.
+
+MySQLでは、タイムゾーンの設定を奨励します.
 
 ## 使い方
 [Wiki](https://github.com/seventhsense/redmine_timetable/wiki)を参照してください.
