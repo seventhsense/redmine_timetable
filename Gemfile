@@ -17,7 +17,7 @@ group :test do
   gem 'coveralls', require: false
   gem 'minitest-rails-capybara'
   gem 'minitest-reporters'
-  gem 'minitest-ar-assertions', :require => 'minitest_activerecord_assertions'
+  gem 'minitest-ar-assertions'
   gem "minitest-power_assert", "0.2.0"    
 end
 

@@ -1,6 +1,6 @@
 language: ruby
 rvm:
-  - 2.2.5
+  - 2.3.0
 branches:
   only:
     - master
@@ -9,7 +9,6 @@ env:
   - DB=mysql REDMINE_VERSION=3.0.3 VERBOSE=yes
   - DB=mysql REDMINE_VERSION=3.1.0 VERBOSE=yes
   - DB=mysql REDMINE_VERSION=3.2.0 VERBOSE=yes
-  - DB=mysql REDMINE_VERSION=3.3.0 VERBOSE=yes
 before_script: 
   - sh -e /etc/init.d/xvfb start
   - export DISPLAY=:99.0
